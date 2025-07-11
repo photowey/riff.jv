@@ -1,2 +1,3 @@
 # riff.jv
-This is a distributed task scheduling framework built in Java, inspired by the open-source project XXL-Job.
+
+This is a distributed task scheduling framework built in Java, inspired by the open-source project [XXL-Job](https://github.com/xuxueli/xxl-job).

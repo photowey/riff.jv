@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>io.github.photowey</groupId>
+        <artifactId>riff.jv</artifactId>
+        <version>${reversion}</version>
+        <relativePath>../../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>riff</artifactId>
+    <name>${project.groupId}:${project.artifactId}</name>
+    <description>sub-root project for riff.jv</description>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>../riff-bom</module>
+        <module>../riff-dependencies</module>
+        <module>../riff-parent</module>
+    </modules>
+
+    <licenses>
+        <license>
+            <name>The Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>photowey</name>
+            <email>photowey@gmail.com</email>
+            <organization>io.github.photowey</organization>
+            <organizationUrl>https://photowey.github.io</organizationUrl>
+        </developer>
+    </developers>
+
+    <!-- @formatter:off -->
+    <scm>
+        <connection>scm:git:git@github.com:photowey/riff.jv.git</connection>
+        <developerConnection>scm:git:git@github.com:photowey/riff.jv.git</developerConnection>
+        <url>https://github.com/photowey/riff.jv</url>
+        <tag>HEAD</tag>
+    </scm>
+    <!-- @formatter:on -->
+
+    <!-- @formatter:off -->
+    <properties>
+    </properties>
+    <!-- @formatter:on -->
+
+    <dependencies>
+    </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.github.photowey</groupId>
+                <artifactId>riff-bom</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.photowey</groupId>
+                <artifactId>riff-dependencies</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.photowey</groupId>
+                <artifactId>riff-parent</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+        </plugins>
+    </build>
+</project>
