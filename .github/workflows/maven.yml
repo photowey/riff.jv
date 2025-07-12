@@ -24,11 +24,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+
       - name: Set up GraalVM 21
-        uses: oracle-labs-java/setup-graalvm@v1
+        uses: graalvm/setup-graalvm@v1
         with:
-          graalvm-version: '21'
-          version-set: 'community'
+          version: '21'
+          implementation: 'community'
           java-version: '21'
           components: 'native-image'
           cache: maven
