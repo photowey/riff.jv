@@ -25,14 +25,19 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Set up GraalVM 21
+      - name: Setup GraalVM (JDK 21)
         uses: graalvm/setup-graalvm@v1
         with:
-          version: '21'
-          implementation: 'community'
+          version: '23.1.2'
           java-version: '21'
+          implementation: 'community'
           components: 'native-image'
           cache: maven
+
+      - name: Verify Java & GraalVM
+        run: |
+          java -version
+          native-image --version
 
       - name: Set up Maven environment
         run: echo "MAVEN_REPO=${MAVEN_REPO_PATH}" >> $GITHUB_ENV
