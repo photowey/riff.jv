@@ -23,6 +23,9 @@
         <module>../../riff-storage</module>
 
         <module>../../riff-startup</module>
+
+        <module>../../riffctl</module>
+        <module>../../rifflet</module>
     </modules>
 
     <properties>
