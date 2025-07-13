@@ -1,0 +1,21 @@
+[project]
+name = "riff"
+version = "0.1.0"
+description = "Design document for the riff.jv project – PDM Package"
+
+authors = [
+  { name = "photowey", email = "photowey@gmail.com" },
+]
+
+dependencies = ["mkdocs>=1.6.1", "mkdocs-material>=9.6.15", "mkdocs-minify-plugin>=0.8.0"]
+
+requires-python = "==3.12.*"
+readme = "README.md"
+license = { text = "Apache-2.0" }
+
+[tool.pdm.scripts]
+mkd = "mkdocs {args}"
+transfer = "pdm export -f requirements --no-hashes"
+
+[tool.pdm]
+distribution = false
