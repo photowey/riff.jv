@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.photowey.riff.core.datetime;
+package io.github.photowey.riff.infras.common.datetime;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -25,9 +25,9 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
-import io.github.photowey.riff.core.constant.datetime.DatePatternConstants;
-import io.github.photowey.riff.core.util.Objects;
-import io.github.photowey.riff.core.util.Strings;
+import io.github.photowey.riff.infras.common.constant.datetime.DatePatternConstants;
+import io.github.photowey.riff.infras.common.util.Objects;
+import io.github.photowey.riff.infras.common.util.Strings;
 
 /**
  * {@code LocalDateTimes}.

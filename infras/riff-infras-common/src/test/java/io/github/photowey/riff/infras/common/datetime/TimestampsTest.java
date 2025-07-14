@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.photowey.riff.core.datetime;
+package io.github.photowey.riff.infras.common.datetime;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -46,11 +46,14 @@ class TimestampsTest {
         long now = 1752491157888L;
         LocalDateTime dateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(now), ZoneId.systemDefault());
 
+        // 1752491157888L
         long epochMilli = dateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
         Assertions.assertTrue(epochMilli % 1000 > 0);
 
-        Long trimmed = Timestamps.toTimestamp(Timestamps.trimTail(dateTime));
+        // 1752491157000L
+        Long trimmed = Timestamps.toTimestamp(dateTime);
         Assertions.assertNotNull(trimmed);
+        Assertions.assertEquals(1752491157000L, trimmed);
         Assertions.assertEquals(0, trimmed % 1000);
     }
 

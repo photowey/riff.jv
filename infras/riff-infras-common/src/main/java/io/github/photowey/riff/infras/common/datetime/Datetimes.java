@@ -14,12 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.photowey.riff.core.datetime;
+package io.github.photowey.riff.infras.common.datetime;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import io.github.photowey.riff.core.constant.datetime.DatePatternConstants;
+import io.github.photowey.riff.infras.common.constant.datetime.DatePatternConstants;
 
 /**
  * {@code Datetimes}.

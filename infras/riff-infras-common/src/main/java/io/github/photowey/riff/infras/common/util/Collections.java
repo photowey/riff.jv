@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.photowey.riff.core.util;
+package io.github.photowey.riff.infras.common.util;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -22,8 +22,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import io.github.photowey.riff.core.constant.CommonConstants;
-import io.github.photowey.riff.core.thrower.AssertionErrors;
+import io.github.photowey.riff.infras.common.constant.CommonConstants;
+import io.github.photowey.riff.infras.common.thrower.AssertionErrors;
 
 /**
  * {@code Collections}.
@@ -110,7 +110,7 @@ public final class Collections {
 
     @SafeVarargs
     public static <T> List<T> copyList(T... elements) {
-        return Arrays.asImmutableList(elements);
+        return Arrays.asMutableList(elements);
     }
 
     public static <T> List<T> copyList(List<T> elements) {
@@ -123,7 +123,7 @@ public final class Collections {
 
     @SafeVarargs
     public static <T> Set<T> copySet(T... elements) {
-        return Arrays.asImmutableSet(elements);
+        return Arrays.asMutableSet(elements);
     }
 
     public static <T> Set<T> copySet(List<T> elements) {
@@ -132,6 +132,34 @@ public final class Collections {
 
     public static <T> Set<T> copySet(Set<T> elements) {
         return new HashSet<>(elements);
+    }
+
+    // ----------------------------------------------------------------
+
+    @SafeVarargs
+    public static <T> List<T> immutableCopyList(T... elements) {
+        return Arrays.asImmutableList(elements);
+    }
+
+    public static <T> List<T> immutableCopyList(List<T> elements) {
+        return java.util.Collections.unmodifiableList(elements);
+    }
+
+    public static <T> List<T> immutableCopyList(Set<T> elements) {
+        return List.copyOf(elements);
+    }
+
+    @SafeVarargs
+    public static <T> Set<T> immutableCopySet(T... elements) {
+        return Arrays.asImmutableSet(elements);
+    }
+
+    public static <T> Set<T> immutableCopySet(List<T> elements) {
+        return Set.copyOf(elements);
+    }
+
+    public static <T> Set<T> immutableCopySet(Set<T> elements) {
+        return java.util.Collections.unmodifiableSet(elements);
     }
 
     // ----------------------------------------------------------------

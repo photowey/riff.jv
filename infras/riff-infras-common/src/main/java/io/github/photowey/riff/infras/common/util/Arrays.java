@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.photowey.riff.core.util;
+package io.github.photowey.riff.infras.common.util;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -23,7 +23,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import io.github.photowey.riff.core.thrower.AssertionErrors;
+import io.github.photowey.riff.infras.common.thrower.AssertionErrors;
 
 /**
  * {@code Arrays}.

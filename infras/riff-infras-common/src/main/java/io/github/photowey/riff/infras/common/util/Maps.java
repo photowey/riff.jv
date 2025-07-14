@@ -14,13 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.photowey.riff.core.util;
+package io.github.photowey.riff.infras.common.util;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import io.github.photowey.riff.core.thrower.AssertionErrors;
+import io.github.photowey.riff.infras.common.thrower.AssertionErrors;
 
 /**
  * {@code Maps}.
@@ -36,6 +36,16 @@ public final class Maps {
 
     private Maps() {
         AssertionErrors.throwz(Maps.class);
+    }
+
+    // ----------------------------------------------------------------
+
+    public static <K, V> boolean isEmpty(Map<K, V> collection) {
+        return null == collection || collection.isEmpty();
+    }
+
+    public static <K, V> boolean isNotEmpty(Map<K, V> collection) {
+        return !isEmpty(collection);
     }
 
     // ----------------------------------------------------------------
@@ -64,7 +74,9 @@ public final class Maps {
         return new HashMap<>(capacity(expectedSize));
     }
 
-    static int capacity(int expectedSize) {
+    // ----------------------------------------------------------------
+
+    private static int capacity(int expectedSize) {
         if (expectedSize < THRESHOLD_SIZE) {
             checkNonnegative(expectedSize, "expectedSize");
             return expectedSize + 1;
@@ -79,17 +91,7 @@ public final class Maps {
 
     // ----------------------------------------------------------------
 
-    public static <K, V> boolean isEmpty(Map<K, V> collection) {
-        return null == collection || collection.isEmpty();
-    }
-
-    public static <K, V> boolean isNotEmpty(Map<K, V> collection) {
-        return !isEmpty(collection);
-    }
-
-    // ----------------------------------------------------------------
-
-    public static int checkNonnegative(int value, String name) {
+    private static int checkNonnegative(int value, String name) {
         if (value < 0) {
             throw new IllegalArgumentException(name + " cannot be negative but was: " + value);
         }

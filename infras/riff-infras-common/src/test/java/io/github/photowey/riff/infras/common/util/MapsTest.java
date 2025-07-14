@@ -14,17 +14,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.photowey.riff.core.constant.datetime;
+package io.github.photowey.riff.infras.common.util;
+
+import java.util.Map;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
- * {@code DatetimeConstants}.
+ * {@code MapsTest}.
  *
  * @author photowey
  * @version 1.0.0
  * @since 2025/07/14
  */
-public interface DatetimeConstants {
+class MapsTest {
 
-    long MILLIS_OF_SECONDS = 1_000L;
+    @Test
+    void testIsEmpty() {
+        Map<Integer, Integer> map = Map.of(1, 2, 3, 4);
+        Assertions.assertFalse(Maps.isEmpty(map));
+        Assertions.assertTrue(Maps.isEmpty(Map.of()));
+        Assertions.assertTrue(Maps.isEmpty(null));
+    }
 
+    @Test
+    void testIsNotEmpty() {
+        Map<Integer, Integer> map = Map.of(1, 2, 3, 4);
+        Assertions.assertTrue(Maps.isNotEmpty(map));
+        Assertions.assertFalse(Maps.isNotEmpty(Map.of()));
+        Assertions.assertFalse(Maps.isNotEmpty(null));
+    }
 }

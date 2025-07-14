@@ -14,9 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.photowey.riff.core.hardware;
+package io.github.photowey.riff.infras.common.hardware;
 
-import io.github.photowey.riff.core.thrower.AssertionErrors;
+import io.github.photowey.riff.infras.common.thrower.AssertionErrors;
 
 /**
  * {@code Hardwares}.

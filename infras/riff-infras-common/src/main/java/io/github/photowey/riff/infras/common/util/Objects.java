@@ -14,13 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.photowey.riff.core.util;
+package io.github.photowey.riff.infras.common.util;
 
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.function.Supplier;
 
-import io.github.photowey.riff.core.thrower.AssertionErrors;
+import io.github.photowey.riff.infras.common.thrower.AssertionErrors;
 
 /**
  * {@code Objects}.
@@ -41,7 +41,7 @@ public final class Objects {
         return target != null ? target : defaultValue;
     }
 
-    public static <T> T defaultIfNull(T target, Supplier<T> fx) {
+    public static <T> T tryDefaultIfNull(T target, Supplier<T> fx) {
         if (target != null) {
             return target;
         }
@@ -52,11 +52,11 @@ public final class Objects {
     // ----------------------------------------------------------------
 
     public static <T extends Collection<E>, E> T defaultIfEmpty(T target, T defaultValue) {
-        return target.isEmpty() ? defaultValue : target;
+        return Collections.isEmpty(target) ? defaultValue : target;
     }
 
-    public static <T extends Collection<E>, E> T defaultIfEmpty(T target, Supplier<T> fx) {
-        if (target.isEmpty()) {
+    public static <T extends Collection<E>, E> T tryDefaultIfEmpty(T target, Supplier<T> fx) {
+        if (Collections.isEmpty(target)) {
             return fx.get();
         }
 

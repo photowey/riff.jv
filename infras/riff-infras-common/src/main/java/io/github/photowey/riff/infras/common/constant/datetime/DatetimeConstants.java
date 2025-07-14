@@ -14,35 +14,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.photowey.riff.core.constant.datetime;
+package io.github.photowey.riff.infras.common.constant.datetime;
 
 /**
- * {@code DatePatternConstants}.
+ * {@code DatetimeConstants}.
  *
  * @author photowey
  * @version 1.0.0
  * @since 2025/07/14
  */
-public interface DatePatternConstants {
+public interface DatetimeConstants {
 
-    String yyyy_MM_dd_HH_mm_ss = "yyyy-MM-dd HH:mm:ss";
-    String yyyy_MM_dd_HH_mm_ss_SSS = "yyyy-MM-dd HH:mm:ss.SSS";
+    long MILLIS_OF_SECONDS = 1_000L;
 
-    String yyyy_MM_dd = "yyyy-MM-dd ";
-    String HH_mm_ss = "HH:mm:ss";
-    String yyyyMMdd = "yyyyMMdd";
-    String yyyyMM = "yyyyMM";
-    String yyMMdd = "yyMMdd";
-    String yyMM = "yyMM";
-    String MMdd = "MMdd";
-    String HHmmss = "HHmmss";
-    String HHmm = "HHmm";
-
-    String yyyyMMddHHmmss = "yyyyMMddHHmmss";
-    String yyyyMMddHHmmssSSS = "yyyyMMddHHmmssSSS";
-
-    String yyyyMMddHHmm = "yyyyMMddHHmm";
-    String yyMMddHHmm = "yyMMddHHmm";
-    String yyMMddHHmmss = "yyMMddHHmmss";
 }
-
