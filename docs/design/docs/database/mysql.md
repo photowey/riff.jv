@@ -4,17 +4,34 @@
 
 ### `1.1.Scheduled`
 
-- `riff_scheduled_app`
+- `riff_schedule_app`
   - `id`
     - `app_id`
   - `app_code`
     - `${spring.application.name}`
   - `app_name`
+    - `Nullable`
   - `security`
     - `access_key`
       - `app_id`
     - `access_secret`
       - `app_secret`
+  - `--------------------------------`
+  - `cluster`
+    - `host`
+      - `in k8s`
+      - `Nullable`
+  - `config_namespace`
+    - `Nacos`
+      - `...`
+    - `public`
+      - `Nullable`
+  - `config_group`
+    - `Nacos`
+      - `...`
+    - `DEFAULT_GROUP`
+      - `Nullable`
+  - `--------------------------------`
   - `tenant`
     - `tenant`
       - `saas`
@@ -23,20 +40,29 @@
     - `app`
       - `boss`
       - `...`
-- `riff_scheduled_task`
+- `riff_schedule_task`
   - `id`
     - `task_id`
   - `--------------------------------`
   - `tenant`
+    - `saas`
   - `platform`
+    - `saas`
   - `app`
+    - `boss`
   - `--------------------------------`
   - `app_id`
   - `task_code`
+    - `@RiffTask(value="io.github.photowey.saas.order.delayed.refresh")`
   - `task_name`
+    - `Nullable`
   - `task_type`
     - `handler_task`
-    - `glue_task`
+      - `1`
+    - `scritp_task`
+      - `2`
+    - `http_task`
+      - `4`
   - `handler_name`
     - `${ioc_handler_bean_name}`
     - `hello_python`
@@ -52,22 +78,71 @@
   - `method`
     - `handle - default`
   - `arguments`
-    - `txt`
-    - `json`
-    - `yml`
-    - `xml`
-    - `toml`
-    - `hcl`
-    - `...`
-- `riff_scheduled_task_client`
+    - `type`
+      - `txt` - `plain text`
+      - `json`
+      - `yml`
+      - `xml`
+      - `toml`
+      - `hcl`
+      - `...`
+- `riff_schedule_task_client`
   - `id`
+  - `app_id`
   - `task_id`
+  - `client_status`
+    - `online`
+      - `1`
+
+    - `unhealthy`
+      - `healthcheck_failure_count >=1 && healthcheck_failure_count < 4`
+      - `2`
+
+    - `suspect`
+      - `healthcheck_failure_count == 4`
+      - `4`
+
+    - `offline`
+      - `healthcheck_failure_count == 5`
+      - `8`
+
   - `${server.ip}`
   - `${server.port}`
   - `${server.protocol}`
     - `http`
     - `gRPC`
-  
+  - `healthcheck_success_count`
+    - `Server`
+
+  - `healthcheck_failure_count`
+    - `Server`
+      - `30s * 5`
+        - `offline`
+
+  - `received_heartbeats`
+    - `Client`
+
+  - `online_time`
+    - `datetime`
+
+  - `offline_time`
+    - `datetime`
+
+- `riff_schedule_task_chain`
+  - `id`
+    - `chain_id`
+
+  - `parent_id`
+  - `children_id`
+  - `condition`
+    - `${xxxStatus} == 1`
+    - `${xxxEnabled}`
+
+  - `context`
+    - `k1==v1`
+    - `k2==v2`
+    - `k3==${SpEL}`
+
 
 ### `1.2.System`
 
@@ -131,16 +206,20 @@
   - `token_expire_in`
     - `3600 * 24`
     - `${long-time}`
+      - `100 YEAR || 1970-01-01`
   - `token_expire_time`
     - `datetime`
     - `${now} + ${token_expire_in} * 1000`
     - `${long-time}`
+      - `100 YEAR || 1970-01-01`
   - `refresh_token`
   - `refresh_token_expire_in`
     - `3600 * 24 * 7`
     - `${long-time}`
+      - `100 YEAR || 1970-01-01`
   - `refresh_token_expire_time`
     - `${long-time}`
+      - `100 YEAR || 1970-01-01`
 
 
 

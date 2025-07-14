@@ -1,4 +1,4 @@
-site_name: riff
+site_name: riff.jv
 site_url: https://github.com/photowey/riff.jv
 site_author: photowey<photowey@gmail.com>
 
@@ -7,7 +7,7 @@ repo_name: photowey/riff.jv
 repo_url: https://github.com/photowey/riff.jv
 
 
-copyright: Copyright &copy; 2025 - present photowey<photowey@gmail.com>
+copyright: Copyright &copy; 2025 - present <a href="mailto:photowey@gmail.com">photowey</a>
 
 
 # Copy form: https://github.com/squidfunk/mkdocs-material
@@ -63,7 +63,8 @@ theme:
   font:
     text: Roboto
     code: Roboto Mono
-  favicon: assets/favicon.png
+  favicon: assets/images/favicon.png
+  logo: assets/logo.svg
 
 
 # Copy form: https://github.com/squidfunk/mkdocs-material
