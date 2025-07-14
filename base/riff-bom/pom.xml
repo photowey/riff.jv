@@ -54,6 +54,78 @@
                 <version>${project.version}</version>
             </dependency>
 
+            <!-- Infras Common -->
+            <dependency>
+                <groupId>io.github.photowey</groupId>
+                <artifactId>riff-infras-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.photowey</groupId>
+                <artifactId>riff-infras-model</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.github.photowey</groupId>
+                <artifactId>riff-infras-transport-grpc-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.photowey</groupId>
+                <artifactId>riff-infras-transport-grpc-client</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.photowey</groupId>
+                <artifactId>riff-infras-transport-grpc-server</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.github.photowey</groupId>
+                <artifactId>riff-infras-transport-http-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.photowey</groupId>
+                <artifactId>riff-infras-transport-http-rest-template</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- Middleware Database -->
+            <dependency>
+                <groupId>io.github.photowey</groupId>
+                <artifactId>riff-middleware-database-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.photowey</groupId>
+                <artifactId>riff-middleware-database-meta</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.photowey</groupId>
+                <artifactId>riff-middleware-database-orm</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.photowey</groupId>
+                <artifactId>riff-middleware-database-mysql</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.photowey</groupId>
+                <artifactId>riff-middleware-database-postgresql</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.photowey</groupId>
+                <artifactId>riff-middleware-database-sqlite</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- Storage -->
             <dependency>
                 <groupId>io.github.photowey</groupId>
                 <artifactId>riff-storage</artifactId>
@@ -68,6 +140,16 @@
             <dependency>
                 <groupId>io.github.photowey</groupId>
                 <artifactId>riff-storage-mysql</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.photowey</groupId>
+                <artifactId>riff-storage-postgresql</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.photowey</groupId>
+                <artifactId>riff-storage-sqlite</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>

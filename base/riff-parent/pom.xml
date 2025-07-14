@@ -17,15 +17,22 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>../../riff-apiserver</module>
-        <module>../../riff-core</module>
         <module>../../riff-scheduler</module>
-        <module>../../riff-storage</module>
-
-        <module>../../riff-startup</module>
-
+        <module>../../riff-apiserver</module>
         <module>../../riffctl</module>
         <module>../../rifflet</module>
+
+        <module>../../riff-core</module>
+        <module>../../riff-storage</module>
+        <module>../../riff-startup</module>
+
+        <!-- Infras -->
+        <module>../../infras/riff-infras-common</module>
+        <module>../../infras/riff-infras-model</module>
+        <module>../../infras/riff-infras-transport</module>
+
+        <!-- Middleware -->
+        <module>../../middleware/riff-middleware-database</module>
     </modules>
 
     <properties>

@@ -19,6 +19,8 @@
     <modules>
         <module>riff-storage-api</module>
         <module>riff-storage-mysql</module>
+        <module>riff-storage-postgresql</module>
+        <module>riff-storage-sqlite</module>
     </modules>
 
     <properties>

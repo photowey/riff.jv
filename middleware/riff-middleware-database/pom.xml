@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>io.github.photowey</groupId>
+        <artifactId>riff-parent</artifactId>
+        <version>${reversion}</version>
+        <relativePath>../../base/riff-parent/pom.xml</relativePath>
+    </parent>
+
+    <artifactId>riff-middleware-database</artifactId>
+    <name>riff-middleware-database</name>
+    <description>middleware-database module for riff.jv</description>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>riff-middleware-database-core</module>
+        <module>riff-middleware-database-meta</module>
+        <module>riff-middleware-database-orm</module>
+
+        <module>riff-middleware-database-mysql</module>
+        <module>riff-middleware-database-postgresql</module>
+        <module>riff-middleware-database-sqlite</module>
+    </modules>
+
+    <properties>
+    </properties>
+
+    <dependencies>
+    </dependencies>
+
+    <build>
+        <plugins>
+        </plugins>
+    </build>
+
+</project>
