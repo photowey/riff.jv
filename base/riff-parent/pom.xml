@@ -21,10 +21,11 @@
         <module>../../riff-apiserver</module>
         <module>../../riffctl</module>
         <module>../../rifflet</module>
+        <module>../../riff-proxy</module>
 
-        <module>../../riff-core</module>
-        <module>../../riff-storage</module>
-        <module>../../riff-startup</module>
+        <module>../../infras/riff-core</module>
+        <module>../../infras/riff-storage</module>
+        <module>../../infras/riff-startup</module>
 
         <!-- Infras -->
         <module>../../infras/riff-infras-common</module>

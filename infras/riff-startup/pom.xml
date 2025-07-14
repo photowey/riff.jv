@@ -8,7 +8,7 @@
         <groupId>io.github.photowey</groupId>
         <artifactId>riff-parent</artifactId>
         <version>${reversion}</version>
-        <relativePath>../base/riff-parent/pom.xml</relativePath>
+        <relativePath>../../base/riff-parent/pom.xml</relativePath>
     </parent>
 
     <artifactId>riff-startup</artifactId>

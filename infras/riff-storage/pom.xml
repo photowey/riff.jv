@@ -8,21 +8,25 @@
         <groupId>io.github.photowey</groupId>
         <artifactId>riff-parent</artifactId>
         <version>${reversion}</version>
-        <relativePath>../base/riff-parent/pom.xml</relativePath>
+        <relativePath>../../base/riff-parent/pom.xml</relativePath>
     </parent>
 
-    <artifactId>riff-core</artifactId>
-    <name>riff-core</name>
-    <description>core module for riff.jv</description>
+    <artifactId>riff-storage</artifactId>
+    <name>riff-storage</name>
+    <description>storage module for riff.jv</description>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>riff-storage-api</module>
+        <module>riff-storage-mysql</module>
+        <module>riff-storage-postgresql</module>
+        <module>riff-storage-sqlite</module>
+    </modules>
 
     <properties>
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
     </dependencies>
 
     <build>

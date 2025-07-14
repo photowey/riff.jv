@@ -11,17 +11,10 @@
         <relativePath>../base/riff-parent/pom.xml</relativePath>
     </parent>
 
-    <artifactId>riff-storage</artifactId>
-    <name>riff-storage</name>
-    <description>storage module for riff.jv</description>
-    <packaging>pom</packaging>
+    <artifactId>riff-proxy</artifactId>
+    <name>riff-proxy</name>
 
-    <modules>
-        <module>riff-storage-api</module>
-        <module>riff-storage-mysql</module>
-        <module>riff-storage-postgresql</module>
-        <module>riff-storage-sqlite</module>
-    </modules>
+    <description>A riff.jv client network proxy project</description>
 
     <properties>
     </properties>
@@ -29,9 +22,13 @@
     <dependencies>
     </dependencies>
 
+    <dependencyManagement>
+        <dependencies>
+        </dependencies>
+    </dependencyManagement>
+
     <build>
         <plugins>
         </plugins>
     </build>
-
 </project>
