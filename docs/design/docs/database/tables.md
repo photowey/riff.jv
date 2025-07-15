@@ -1,4 +1,4 @@
-# `MySQL`
+# `riff`
 
 ## `1.Tables`
 
@@ -40,9 +40,42 @@
     - `app`
       - `boss`
       - `...`
-- `riff_schedule_task`
+- `riff_schedule_client`
   - `id`
-    - `task_id`
+  - `app_id`
+  - `job_id`
+  - `client_status`
+    - `online`
+      - `1`
+    - `unhealthy`
+      - `healthcheck_failure_count >=1 && healthcheck_failure_count < 4`
+      - `2`
+    - `suspect`
+      - `healthcheck_failure_count == 4`
+      - `4`
+    - `offline`
+      - `healthcheck_failure_count == 5`
+      - `8`
+  - `${server.ip}`
+  - `${server.port}`
+  - `${server.protocol}`
+    - `http`
+    - `gRPC`
+  - `healthcheck_success_count`
+    - `Server`
+  - `healthcheck_failure_count`
+    - `Server`
+      - `30s * 5`
+        - `offline`
+  - `received_heartbeats`
+    - `Client`
+  - `online_time`
+    - `datetime`
+  - `offline_time`
+    - `datetime`
+- `riff_schedule_job`
+  - `id`
+    - `job_id`
   - `--------------------------------`
   - `tenant`
     - `saas`
@@ -52,16 +85,16 @@
     - `boss`
   - `--------------------------------`
   - `app_id`
-  - `task_code`
-    - `@RiffTask(value="io.github.photowey.saas.order.delayed.refresh")`
-  - `task_name`
+  - `job_code`
+    - `@RiffJob(value="io.github.photowey.saas.order.delayed.close")`
+  - `job_name`
     - `Nullable`
-  - `task_type`
-    - `handler_task`
+  - `job_type`
+    - `handler_job`
       - `1`
-    - `scritp_task`
+    - `scritp_job`
       - `2`
-    - `http_task`
+    - `http_job`
       - `4`
   - `handler_name`
     - `${ioc_handler_bean_name}`
@@ -86,63 +119,68 @@
       - `toml`
       - `hcl`
       - `...`
-- `riff_schedule_task_client`
-  - `id`
-  - `app_id`
-  - `task_id`
-  - `client_status`
-    - `online`
-      - `1`
-
-    - `unhealthy`
-      - `healthcheck_failure_count >=1 && healthcheck_failure_count < 4`
-      - `2`
-
-    - `suspect`
-      - `healthcheck_failure_count == 4`
-      - `4`
-
-    - `offline`
-      - `healthcheck_failure_count == 5`
-      - `8`
-
-  - `${server.ip}`
-  - `${server.port}`
-  - `${server.protocol}`
-    - `http`
-    - `gRPC`
-  - `healthcheck_success_count`
-    - `Server`
-
-  - `healthcheck_failure_count`
-    - `Server`
-      - `30s * 5`
-        - `offline`
-
-  - `received_heartbeats`
-    - `Client`
-
-  - `online_time`
-    - `datetime`
-
-  - `offline_time`
-    - `datetime`
-
-- `riff_schedule_task_chain`
+- `riff_schedule_job_chain`
   - `id`
     - `chain_id`
-
   - `parent_id`
   - `children_id`
   - `condition`
     - `${xxxStatus} == 1`
     - `${xxxEnabled}`
-
   - `context`
     - `k1==v1`
     - `k2==v2`
     - `k3==${SpEL}`
+- `riff_schedule_job_trigger_record`
+  - `id`
+  - `app_id`
+  - `--------------------------------`
+  - `job_id`
+  - `job_code`	
+  - `--------------------------------`
+  - `client_id`
+  - `client_address`
+    - `client_ip`
+    - `client_port`
+  - `--------------------------------`
+  - `sharding_context`
+    - `Nullable`
+  - `--------------------------------`
+  - `trigger_time`
+  - `finished_time`
+  - `trigger_status`
+  - `trigger_context`
+  - `trigger_source`
+    - `script`
+    - `...`
+  - `trigger_code`
+  - `trigger_message`
+  - `retry_count`
+  - `--------------------------------`
+  - `handle_time`
+  - `handle_code`
+  - `handle_message`
+  - `handle_status`
+  - `--------------------------------`
+  - `alarm_type`
+  - `alarm_status`
+  - `alarrm_context`
 
+- `riff_schedule_job_trigger_stat`
+  - `id`
+  - `app_id`
+  - `job_id`
+  - `trigger_year`
+  - `trigger_month`
+  - `trigger_day`
+  - `trigger_time`
+  - `trigger_count`
+  - `success_count`
+  - `failure_count`
+  - `retry_count`
+- `riff_schedule_lock`
+  - `io.github.photowey.riff.distributed.schedule.job.lock`
+    - `Fixed`
 
 ### `1.2.System`
 
@@ -189,14 +227,14 @@
       - `username`
       - `password`
       - `1`
-    - `app|client`
+    - `app|thirdparty`
       - `access_key`
       - `access_secret`
       - `2`
   - `authentication_key`
     - `${riff_system_user.username}`
     - `${riff_scheduled_app.access_key}`
-  - token_type
+  - `token_type`
     - `bearer`
       - `web`
         - `dashboard`

@@ -139,4 +139,6 @@ nav:
   - License: license.md
   - Database:
     - database/index.md
-    - MySQL: database/mysql.md
+    - Tables: database/tables.md
+  - Authentication:
+    - authentication/index.md

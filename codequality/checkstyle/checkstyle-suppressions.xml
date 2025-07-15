@@ -5,8 +5,13 @@
 
 <suppressions>
     <suppress files="[\\/].*(package-info)\.java" checks="RegexpOnFilename"/>
+
+    <suppress files=".*[\\/]model[\\/]query([\\/])?.*" checks="RegexpOnFilename"/>
+    <suppress files=".*[\\/]model[\\/]query[\\/]pagination([\\/])?.*" checks="RegexpOnFilename"/>
+
     <suppress files=".*[\\/]enums([\\/])?.*" checks="NoWhitespaceBefore"/>
     <suppress files=".*[\\/]constant([\\/])?.*" checks="InterfaceIsType"/>
+
     <suppress files=".*[\\/]apiserver([\\/])?.*" checks="UncommentedMain"/>
 </suppressions>
 

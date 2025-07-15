@@ -18,6 +18,19 @@
 
     <properties>
         <picocli.version>4.7.7</picocli.version>
+
+        <mybatis-plus.version>3.5.12</mybatis-plus.version>
+        <mybatis-typehandlers-jsr310.version>1.0.2</mybatis-typehandlers-jsr310.version>
+        <jackson-datatype-jsr310.version>2.18.2</jackson-datatype-jsr310.version>
+
+        <knife4j.version>4.5.0</knife4j.version>
+        <swagger-annotations-v3.version>2.2.19</swagger-annotations-v3.version>
+
+        <jjwt.version>0.12.6</jjwt.version>
+        <jnanoid.version>2.0.0</jnanoid.version>
+
+        <bcprov-jdk18on.version>1.80</bcprov-jdk18on.version>
+        <bcpkix-jdk18on.version>1.80</bcpkix-jdk18on.version>
     </properties>
 
     <dependencies>
@@ -29,6 +42,22 @@
                 <groupId>io.github.photowey</groupId>
                 <artifactId>riff-bom</artifactId>
                 <version>${project.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-bom</artifactId>
+                <version>${mybatis-plus.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-dependencies</artifactId>
+                <version>${knife4j.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -47,6 +76,34 @@
                 <groupId>info.picocli</groupId>
                 <artifactId>picocli-spring-boot-starter</artifactId>
                 <version>${picocli.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.swagger.core.v3</groupId>
+                <artifactId>swagger-annotations-jakarta</artifactId>
+                <version>${swagger-annotations-v3.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.aventrix.jnanoid</groupId>
+                <artifactId>jnanoid</artifactId>
+                <version>${jnanoid.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>${jjwt.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.bouncycastle</groupId>
+                <artifactId>bcprov-jdk18on</artifactId>
+                <version>${bcprov-jdk18on.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.bouncycastle</groupId>
+                <artifactId>bcpkix-jdk18on</artifactId>
+                <version>${bcpkix-jdk18on.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
