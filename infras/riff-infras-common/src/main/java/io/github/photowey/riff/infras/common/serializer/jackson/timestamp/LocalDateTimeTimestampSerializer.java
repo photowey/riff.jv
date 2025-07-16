@@ -1,4 +1,29 @@
+/*
+ * Copyright (c) 2025-present
+ * the original author(photowey<photowey@gmail.com>) or authors All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package io.github.photowey.riff.infras.common.serializer.jackson.timestamp;
+
+import java.io.IOException;
+import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import io.github.photowey.riff.infras.common.datetime.LocalDateTimes;
+import io.github.photowey.riff.infras.common.util.Objects;
 
 /**
  * {@code LocalDateTimeTimestampSerializer}.
@@ -7,5 +32,14 @@ package io.github.photowey.riff.infras.common.serializer.jackson.timestamp;
  * @version 1.0.0
  * @since 2025/07/17
  */
-public class LocalDateTimeTimestampSerializer {
+public class LocalDateTimeTimestampSerializer extends JsonSerializer<LocalDateTime> {
+
+    @Override
+    public void serialize(LocalDateTime value, JsonGenerator gen, SerializerProvider serializers)
+        throws IOException {
+        if (value != null) {
+            Long timestamp = LocalDateTimes.toTimestamp(value);
+            gen.writeNumber(Objects.requireNonNull(timestamp));
+        }
+    }
 }

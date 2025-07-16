@@ -10,6 +10,7 @@
 
     <suppress files=".*[\\/]enums([\\/])?.*" checks="NoWhitespaceBefore"/>
     <suppress files=".*[\\/]constant([\\/])?.*" checks="InterfaceIsType"/>
+    <suppress files=".*[\\/]common[\\/]json([\\/])?.*" checks="OverloadMethodsDeclarationOrder"/>
 
     <suppress files=".*[\\/]apiserver([\\/])?.*" checks="UncommentedMain"/>
 </suppressions>

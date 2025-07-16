@@ -20,6 +20,7 @@ import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.function.Supplier;
 
+import io.github.photowey.riff.infras.common.formatter.StringFormatter;
 import io.github.photowey.riff.infras.common.thrower.AssertionErrors;
 
 /**
@@ -87,6 +88,10 @@ public final class Objects {
 
     public static <T> T requireNonNull(T target) {
         return java.util.Objects.requireNonNull(target);
+    }
+
+    public static <T> T requireNonNull(T target, String message, Object... args) {
+        return java.util.Objects.requireNonNull(target, StringFormatter.format(message, args));
     }
 
     // ----------------------------------------------------------------

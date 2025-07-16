@@ -16,6 +16,8 @@
  */
 package io.github.photowey.riff.infras.ioc.context.injector;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.photowey.riff.infras.common.json.JSON;
 import io.github.photowey.riff.infras.ioc.core.enums.holder.ApplicationContextHolder;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.DisposableBean;
@@ -58,7 +60,12 @@ public class ApplicationContextInjector implements ApplicationContextAware, Disp
 
     private void inject() {
         ApplicationContextHolder.INSTANCE.applicationContext(this.configurableApplicationContext());
+
+        // try inject {@code ObjectMapper}. if necessary.
+        ObjectMapper objectMapper = this.applicationContext.getBean(ObjectMapper.class);
+        JSON.json(objectMapper);
     }
+
 
     private void clean() {
         ApplicationContextHolder.clean();
