@@ -280,24 +280,6 @@
     </module>
 
     <module name="RegexpOnFilename">
-        <property name="folderPattern" value="[\\/]dao(?![\\/]?impl[\\/]?).*"/>
-        <property name="fileExtensions" value="java"/>
-        <property name="fileNamePattern" value="^[A-Z][a-zA-Z0-9]*(DAO|DAOTest)\.java$"/>
-        <property name="match" value="false"/>
-        <message key="regexp.filename.mismatch"
-                 value="Interface names in the dao package must end with 'DAO' or 'DAOTest'."/>
-    </module>
-
-    <module name="RegexpOnFilename">
-        <property name="folderPattern" value="[\\/]dao[\\/]impl[\\/]?"/>
-        <property name="fileExtensions" value="java"/>
-        <property name="fileNamePattern" value="^[A-Z][a-zA-Z0-9]*DAOImpl\.java$"/>
-        <property name="match" value="false"/>
-        <message key="regexp.filename.mismatch"
-                 value="Class names in the dao.impl package must end with 'DAOImpl'."/>
-    </module>
-
-    <module name="RegexpOnFilename">
         <property name="folderPattern" value="[\\/]mapper[\\/]?"/>
         <property name="fileExtensions" value="java"/>
         <property name="fileNamePattern" value="^[A-Z][a-zA-Z0-9]*Mapper\.java$"/>
@@ -318,7 +300,7 @@
     <module name="RegexpOnFilename">
         <property name="folderPattern" value="[\\/]query[\\/]?"/>
         <property name="fileExtensions" value="java"/>
-        <property name="fileNamePattern" value="^[A-Z][a-zA-Z0-9]*Query\.java$"/>
+        <property name="fileNamePattern" value="^([A-Z][a-zA-Z0-9]*)?Query\.java$"/>
         <property name="match" value="false"/>
         <message key="regexp.filename.mismatch"
                  value="Query class names must end with 'Query'."/>

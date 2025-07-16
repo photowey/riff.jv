@@ -28,7 +28,9 @@
         <module>../../infras/riff-startup</module>
 
         <!-- Infras -->
+        <module>../../infras/riff-infras-authentication</module>
         <module>../../infras/riff-infras-common</module>
+        <module>../../infras/riff-infras-ioc</module>
         <module>../../infras/riff-infras-model</module>
         <module>../../infras/riff-infras-transport</module>
 

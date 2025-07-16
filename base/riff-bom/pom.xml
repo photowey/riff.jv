@@ -48,6 +48,7 @@
                 <version>${project.version}</version>
             </dependency>
 
+            <!--region Startup -->
             <dependency>
                 <groupId>io.github.photowey</groupId>
                 <artifactId>riff-startup</artifactId>
@@ -69,6 +70,7 @@
                 <artifactId>riff-startup-printer</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <!--endregion Startup -->
 
             <!-- Infras Common -->
             <dependency>
@@ -82,6 +84,7 @@
                 <version>${project.version}</version>
             </dependency>
 
+            <!--region gRPC -->
             <dependency>
                 <groupId>io.github.photowey</groupId>
                 <artifactId>riff-infras-transport-grpc-core</artifactId>
@@ -97,6 +100,7 @@
                 <artifactId>riff-infras-transport-grpc-server</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <!--endregion gRPC -->
 
             <dependency>
                 <groupId>io.github.photowey</groupId>
@@ -109,7 +113,42 @@
                 <version>${project.version}</version>
             </dependency>
 
+            <!--region Authentication -->
+            <dependency>
+                <groupId>io.github.photowey</groupId>
+                <artifactId>riff-infras-authentication-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.photowey</groupId>
+                <artifactId>riff-infras-authentication-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.photowey</groupId>
+                <artifactId>riff-infras-authentication-jjwt</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.photowey</groupId>
+                <artifactId>riff-infras-authentication-property</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <!--endregion Authentication -->
+
+            <dependency>
+                <groupId>io.github.photowey</groupId>
+                <artifactId>riff-infras-ioc-context</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.photowey</groupId>
+                <artifactId>riff-infras-ioc-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
             <!-- Middleware Database -->
+            <!--region Database -->
             <dependency>
                 <groupId>io.github.photowey</groupId>
                 <artifactId>riff-middleware-database-core</artifactId>
@@ -140,8 +179,10 @@
                 <artifactId>riff-middleware-database-sqlite</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <!--endregion Database -->
 
             <!-- Storage -->
+            <!--region Storage -->
             <dependency>
                 <groupId>io.github.photowey</groupId>
                 <artifactId>riff-storage</artifactId>
@@ -168,6 +209,7 @@
                 <artifactId>riff-storage-sqlite</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <!--endregion Storage -->
         </dependencies>
     </dependencyManagement>
 
