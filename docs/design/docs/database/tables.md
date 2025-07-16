@@ -48,26 +48,26 @@
     - `online`
       - `1`
     - `unhealthy`
-      - `healthcheck_failure_count >=1 && healthcheck_failure_count < 4`
+      - `health_check_failure_count >=1 && health_check_failure_count < 4`
       - `2`
     - `suspect`
-      - `healthcheck_failure_count == 4`
+      - `health_check_failure_count == 4`
       - `4`
     - `offline`
-      - `healthcheck_failure_count == 5`
+      - `health_check_failure_count == 5`
       - `8`
   - `${server.ip}`
   - `${server.port}`
   - `${server.protocol}`
     - `http`
     - `gRPC`
-  - `healthcheck_success_count`
+  - `health_check_success_count`
     - `Server`
-  - `healthcheck_failure_count`
+  - `health_check_failure_count`
     - `Server`
       - `30s * 5`
         - `offline`
-  - `received_heartbeats`
+  - `received_heartbeat_count`
     - `Client`
   - `online_time`
     - `datetime`
@@ -124,10 +124,10 @@
     - `chain_id`
   - `parent_id`
   - `children_id`
-  - `condition`
+  - `trigger_condition`
     - `${xxxStatus} == 1`
     - `${xxxEnabled}`
-  - `context`
+  - `trigger_context`
     - `k1==v1`
     - `k2==v2`
     - `k3==${SpEL}`
@@ -164,7 +164,7 @@
   - `--------------------------------`
   - `alarm_type`
   - `alarm_status`
-  - `alarrm_context`
+  - `alarm_context`
 
 - `riff_schedule_job_trigger_stat`
   - `id`
@@ -205,6 +205,9 @@
     - `role_id`
   - `role_code`
   - `role_name`
+  - `principal_id`
+    - `Default == 0`
+  - `remark`
 - `riff_system_user_role_link`
   - `id`
   - `user_id`
@@ -213,7 +216,7 @@
   - `id`
   - `role_id`
   - `app_id`
-    - `${riff_scheduled_app.id}`
+    - `${riff_schedule_app.id}`
 
 ### `1.3.Authentication`
 
@@ -221,37 +224,38 @@
   - `id`
     - `authentication`
   - `app_id`
-    - `${riff_scheduled_app.id}`
+    - `${riff_schedule_app.id}`
   - `authentication_type`
     - `web|dashboard`
       - `username`
       - `password`
       - `1`
-    - `app|thirdparty`
+    - `app|oauthclient`
       - `access_key`
       - `access_secret`
       - `2`
   - `authentication_key`
     - `${riff_system_user.username}`
-    - `${riff_scheduled_app.access_key}`
+    - `${riff_schedule_app.access_key}`
   - `token_type`
-    - `bearer`
+    - `Bearer`
       - `web`
         - `dashboard`
-    - `distributed`
-      - `${riff_scheduled_app}`
+    - `OAuth`
+      - `${riff_schedule_app}`
+        - `${riff_schedule_client}`
   - `token`
-  - `token_expire_in`
+  - `token_expires_in`
     - `3600 * 24`
     - `${long-time}`
       - `100 YEAR || 1970-01-01`
   - `token_expire_time`
     - `datetime`
-    - `${now} + ${token_expire_in} * 1000`
+    - `${now} + ${token_expires_in} * 1000`
     - `${long-time}`
       - `100 YEAR || 1970-01-01`
   - `refresh_token`
-  - `refresh_token_expire_in`
+  - `refresh_token_expires_in`
     - `3600 * 24 * 7`
     - `${long-time}`
       - `100 YEAR || 1970-01-01`
