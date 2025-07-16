@@ -147,6 +147,17 @@
                 <version>${project.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>io.github.photowey</groupId>
+                <artifactId>riff-infras-exception-advice</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.photowey</groupId>
+                <artifactId>riff-infras-exception-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
             <!-- Middleware Database -->
             <!--region Database -->
             <dependency>

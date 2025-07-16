@@ -26,7 +26,7 @@ https://central.sonatype.com/artifact/io.jsonwebtoken/jjwt
 #### `2.1.2.Schedule app`
 
 - `Scope`
-  - `thirdparty`
+  - `oauth`
     - `schedule app`
 
 ### 2.2.`Type`
@@ -38,7 +38,7 @@ https://central.sonatype.com/artifact/io.jsonwebtoken/jjwt
 
 
 
-#### 2.2.2.`Thirdparty`
+#### 2.2.2.`OAuth`
 
 - `AccessKey`
 - `AccessSecret`
@@ -60,7 +60,7 @@ https://central.sonatype.com/artifact/io.jsonwebtoken/jjwt
 {
   "username":"admin",
   "password": "itsasecret",
-  "remenberMe": true,
+  "rememberMe": true,
   "captchaId":"63222855815719188245190111831234", 
   "captcha" :"9527" 
 }
@@ -82,7 +82,7 @@ https://central.sonatype.com/artifact/io.jsonwebtoken/jjwt
 
 
 
-##### 2.2.1.2.`thirdparty`
+##### 2.2.1.2.`OAuth`
 
 ```json
 {
@@ -138,18 +138,18 @@ https://jwt.io
 }
 ```
 
-##### 2.2.2.2.`Thridparty`
+##### 2.2.2.2.`OAuth`
 
 ```json
 {
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.KMUFsIDTnFmyG3nMiGM6H9FNFUROf3wh7SmqJp-QV30",
-  "type": "Thirdparty",
+  "type": "OAuth",
   "issuedAt": "1752563363000",
   "expiresIn ": "604800",
   "refreshToken": {
     "enabled": 1,
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.KMUFsIDTnFmyG3nMiGM6H9FNFUROf3wh7SmqJp-QV30",
-    "type": "Thirdparty",
+    "type": "OAuth",
     "issuedAt": "1752563363000",
     "expiresIn ": "2592000"
   }

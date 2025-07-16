@@ -32,7 +32,8 @@ public enum ApiDictionary {
      */
     public enum Status {
 
-        // API
+        // STATUS
+
         API_OK("OK", "200000"),
         API_FAILED("FAILED", "500000"),
 

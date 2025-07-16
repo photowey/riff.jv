@@ -11,16 +11,14 @@
         <relativePath>../../base/riff-parent/pom.xml</relativePath>
     </parent>
 
-    <artifactId>riff-infras-authentication</artifactId>
-    <name>riff-infras-authentication</name>
-    <description>infras authentication module for riff.jv</description>
+    <artifactId>riff-infras-exception</artifactId>
+    <name>riff-infras-exception</name>
+    <description>infras exception module for riff.jv</description>
     <packaging>pom</packaging>
 
     <modules>
-        <module>riff-infras-authentication-api</module>
-        <module>riff-infras-authentication-core</module>
-        <module>riff-infras-authentication-jjwt</module>
-        <module>riff-infras-authentication-property</module>
+        <module>riff-infras-exception-advice</module>
+        <module>riff-infras-exception-core</module>
     </modules>
 
     <properties>
@@ -33,22 +31,12 @@
         <dependencies>
             <dependency>
                 <groupId>io.github.photowey</groupId>
-                <artifactId>riff-infras-authentication-api</artifactId>
+                <artifactId>riff-infras-exception-advice</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.photowey</groupId>
-                <artifactId>riff-infras-authentication-core</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.github.photowey</groupId>
-                <artifactId>riff-infras-authentication-jjwt</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.github.photowey</groupId>
-                <artifactId>riff-infras-authentication-property</artifactId>
+                <artifactId>riff-infras-exception-core</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>
