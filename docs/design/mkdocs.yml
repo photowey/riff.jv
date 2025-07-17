@@ -133,7 +133,6 @@ extra:
 
 # ----------------------------------------------------------------
 
-
 nav:
   - Home: index.md
   - License: license.md
@@ -142,3 +141,6 @@ nav:
     - Tables: database/tables.md
   - Authentication:
     - authentication/index.md
+  - Job:
+      - job/index.md
+      - Scheduler: job/scheduler.md

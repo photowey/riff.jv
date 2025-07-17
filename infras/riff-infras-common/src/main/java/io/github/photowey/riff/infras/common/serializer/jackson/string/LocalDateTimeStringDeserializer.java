@@ -48,7 +48,7 @@ public class LocalDateTimeStringDeserializer extends JsonDeserializer<LocalDateT
             }
 
             // yyyy-MM-dd
-            return LocalDateTime.parse(datetime, Datetimes.shortDateFormatter());
+            return LocalDateTime.parse(datetime, Datetimes.dateFormatter());
         }
 
         return null;
