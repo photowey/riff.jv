@@ -41,7 +41,7 @@ public final class Collections {
     // ----------------------------------------------------------------
 
     public static <T> boolean isEmpty(Collection<T> haystack) {
-        return null == haystack || haystack.isEmpty();
+        return Objects.isNull(haystack) || haystack.isEmpty();
     }
 
     public static <T> boolean isNotEmpty(Collection<T> haystack) {

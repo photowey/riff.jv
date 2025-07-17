@@ -14,22 +14,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.photowey.riff.infras.ioc.context.strategy;
+package io.github.photowey.riff.infras.ioc.context.strategy.string;
 
-import org.springframework.core.Ordered;
+import io.github.photowey.riff.infras.ioc.context.getter.BeanFactoryGetter;
+import org.springframework.beans.factory.BeanFactoryAware;
+
+// @formatter:off
 
 /**
- * {@code OrderedStrategySupporter}.
+ * {@code StringBeanFactoryStrategySupporter}.
  *
- * @param <T> The strategy type.
  * @author photowey
  * @version 1.0.0
- * @since 2025/07/16
+ * @since 2025/07/17
  */
-public interface OrderedStrategySupporter<T> extends StrategySupporter<T>, Ordered {
+public interface StringBeanFactoryStrategySupporter
+    extends StringStrategySupporter, BeanFactoryAware, BeanFactoryGetter { }
 
-    @Override
-    default int getOrder() {
-        return 0;
-    }
-}
+// @formatter:on
+

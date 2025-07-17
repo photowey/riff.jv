@@ -25,6 +25,9 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+
 import io.github.photowey.riff.infras.common.constant.datetime.DatePatternConstants;
 import io.github.photowey.riff.infras.common.util.Objects;
 import io.github.photowey.riff.infras.common.util.Strings;
@@ -38,7 +41,8 @@ import io.github.photowey.riff.infras.common.util.Strings;
  */
 public interface LocalDateTimes {
 
-    static String format(LocalDateTime dateTime) {
+    @Nullable
+    static String format(@Nullable LocalDateTime dateTime) {
         if (Objects.isNull(dateTime)) {
             return null;
         }
@@ -46,7 +50,8 @@ public interface LocalDateTimes {
         return format(dateTime, DatePatternConstants.yyyy_MM_dd_HH_mm_ss);
     }
 
-    static String format(LocalDateTime dateTime, String pattern) {
+    @Nullable
+    static String format(@Nullable LocalDateTime dateTime, @Nonnull String pattern) {
         if (Objects.isNull(dateTime)) {
             return null;
         }
@@ -55,7 +60,8 @@ public interface LocalDateTimes {
         return formatter.format(dateTime);
     }
 
-    static String format(LocalDate dateTime) {
+    @Nullable
+    static String format(@Nullable LocalDate dateTime) {
         if (Objects.isNull(dateTime)) {
             return null;
         }
@@ -63,7 +69,8 @@ public interface LocalDateTimes {
         return format(dateTime, DatePatternConstants.yyyy_MM_dd);
     }
 
-    static String format(LocalDate dateTime, String pattern) {
+    @Nullable
+    static String format(@Nullable LocalDate dateTime, @Nonnull String pattern) {
         if (Objects.isNull(dateTime)) {
             return null;
         }
@@ -74,7 +81,8 @@ public interface LocalDateTimes {
 
     // ----------------------------------------------------------------
 
-    static String format(LocalTime dateTime) {
+    @Nullable
+    static String format(@Nullable LocalTime dateTime) {
         if (Objects.isNull(dateTime)) {
             return null;
         }
@@ -82,7 +90,8 @@ public interface LocalDateTimes {
         return format(dateTime, DatePatternConstants.HH_mm_ss);
     }
 
-    static String format(LocalTime dateTime, String pattern) {
+    @Nullable
+    static String format(@Nullable LocalTime dateTime, @Nonnull String pattern) {
         if (Objects.isNull(dateTime)) {
             return null;
         }
@@ -91,7 +100,8 @@ public interface LocalDateTimes {
         return formatter.format(dateTime);
     }
 
-    static String format(Date dateTime) {
+    @Nullable
+    static String format(@Nullable Date dateTime) {
         if (Objects.isNull(dateTime)) {
             return null;
         }
@@ -99,7 +109,8 @@ public interface LocalDateTimes {
         return format(dateTime, DatePatternConstants.yyyy_MM_dd_HH_mm_ss);
     }
 
-    static String format(Date dateTime, String pattern) {
+    @Nullable
+    static String format(@Nullable Date dateTime, @Nonnull String pattern) {
         if (Objects.isNull(dateTime)) {
             return null;
         }
@@ -109,7 +120,8 @@ public interface LocalDateTimes {
 
     // ----------------------------------------------------------------
 
-    static Date toDate(LocalDate date) {
+    @Nullable
+    static Date toDate(@Nullable LocalDate date) {
         if (Objects.isNull(date)) {
             return null;
         }
@@ -117,7 +129,8 @@ public interface LocalDateTimes {
         return Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
 
-    static Date toDate(LocalDateTime dateTime) {
+    @Nullable
+    static Date toDate(@Nullable LocalDateTime dateTime) {
         if (Objects.isNull(dateTime)) {
             return null;
         }
@@ -127,7 +140,8 @@ public interface LocalDateTimes {
 
     // ----------------------------------------------------------------
 
-    static LocalDate toLocalDate(Date date) {
+    @Nullable
+    static LocalDate toLocalDate(@Nullable Date date) {
         if (Objects.isNull(date)) {
             return null;
         }
@@ -137,7 +151,8 @@ public interface LocalDateTimes {
 
     // ----------------------------------------------------------------
 
-    static LocalDateTime toLocalDateTime(Date date) {
+    @Nullable
+    static LocalDateTime toLocalDateTime(@Nullable Date date) {
         if (Objects.isNull(date)) {
             return null;
         }
@@ -145,7 +160,8 @@ public interface LocalDateTimes {
         return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
     }
 
-    static LocalDateTime toLocalDateTime(Long timestamp) {
+    @Nullable
+    static LocalDateTime toLocalDateTime(@Nullable Long timestamp) {
         if (Objects.isNull(timestamp)) {
             return null;
         }
@@ -155,7 +171,8 @@ public interface LocalDateTimes {
 
     // ----------------------------------------------------------------
 
-    static LocalDateTime toLocalDateTime(String dateTime) {
+    @Nullable
+    static LocalDateTime toLocalDateTime(@Nullable String dateTime) {
         if (Objects.isNull(dateTime)) {
             return null;
         }
@@ -163,7 +180,8 @@ public interface LocalDateTimes {
         return LocalDateTime.parse(dateTime, Datetimes.formatter());
     }
 
-    static LocalDateTime toLocalDateTime(String dateTime, String pattern) {
+    @Nullable
+    static LocalDateTime toLocalDateTime(@Nullable String dateTime, @Nonnull String pattern) {
         if (Strings.isEmpty(dateTime)) {
             return null;
         }
@@ -171,7 +189,8 @@ public interface LocalDateTimes {
         return LocalDateTime.parse(dateTime, Datetimes.formatter(pattern));
     }
 
-    static LocalDateTime toLocalDateTime(ZonedDateTime from) {
+    @Nullable
+    static LocalDateTime toLocalDateTime(@Nullable ZonedDateTime from) {
         if (Objects.isNull(from)) {
             return null;
         }
@@ -181,7 +200,8 @@ public interface LocalDateTimes {
 
     // ----------------------------------------------------------------
 
-    static Long toTimestamp(Date date) {
+    @Nullable
+    static Long toTimestamp(@Nullable Date date) {
         if (Objects.isNull(date)) {
             return null;
         }
@@ -189,7 +209,8 @@ public interface LocalDateTimes {
         return date.getTime();
     }
 
-    static Long toTimestamp(LocalDateTime dateTime) {
+    @Nullable
+    static Long toTimestamp(@Nullable LocalDateTime dateTime) {
         if (Objects.isNull(dateTime)) {
             return null;
         }
@@ -199,7 +220,8 @@ public interface LocalDateTimes {
 
     // ----------------------------------------------------------------
 
-    static ZonedDateTime toZoned(LocalDateTime dateTime) {
+    @Nullable
+    static ZonedDateTime toZoned(@Nullable LocalDateTime dateTime) {
         if (Objects.isNull(dateTime)) {
             return null;
         }
@@ -207,7 +229,8 @@ public interface LocalDateTimes {
         return toZoned(dateTime, ZoneId.systemDefault());
     }
 
-    static ZonedDateTime toZoned(LocalDateTime dateTime, ZoneId zoneId) {
+    @Nullable
+    static ZonedDateTime toZoned(@Nullable LocalDateTime dateTime, ZoneId zoneId) {
         if (Objects.isNull(dateTime)) {
             return null;
         }
@@ -217,7 +240,8 @@ public interface LocalDateTimes {
 
     // ----------------------------------------------------------------
 
-    static LocalDateTime fromZoned(ZonedDateTime dateTime) {
+    @Nullable
+    static LocalDateTime fromZoned(@Nullable ZonedDateTime dateTime) {
         if (Objects.isNull(dateTime)) {
             return null;
         }

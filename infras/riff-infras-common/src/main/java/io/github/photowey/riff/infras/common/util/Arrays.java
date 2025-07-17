@@ -41,11 +41,11 @@ public final class Arrays {
     // ----------------------------------------------------------------
 
     public static <T> boolean isEmpty(T[] elements) {
-        return null == elements || elements.length == 0;
+        return Objects.isNull(elements) || elements.length == 0;
     }
 
     public static boolean isEmpty(byte[] elements) {
-        return null == elements || elements.length == 0;
+        return Objects.isNull(elements) || elements.length == 0;
     }
 
     public static <T> boolean isNotEmpty(T[] elements) {

@@ -20,6 +20,8 @@ import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.function.Supplier;
 
+import jakarta.annotation.Nullable;
+
 import io.github.photowey.riff.infras.common.formatter.StringFormatter;
 import io.github.photowey.riff.infras.common.thrower.AssertionErrors;
 
@@ -38,12 +40,12 @@ public final class Objects {
 
     // ----------------------------------------------------------------
 
-    public static <T> T defaultIfNull(T target, T defaultValue) {
-        return target != null ? target : defaultValue;
+    public static <T> T defaultIfNull(@Nullable T target, @Nullable T defaultValue) {
+        return isNotNull(target) ? target : defaultValue;
     }
 
-    public static <T> T tryDefaultIfNull(T target, Supplier<T> fx) {
-        if (target != null) {
+    public static <T> T tryDefaultIfNull(@Nullable T target, Supplier<T> fx) {
+        if (isNotNull(target)) {
             return target;
         }
 
@@ -52,11 +54,11 @@ public final class Objects {
 
     // ----------------------------------------------------------------
 
-    public static <T extends Collection<E>, E> T defaultIfEmpty(T target, T defaultValue) {
+    public static <T extends Collection<E>, E> T defaultIfEmpty(@Nullable T target, @Nullable T defaultValue) {
         return Collections.isEmpty(target) ? defaultValue : target;
     }
 
-    public static <T extends Collection<E>, E> T tryDefaultIfEmpty(T target, Supplier<T> fx) {
+    public static <T extends Collection<E>, E> T tryDefaultIfEmpty(@Nullable T target, Supplier<T> fx) {
         if (Collections.isEmpty(target)) {
             return fx.get();
         }

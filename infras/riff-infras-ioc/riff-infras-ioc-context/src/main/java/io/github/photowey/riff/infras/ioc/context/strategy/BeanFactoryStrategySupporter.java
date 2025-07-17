@@ -19,13 +19,17 @@ package io.github.photowey.riff.infras.ioc.context.strategy;
 import io.github.photowey.riff.infras.ioc.context.getter.BeanFactoryGetter;
 import org.springframework.beans.factory.BeanFactoryAware;
 
+// @formatter:off
+
 /**
  * {@code BeanFactoryStrategySupporter}.
  *
+ * @param <T> The strategy type.
  * @author photowey
  * @version 1.0.0
  * @since 2025/07/16
  */
-public interface BeanFactoryStrategySupporter
-    extends StrategySupporter, BeanFactoryAware, BeanFactoryGetter {
-}
+public interface BeanFactoryStrategySupporter<T>
+    extends StrategySupporter<T>, BeanFactoryAware, BeanFactoryGetter { }
+
+// @formatter:on

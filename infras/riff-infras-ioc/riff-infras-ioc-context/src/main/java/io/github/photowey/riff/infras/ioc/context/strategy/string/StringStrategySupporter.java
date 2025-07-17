@@ -14,22 +14,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.photowey.riff.infras.ioc.context.strategy;
+package io.github.photowey.riff.infras.ioc.context.strategy.string;
 
-import org.springframework.core.Ordered;
+import io.github.photowey.riff.infras.ioc.context.strategy.StrategySupporter;
 
 /**
- * {@code OrderedStrategySupporter}.
+ * {@code StringStrategySupporter}.
  *
- * @param <T> The strategy type.
  * @author photowey
  * @version 1.0.0
- * @since 2025/07/16
+ * @since 2025/07/17
  */
-public interface OrderedStrategySupporter<T> extends StrategySupporter<T>, Ordered {
+public interface StringStrategySupporter extends StrategySupporter<String> {
 
+    /**
+     * Supports or not.
+     *
+     * @param strategy the strategy of string type.
+     * @return {@code boolean}.
+     */
     @Override
-    default int getOrder() {
-        return 0;
-    }
+    boolean supports(String strategy);
 }
+

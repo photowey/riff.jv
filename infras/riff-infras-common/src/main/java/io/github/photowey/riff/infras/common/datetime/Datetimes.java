@@ -19,6 +19,8 @@ package io.github.photowey.riff.infras.common.datetime;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import jakarta.annotation.Nonnull;
+
 import io.github.photowey.riff.infras.common.constant.datetime.DatePatternConstants;
 
 /**
@@ -36,7 +38,7 @@ public interface Datetimes {
 
     // ----------------------------------------------------------------
 
-    static DateTimeFormatter formatter(String pattern) {
+    static DateTimeFormatter formatter(@Nonnull String pattern) {
         return DateTimeFormatter.ofPattern(pattern);
     }
 
@@ -58,7 +60,7 @@ public interface Datetimes {
         return LocalDateTime.now();
     }
 
-    static String now(String pattern) {
+    static String now(@Nonnull String pattern) {
         LocalDateTime now = LocalDateTime.now();
 
         return formatter(pattern).format(now);
@@ -70,7 +72,7 @@ public interface Datetimes {
         return today(DatePatternConstants.yyMMdd);
     }
 
-    static String today(String pattern) {
+    static String today(@Nonnull String pattern) {
         LocalDateTime now = LocalDateTime.now();
 
         return LocalDateTimes.format(now, pattern);
@@ -78,7 +80,7 @@ public interface Datetimes {
 
     // ----------------------------------------------------------------
 
-    static boolean betweenNow(LocalDateTime start, LocalDateTime end) {
+    static boolean betweenNow(@Nonnull LocalDateTime start, @Nonnull LocalDateTime end) {
         LocalDateTime now = now();
         return start.isBefore(now) && end.isAfter(now);
     }

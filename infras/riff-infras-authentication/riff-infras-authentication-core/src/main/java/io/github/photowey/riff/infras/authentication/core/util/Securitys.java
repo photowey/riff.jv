@@ -16,6 +16,8 @@
  */
 package io.github.photowey.riff.infras.authentication.core.util;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import jakarta.servlet.http.HttpServletRequest;
 
 import io.github.photowey.riff.infras.authentication.core.constant.AuthorityConstants;
@@ -26,7 +28,6 @@ import io.github.photowey.riff.infras.common.thrower.AssertionErrors;
 import io.github.photowey.riff.infras.common.util.Objects;
 import io.github.photowey.riff.infras.common.util.Strings;
 import io.github.photowey.riff.infras.exception.core.enums.ExceptionStatus;
-import org.springframework.lang.Nullable;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -56,7 +57,7 @@ public final class Securitys {
         );
     }
 
-    public static String parseAuthorizationHeader(String header, String prefix) {
+    public static String parseAuthorizationHeader(@Nonnull String header, @Nonnull String prefix) {
         HttpServletRequest request = Requests.getRequest();
         String authorization = Objects.requireNonNull(request).getHeader(header);
         if (!StringUtils.hasText(authorization)) {
@@ -71,7 +72,7 @@ public final class Securitys {
         return null;
     }
 
-    public static String parseAuthorizationHeader(String header) {
+    public static String parseAuthorizationHeader(@Nonnull String header) {
         HttpServletRequest request = Requests.getRequest();
         String authorization = Objects.requireNonNull(request).getHeader(header);
         if (Strings.isEmpty(authorization)) {
@@ -83,7 +84,7 @@ public final class Securitys {
 
     public static Authentication tryAcuireAuthentication() {
         SecurityContext context = SecurityContextHolder.getContext();
-        if (context == null) {
+        if (Objects.isNull(context)) {
             return null;
         }
 
@@ -93,15 +94,15 @@ public final class Securitys {
     @Nullable
     public static LoginUser tryAcquireLoginUser() {
         Authentication authentication = tryAcuireAuthentication();
-        if (authentication == null) {
+        if (Objects.isNull(authentication)) {
             return null;
         }
 
         return tryAcquireLoginUser(authentication);
     }
 
-    public static LoginUser tryAcquireLoginUser(Authentication authentication) {
-        if (authentication == null) {
+    public static LoginUser tryAcquireLoginUser(@Nullable Authentication authentication) {
+        if (Objects.isNull(authentication)) {
             return null;
         }
 
@@ -112,9 +113,9 @@ public final class Securitys {
 
     public static LoginUser tryAcquireMustLoginUser() {
         Authentication authentication = tryAcuireAuthentication();
-        if (authentication == null) {
+        if (Objects.isNull(authentication)) {
             LoginUser loginUser = LoginUserHolder.get();
-            if (loginUser == null) {
+            if (Objects.isNull(loginUser)) {
                 throw new SecurityAuthenticationException(ExceptionStatus.UNAUTHORIZED);
             }
 
@@ -126,28 +127,28 @@ public final class Securitys {
 
     public static Long tryAcquireUserId() {
         LoginUser loginUser = tryAcquireLoginUser();
-        return loginUser != null ? loginUser.getUserId() : null;
+        return Objects.isNotNull(loginUser) ? loginUser.getUserId() : null;
     }
 
-    public static void authenticated(LoginUser loginUser) {
+    public static void authenticated(@Nonnull LoginUser loginUser) {
         Authentication authentication = buildAuthentication(loginUser);
         authenticated(authentication);
     }
 
-    public static void authenticated(LoginUser loginUser, Object credentials) {
+    public static void authenticated(@Nonnull LoginUser loginUser, @Nullable Object credentials) {
         Authentication authentication = buildAuthentication(loginUser, credentials);
         authenticated(authentication);
     }
 
-    public static void authenticated(Authentication authentication) {
+    public static void authenticated(@Nonnull Authentication authentication) {
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 
-    private static Authentication buildAuthentication(LoginUser loginUser) {
+    private static Authentication buildAuthentication(@Nonnull LoginUser loginUser) {
         return buildAuthentication(loginUser, loginUser.getToken());
     }
 
-    private static Authentication buildAuthentication(LoginUser loginUser, Object credentials) {
+    private static Authentication buildAuthentication(@Nonnull LoginUser loginUser, @Nullable Object credentials) {
         HttpServletRequest request = Requests.getRequest();
         UsernamePasswordAuthenticationToken authenticationToken =
             new UsernamePasswordAuthenticationToken(loginUser, credentials,

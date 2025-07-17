@@ -20,6 +20,9 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -27,6 +30,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import io.github.photowey.riff.infras.common.exception.Exceptions;
+import io.github.photowey.riff.infras.common.util.Objects;
 
 /**
  * {@code JSON}.
@@ -44,7 +48,8 @@ public final class JSON {
 
     // ----------------------------------------------------------------
 
-    public static void json(ObjectMapper json) {
+    public static void json(@Nonnull ObjectMapper json) {
+        checkNPE(json);
         JSON.json = json;
     }
 
@@ -53,7 +58,8 @@ public final class JSON {
         return json;
     }
 
-    public static void xml(ObjectMapper xml) {
+    public static void xml(@Nonnull ObjectMapper xml) {
+        checkNPE(xml);
         JSON.xml = xml;
     }
 
@@ -62,7 +68,8 @@ public final class JSON {
         return xml;
     }
 
-    public static void underline(ObjectMapper underline) {
+    public static void underline(@Nonnull ObjectMapper underline) {
+        checkNPE(underline);
         JSON.underline = underline;
     }
 
@@ -73,7 +80,7 @@ public final class JSON {
 
     // ----------------------------------------------------------------
 
-    public static String toPrettyString(ObjectMapper objectMapper, String json) {
+    public static String toPrettyString(@Nonnull ObjectMapper objectMapper, @Nonnull String json) {
         checkNPE(objectMapper);
         try {
             // @formatter:off
@@ -86,11 +93,11 @@ public final class JSON {
         }
     }
 
-    public static String toPrettyString(String json) {
+    public static String toPrettyString(@Nonnull String json) {
         return toPrettyString(json(), json);
     }
 
-    public static String toPrettyXMLString(String xml) {
+    public static String toPrettyXMLString(@Nonnull String xml) {
         return toPrettyString(xml(), xml);
     }
 
@@ -104,8 +111,10 @@ public final class JSON {
 
     // ----------------------------------------------------------------
 
-    @SuppressWarnings("all")
-    public static <T> String toJSONString(T body) {
+    public static <T> String toJSONString(@Nullable T body) {
+        if (Objects.isNull(body)) {
+            return null;
+        }
         try {
             return toJSONString(json(), body);
         } catch (Exception e) {
@@ -113,8 +122,11 @@ public final class JSON {
         }
     }
 
-    @SuppressWarnings("all")
-    public static <T> String toJSONString(ObjectMapper objectMapper, T body) {
+    public static <T> String toJSONString(@Nonnull ObjectMapper objectMapper, T body) {
+        if (Objects.isNull(body)) {
+            return null;
+        }
+
         checkNPE(objectMapper);
         try {
             return objectMapper.writeValueAsString(body);
@@ -125,7 +137,7 @@ public final class JSON {
 
     // ----------------------------------------------------------------
 
-    public static <K, V> Map<K, V> toMap(String json) {
+    public static <K, V> Map<K, V> toMap(@Nonnull String json) {
         try {
             // @formatter:off
             return json().readValue(json, new TypeReference<Map<K, V>>() { });
@@ -135,7 +147,7 @@ public final class JSON {
         }
     }
 
-    public static <K, V> Map<K, V> toMap(ObjectMapper objectMapper, String kv) {
+    public static <K, V> Map<K, V> toMap(@Nonnull ObjectMapper objectMapper, @Nonnull String kv) {
         checkNPE(objectMapper);
         try {
             // @formatter:off
@@ -148,15 +160,15 @@ public final class JSON {
 
     // ----------------------------------------------------------------
 
-    public static <T> T parseObject(String json, Class<T> clazz) {
+    public static <T> T parseObject(@Nonnull String json, @Nonnull Class<T> clazz) {
         return parseObject(json(), json, clazz);
     }
 
-    public static <T> T parseObject(String json, TypeReference<T> clazz) {
+    public static <T> T parseObject(@Nonnull String json, @Nonnull TypeReference<T> clazz) {
         return parseObject(json(), json, clazz);
     }
 
-    public static <T> T parseObject(ObjectMapper objectMapper, String json, Class<T> clazz) {
+    public static <T> T parseObject(@Nonnull ObjectMapper objectMapper, @Nonnull String json, @Nonnull Class<T> clazz) {
         checkNPE(objectMapper);
         try {
             return objectMapper.readValue(json, clazz);
@@ -166,8 +178,8 @@ public final class JSON {
     }
 
     public static <T> T parseObject(
-        ObjectMapper objectMapper,
-        String json,
+        @Nonnull ObjectMapper objectMapper,
+        @Nonnull String json,
         TypeReference<T> clazz) {
         checkNPE(objectMapper);
         try {
@@ -179,15 +191,16 @@ public final class JSON {
 
     // ----------------------------------------------------------------
 
-    public static <T> T parseObject(byte[] json, Class<T> clazz) {
+    public static <T> T parseObject(@Nonnull byte[] json, @Nonnull Class<T> clazz) {
         return parseObject(json(), json, clazz);
     }
 
-    public static <T> T parseObject(byte[] json, TypeReference<T> clazz) {
+    public static <T> T parseObject(@Nonnull byte[] json, @Nonnull TypeReference<T> clazz) {
         return parseObject(json(), json, clazz);
     }
 
-    public static <T> T parseObject(ObjectMapper objectMapper, byte[] json, Class<T> clazz) {
+    public static <T> T parseObject(
+        @Nonnull ObjectMapper objectMapper, @Nonnull byte[] json, @Nonnull Class<T> clazz) {
         checkNPE(objectMapper);
         try {
             return objectMapper.readValue(json, clazz);
@@ -197,8 +210,8 @@ public final class JSON {
     }
 
     public static <T> T parseObject(
-        ObjectMapper objectMapper,
-        byte[] json,
+        @Nonnull ObjectMapper objectMapper,
+        @Nonnull byte[] json,
         TypeReference<T> clazz) {
         checkNPE(objectMapper);
         try {
@@ -210,15 +223,16 @@ public final class JSON {
 
     // ----------------------------------------------------------------
 
-    public static <T> T parseObject(InputStream json, Class<T> clazz) {
+    public static <T> T parseObject(@Nonnull InputStream json, @Nonnull Class<T> clazz) {
         return parseObject(json(), json, clazz);
     }
 
-    public static <T> T parseObject(InputStream json, TypeReference<T> clazz) {
+    public static <T> T parseObject(@Nonnull InputStream json, @Nonnull TypeReference<T> clazz) {
         return parseObject(json(), json, clazz);
     }
 
-    public static <T> T parseObject(ObjectMapper objectMapper, InputStream json, Class<T> clazz) {
+    public static <T> T parseObject(
+        @Nonnull ObjectMapper objectMapper, @Nonnull InputStream json, @Nonnull Class<T> clazz) {
         checkNPE(objectMapper);
         try {
             return objectMapper.readValue(json, clazz);
@@ -229,7 +243,7 @@ public final class JSON {
 
     public static <T> T parseObject(
         ObjectMapper objectMapper,
-        InputStream json,
+        @Nonnull InputStream json,
         TypeReference<T> clazz) {
         checkNPE(objectMapper);
         try {
@@ -241,26 +255,27 @@ public final class JSON {
 
     // ----------------------------------------------------------------
 
-    public static <T> List<T> parseArray(String json, Class<T> clazz) {
+    public static <T> List<T> parseArray(@Nonnull String json, @Nonnull Class<T> clazz) {
         return parseArray(json(), json, clazz);
     }
 
-    public static <T> List<T> parseArray(ObjectMapper objectMapper, String json, Class<T> clazz) {
-        return parseList(objectMapper, json, clazz);
-    }
-
-    public static <T> List<T> parseArray(ObjectMapper objectMapper, byte[] json, Class<T> clazz) {
+    public static <T> List<T> parseArray(
+        @Nonnull ObjectMapper objectMapper, @Nonnull String json, @Nonnull Class<T> clazz) {
         return parseList(objectMapper, json, clazz);
     }
 
     public static <T> List<T> parseArray(
-        ObjectMapper objectMapper, InputStream json, Class<T> clazz) {
+        @Nonnull ObjectMapper objectMapper, @Nonnull byte[] json, @Nonnull Class<T> clazz) {
+        return parseList(objectMapper, json, clazz);
+    }
+
+    public static <T> List<T> parseArray(
+        ObjectMapper objectMapper, @Nonnull InputStream json, @Nonnull Class<T> clazz) {
         return parseList(objectMapper, json, clazz);
     }
 
     // ----------------------------------------------------------------
 
-    @SuppressWarnings("all")
     public static <T> String toXMLString(T body) {
         try {
             return xml().writeValueAsString(body);
@@ -269,8 +284,7 @@ public final class JSON {
         }
     }
 
-    @SuppressWarnings("all")
-    public static <T> T parseXMLObject(String xml, Class<T> clazz) {
+    public static <T> T parseXMLObject(@Nonnull String xml, @Nonnull Class<T> clazz) {
         try {
             return xml().readValue(xml, clazz);
         } catch (Exception e) {
@@ -278,46 +292,7 @@ public final class JSON {
         }
     }
 
-    @SuppressWarnings("all")
-    public static <T> T parseXMLObject(String xml, TypeReference<T> clazz) {
-        try {
-            return xml().readValue(xml, clazz);
-        } catch (Exception e) {
-            return Exceptions.throwUnchecked(e);
-        }
-    }
-
-    // ----------------------------------------------------------------
-
-    @SuppressWarnings("all")
-    public static <T> T parseXMLObject(byte[] xml, Class<T> clazz) {
-        try {
-            return xml().readValue(xml, clazz);
-        } catch (Exception e) {
-            return Exceptions.throwUnchecked(e);
-        }
-    }
-
-    @SuppressWarnings("all")
-    public static <T> T parseXMLObject(byte[] xml, TypeReference<T> clazz) {
-        try {
-            return xml().readValue(xml, clazz);
-        } catch (Exception e) {
-            return Exceptions.throwUnchecked(e);
-        }
-    }
-
-    @SuppressWarnings("all")
-    public static <T> T parseXMLObject(InputStream xml, Class<T> clazz) {
-        try {
-            return xml().readValue(xml, clazz);
-        } catch (Exception e) {
-            return Exceptions.throwUnchecked(e);
-        }
-    }
-
-    @SuppressWarnings("all")
-    public static <T> T parseXMLObject(InputStream xml, TypeReference<T> clazz) {
+    public static <T> T parseXMLObject(@Nonnull String xml, @Nonnull TypeReference<T> clazz) {
         try {
             return xml().readValue(xml, clazz);
         } catch (Exception e) {
@@ -327,22 +302,54 @@ public final class JSON {
 
     // ----------------------------------------------------------------
 
-    @SuppressWarnings("all")
-    public static <T> List<T> parseXMLArray(String xml, Class<T> clazz) {
+    public static <T> T parseXMLObject(@Nonnull byte[] xml, @Nonnull Class<T> clazz) {
+        try {
+            return xml().readValue(xml, clazz);
+        } catch (Exception e) {
+            return Exceptions.throwUnchecked(e);
+        }
+    }
+
+    public static <T> T parseXMLObject(@Nonnull byte[] xml, @Nonnull TypeReference<T> clazz) {
+        try {
+            return xml().readValue(xml, clazz);
+        } catch (Exception e) {
+            return Exceptions.throwUnchecked(e);
+        }
+    }
+
+    public static <T> T parseXMLObject(@Nonnull InputStream xml, @Nonnull Class<T> clazz) {
+        try {
+            return xml().readValue(xml, clazz);
+        } catch (Exception e) {
+            return Exceptions.throwUnchecked(e);
+        }
+    }
+
+    public static <T> T parseXMLObject(@Nonnull InputStream xml, @Nonnull TypeReference<T> clazz) {
+        try {
+            return xml().readValue(xml, clazz);
+        } catch (Exception e) {
+            return Exceptions.throwUnchecked(e);
+        }
+    }
+
+    // ----------------------------------------------------------------
+
+    public static <T> List<T> parseXMLArray(@Nonnull String xml, @Nonnull Class<T> clazz) {
         return parseXMLArray(xml(), xml, clazz);
     }
 
-    @SuppressWarnings("all")
     public static <T> List<T> parseXMLArray(
-        ObjectMapper xmlObjectMapper,
-        String xml,
-        Class<T> clazz) {
+        @Nonnull ObjectMapper xmlObjectMapper,
+        @Nonnull String xml,
+        @Nonnull Class<T> clazz) {
         return parseList(xmlObjectMapper, xml, clazz);
     }
 
     // ----------------------------------------------------------------
 
-    public static <T> List<T> parseList(String json, Class<T> clazz) {
+    public static <T> List<T> parseList(@Nonnull String json, @Nonnull Class<T> clazz) {
         try {
             return parseList(json(), json, clazz);
         } catch (Exception e) {
@@ -350,7 +357,7 @@ public final class JSON {
         }
     }
 
-    public static <T> List<T> parseList(byte[] json, Class<T> clazz) {
+    public static <T> List<T> parseList(@Nonnull byte[] json, @Nonnull Class<T> clazz) {
         try {
             return parseList(json(), json, clazz);
         } catch (Exception e) {
@@ -358,7 +365,7 @@ public final class JSON {
         }
     }
 
-    public static <T> List<T> parseList(InputStream json, Class<T> clazz) {
+    public static <T> List<T> parseList(InputStream json, @Nonnull Class<T> clazz) {
         try {
             return parseList(json(), json, clazz);
         } catch (Exception e) {
@@ -366,7 +373,8 @@ public final class JSON {
         }
     }
 
-    public static <T> List<T> parseList(ObjectMapper objectMapper, String json, Class<T> clazz) {
+    public static <T> List<T> parseList(
+        @Nonnull ObjectMapper objectMapper, @Nonnull String json, @Nonnull Class<T> clazz) {
         checkNPE(objectMapper);
         try {
             CollectionType collectionType = toListCollectionType(objectMapper, clazz);
@@ -376,7 +384,7 @@ public final class JSON {
         }
     }
 
-    public static <T> List<T> parseList(ObjectMapper objectMapper, byte[] json, Class<T> clazz) {
+    public static <T> List<T> parseList(ObjectMapper objectMapper, @Nonnull byte[] json, @Nonnull Class<T> clazz) {
         checkNPE(objectMapper);
         try {
             CollectionType collectionType = toListCollectionType(objectMapper, clazz);
@@ -387,9 +395,9 @@ public final class JSON {
     }
 
     public static <T> List<T> parseList(
-        ObjectMapper objectMapper,
-        InputStream json,
-        Class<T> clazz) {
+        @Nonnull ObjectMapper objectMapper,
+        @Nonnull InputStream json,
+        @Nonnull Class<T> clazz) {
         checkNPE(objectMapper);
         try {
             CollectionType collectionType = toListCollectionType(objectMapper, clazz);
@@ -405,49 +413,49 @@ public final class JSON {
         return toJSONString(underline(), body);
     }
 
-    public static <T> T parseUnderlineObject(String json, Class<T> clazz) {
+    public static <T> T parseUnderlineObject(@Nonnull String json, @Nonnull Class<T> clazz) {
         return parseObject(underline(), json, clazz);
     }
 
-    public static <T> T parseUnderlineObject(String json, TypeReference<T> clazz) {
+    public static <T> T parseUnderlineObject(@Nonnull String json, @Nonnull TypeReference<T> clazz) {
         return parseObject(underline(), json, clazz);
     }
 
-    public static <T> List<T> parseUnderlineArray(String json, Class<T> clazz) {
+    public static <T> List<T> parseUnderlineArray(@Nonnull String json, @Nonnull Class<T> clazz) {
         return parseArray(underline(), json, clazz);
     }
 
     // ----------------------------------------------------------------
 
-    public static <T> T parseUnderlineObject(byte[] json, Class<T> clazz) {
+    public static <T> T parseUnderlineObject(@Nonnull byte[] json, @Nonnull Class<T> clazz) {
         return parseObject(underline(), json, clazz);
     }
 
-    public static <T> T parseUnderlineObject(byte[] json, TypeReference<T> clazz) {
+    public static <T> T parseUnderlineObject(@Nonnull byte[] json, @Nonnull TypeReference<T> clazz) {
         return parseObject(underline(), json, clazz);
     }
 
-    public static <T> List<T> parseUnderlineArray(byte[] json, Class<T> clazz) {
+    public static <T> List<T> parseUnderlineArray(@Nonnull byte[] json, @Nonnull Class<T> clazz) {
         return parseArray(underline(), json, clazz);
     }
 
     // ----------------------------------------------------------------
 
-    public static <T> T parseUnderlineObject(InputStream json, Class<T> clazz) {
+    public static <T> T parseUnderlineObject(@Nonnull InputStream json, @Nonnull Class<T> clazz) {
         return parseObject(underline(), json, clazz);
     }
 
-    public static <T> T parseUnderlineObject(InputStream json, TypeReference<T> clazz) {
+    public static <T> T parseUnderlineObject(@Nonnull InputStream json, @Nonnull TypeReference<T> clazz) {
         return parseObject(underline(), json, clazz);
     }
 
-    public static <T> List<T> parseUnderlineArray(InputStream json, Class<T> clazz) {
+    public static <T> List<T> parseUnderlineArray(@Nonnull InputStream json, @Nonnull Class<T> clazz) {
         return parseArray(underline(), json, clazz);
     }
 
     // ----------------------------------------------------------------
 
-    public static boolean predicateIsJSONString(String json) {
+    public static boolean predicateIsJSONString(@Nonnull String json) {
         try {
             json().readTree(json);
             return true;
@@ -456,7 +464,7 @@ public final class JSON {
         }
     }
 
-    public static boolean predicateIsXMLString(String json) {
+    public static boolean predicateIsXMLString(@Nonnull String json) {
         try {
             xml().readTree(json);
             return true;
@@ -468,8 +476,8 @@ public final class JSON {
     // ----------------------------------------------------------------
 
     private static <T> CollectionType toListCollectionType(
-        ObjectMapper objectMapper,
-        Class<T> clazz) {
+        @Nonnull ObjectMapper objectMapper,
+        @Nonnull Class<T> clazz) {
         checkNPE(objectMapper);
         TypeFactory typeFactory = objectMapper.getTypeFactory();
         return typeFactory.constructCollectionType(List.class, clazz);
@@ -478,7 +486,7 @@ public final class JSON {
     // ----------------------------------------------------------------
 
     @SuppressWarnings("all")
-    private static void checkNPE(ObjectMapper objectMapper) {
+    private static void checkNPE(@Nullable ObjectMapper objectMapper) {
         Exceptions.checkNPE(objectMapper, "riff: the objectMapper can't be null.");
     }
 }

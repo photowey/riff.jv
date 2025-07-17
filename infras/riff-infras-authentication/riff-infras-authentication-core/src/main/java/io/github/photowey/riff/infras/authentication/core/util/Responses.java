@@ -19,13 +19,13 @@ package io.github.photowey.riff.infras.authentication.core.util;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import jakarta.annotation.Nullable;
 import jakarta.servlet.http.HttpServletResponse;
 
 import io.github.photowey.riff.infras.authentication.core.exception.SecurityAuthenticationException;
 import io.github.photowey.riff.infras.common.thrower.AssertionErrors;
 import io.github.photowey.riff.infras.common.util.Objects;
 import org.springframework.http.MediaType;
-import org.springframework.lang.Nullable;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 

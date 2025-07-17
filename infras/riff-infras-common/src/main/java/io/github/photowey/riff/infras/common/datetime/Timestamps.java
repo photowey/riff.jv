@@ -20,6 +20,8 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
+import jakarta.annotation.Nullable;
+
 import io.github.photowey.riff.infras.common.constant.datetime.DatetimeConstants;
 import io.github.photowey.riff.infras.common.util.Objects;
 
@@ -38,9 +40,13 @@ public interface Timestamps {
      * @param dateTime the {@link LocalDateTime} to trim
      * @return the trimmed {@link LocalDateTime}
      */
-    static LocalDateTime trimTail(LocalDateTime dateTime) {
-        Long ts = toTimestamp(dateTime);
+    @Nullable
+    static LocalDateTime trimTail(@Nullable LocalDateTime dateTime) {
+        if (Objects.isNull(dateTime)) {
+            return null;
+        }
 
+        Long ts = toTimestamp(dateTime);
         return toLocalDateTime(ts);
     }
 
@@ -50,7 +56,8 @@ public interface Timestamps {
      * @param timestamp the {@code timestamp} to trim
      * @return the trimmed {@code timestamp}
      */
-    static Long trimTail(Long timestamp) {
+    @Nullable
+    static Long trimTail(@Nullable Long timestamp) {
         if (Objects.isNull(timestamp)) {
             return null;
         }
@@ -64,7 +71,8 @@ public interface Timestamps {
      * @param dateTime the {@link LocalDateTime} to convert
      * @return the converted {@code timestamp}
      */
-    static Long toTimestamp(LocalDateTime dateTime) {
+    @Nullable
+    static Long toTimestamp(@Nullable LocalDateTime dateTime) {
         if (Objects.isNull(dateTime)) {
             return null;
         }
@@ -80,7 +88,9 @@ public interface Timestamps {
      * @param timestamp the {@code timestamp} to convert
      * @return the converted {@link LocalDateTime}
      */
-    static LocalDateTime toLocalDateTime(Long timestamp) {
+    @Nullable
+    @SuppressWarnings("all")
+    static LocalDateTime toLocalDateTime(@Nullable Long timestamp) {
         if (Objects.isNull(timestamp)) {
             return null;
         }

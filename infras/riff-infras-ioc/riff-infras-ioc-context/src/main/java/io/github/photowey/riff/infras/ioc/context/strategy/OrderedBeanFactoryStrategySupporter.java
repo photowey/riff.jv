@@ -21,11 +21,12 @@ import org.springframework.core.Ordered;
 /**
  * {@code OrderedBeanFactoryStrategySupporter}.
  *
+ * @param <T> The strategy type.
  * @author photowey
  * @version 1.0.0
  * @since 2025/07/16
  */
-public interface OrderedBeanFactoryStrategySupporter extends BeanFactoryStrategySupporter, Ordered {
+public interface OrderedBeanFactoryStrategySupporter<T> extends BeanFactoryStrategySupporter<T>, Ordered {
 
     @Override
     default int getOrder() {

@@ -19,11 +19,12 @@ package io.github.photowey.riff.infras.ioc.context.strategy;
 /**
  * {@code StrategySupporter}.
  *
+ * @param <T> The strategy type.
  * @author photowey
  * @version 1.0.0
  * @since 2025/07/16
  */
-public interface StrategySupporter {
+public interface StrategySupporter<T> {
 
     /**
      * Supports or not.
@@ -31,6 +32,6 @@ public interface StrategySupporter {
      * @param strategy the strategy.
      * @return {@code boolean}.
      */
-    boolean supports(String strategy);
+    boolean supports(T strategy);
 }
 
