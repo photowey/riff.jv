@@ -16,12 +16,13 @@
  */
 package io.github.photowey.riff.infras.crypto.algo.aes;
 
-import io.github.photowey.riff.infras.crypto.AbstractCryptoTest;
-import io.github.photowey.riff.infras.crypto.algo.hash.Hashes;
-import io.github.photowey.riff.infras.crypto.integrated.Cryptos;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import io.github.photowey.riff.infras.crypto.AbstractCryptoTest;
+import io.github.photowey.riff.infras.crypto.algo.hash.Hashes;
+import io.github.photowey.riff.infras.crypto.integrated.Cryptos;
 
 /**
  * {@code AESsTest}.

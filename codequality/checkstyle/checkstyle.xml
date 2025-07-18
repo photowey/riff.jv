@@ -14,7 +14,8 @@
 
         <module name="AvoidStarImport"/>
         <module name="ImportOrder">
-            <property name="groups" value="/^java\./,/^(javax|jakarta)\./,*"/>
+            <property name="groups" value="java,javax,jakarta,org,com,io,*"/>
+            <property name="staticGroups" value="*"/>
             <property name="ordered" value="true"/>
             <property name="separated" value="true"/>
             <property name="sortStaticImportsAlphabetically" value="true"/>
@@ -89,7 +90,6 @@
             <property name="allowNonPrintableEscapes" value="true"/>
             <property name="severity" value="ignore"/>
         </module>
-        <module name="AvoidStarImport"/>
         <module name="OneTopLevelClass"/>
         <module name="NoLineWrap"/>
         <module name="EmptyBlock">

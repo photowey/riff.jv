@@ -16,9 +16,10 @@
  */
 package io.github.photowey.riff.infras.crypto.algo.hash;
 
-import io.github.photowey.riff.infras.crypto.AbstractCryptoTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import io.github.photowey.riff.infras.crypto.AbstractCryptoTest;
 
 /**
  * {@code HashesTest}.

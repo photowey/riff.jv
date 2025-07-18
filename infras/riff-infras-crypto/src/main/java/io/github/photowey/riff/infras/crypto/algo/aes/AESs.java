@@ -27,11 +27,12 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+
 import io.github.photowey.riff.infras.common.thrower.AssertionErrors;
 import io.github.photowey.riff.infras.crypto.algo.codec.base64.Base64s;
 import io.github.photowey.riff.infras.crypto.algo.codec.hex.Hexes;
 import io.github.photowey.riff.infras.crypto.integrated.Cryptos;
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 /**
  * {@code AESs}.

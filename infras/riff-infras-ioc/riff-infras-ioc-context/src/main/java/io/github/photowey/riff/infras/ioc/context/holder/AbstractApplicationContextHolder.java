@@ -16,11 +16,12 @@
  */
 package io.github.photowey.riff.infras.ioc.context.holder;
 
-import io.github.photowey.riff.infras.ioc.context.getter.ApplicationContextGetter;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ConfigurableApplicationContext;
+
+import io.github.photowey.riff.infras.ioc.context.getter.ApplicationContextGetter;
 
 /**
  * {@code AbstractApplicationContextHolder}.

@@ -22,23 +22,26 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+
 import io.github.photowey.riff.infras.authentication.core.constant.AuthorityConstants;
+import io.github.photowey.riff.infras.authentication.core.enums.AuthenticationDictionary;
 import io.github.photowey.riff.infras.common.util.Arrays;
 import io.github.photowey.riff.infras.common.util.Collections;
 import io.github.photowey.riff.infras.common.util.Objects;
 import io.github.photowey.riff.infras.common.util.Strings;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  * {@code LoginUser}.
@@ -51,7 +54,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginUser implements UserDetails {
+public class LoginUser implements UserDetails, IScope, IRole {
 
     @Serial
     private static final long serialVersionUID = -1908946047508237286L;
@@ -67,10 +70,13 @@ public class LoginUser implements UserDetails {
     private String username;
     private String mobile;
     private String fullname;
+    private String compacted;
 
     /**
-     * 1: web
+     * 1: Boss(web|dashboard)
      * 2: OAuth Client
+     *
+     * @see AuthenticationDictionary.User.Type
      */
     private Integer type;
     /**
@@ -80,6 +86,8 @@ public class LoginUser implements UserDetails {
      * 8: forbidden
      * 16: expired
      * 32: locked
+     *
+     * @see AuthenticationDictionary.User.Status
      */
     private Integer status;
     private Integer authenticationStatus;
@@ -168,19 +176,19 @@ public class LoginUser implements UserDetails {
 
     public void appendScopes(String... scopes) {
         if (Arrays.isNotEmpty(scopes)) {
-            if (Collections.isEmpty(this.scopes)) {
-                this.scopes = Stream.of(scopes).collect(Collectors.toSet());
+            if (Objects.isNull(this.scopes)) {
+                this.scopes = Arrays.asMutableSet(scopes);
 
                 return;
             }
 
-            this.scopes.addAll(Stream.of(scopes).collect(Collectors.toSet()));
+            this.scopes.addAll(Arrays.asImmutableSet(scopes));
         }
     }
 
     public void appendScopes(Set<String> scopeSet) {
         if (Collections.isNotEmpty(scopeSet)) {
-            if (Collections.isEmpty(this.scopes)) {
+            if (Objects.isNull(this.scopes)) {
                 this.scopes = scopeSet;
 
                 return;
@@ -192,19 +200,19 @@ public class LoginUser implements UserDetails {
 
     public void appendAuthoritySets(String... authorities) {
         if (Arrays.isNotEmpty(authorities)) {
-            if (Collections.isEmpty(this.authoritySet)) {
-                this.authoritySet = Stream.of(authorities).collect(Collectors.toSet());
+            if (Objects.isNull(this.authoritySet)) {
+                this.authoritySet = Arrays.asMutableSet(authorities);
 
                 return;
             }
 
-            this.authoritySet.addAll(Stream.of(authorities).collect(Collectors.toSet()));
+            this.authoritySet.addAll(Arrays.asImmutableList(authorities));
         }
     }
 
     public void appendAuthoritySets(Set<String> authoritySet) {
-        if (Collections.isNotEmpty(authorities)) {
-            if (Collections.isEmpty(this.authoritySet)) {
+        if (Collections.isNotEmpty(authoritySet)) {
+            if (Objects.isNull(this.authoritySet)) {
                 this.authoritySet = authoritySet;
 
                 return;
@@ -216,19 +224,19 @@ public class LoginUser implements UserDetails {
 
     public void appendRoles(String... roles) {
         if (Arrays.isNotEmpty(roles)) {
-            if (Collections.isEmpty(this.roles)) {
-                this.roles = Stream.of(roles).collect(Collectors.toSet());
+            if (Objects.isNull(this.roles)) {
+                this.roles = Arrays.asMutableSet(roles);
 
                 return;
             }
 
-            this.roles.addAll(Stream.of(roles).collect(Collectors.toSet()));
+            this.roles.addAll(Arrays.asImmutableSet(roles));
         }
     }
 
     public void appendRoles(Set<String> roleSet) {
         if (Collections.isNotEmpty(roleSet)) {
-            if (Collections.isEmpty(this.roles)) {
+            if (Objects.isNull(this.roles)) {
                 this.roles = roleSet;
 
                 return;
@@ -325,6 +333,16 @@ public class LoginUser implements UserDetails {
 
     // ----------------------------------------------------------------
 
+
+    public void injectPrincipalAuthorities(AuthenticatedPrincipal principal) {
+        this.appendAuthoritySets(principal.authorities());
+        this.appendRoles(principal.roles());
+        this.appendScopes(principal.scopes());
+        this.setFullname(principal.fullname());
+    }
+
+    // ----------------------------------------------------------------
+
     @SuppressWarnings("all")
     public static LoginUser newDummyLoginUser() {
         Set<String> emptySet = Collections.emptySet();
@@ -344,8 +362,8 @@ public class LoginUser implements UserDetails {
             .roles(emptySet)
             .scopes(emptySet)
             // ----------------------------------------------------------------
-            .type(1)
-            .status(1)
+            .type(AuthenticationDictionary.User.Type.BOSS.value())
+            .status(AuthenticationDictionary.User.Status.UNACTIVATED.value())
             // ----------------------------------------------------------------
             .authenticationStatus(0)
             .build();
@@ -371,6 +389,10 @@ public class LoginUser implements UserDetails {
 
     public String fullname() {
         return fullname;
+    }
+
+    public String compacted() {
+        return compacted;
     }
 
     public String mobile() {

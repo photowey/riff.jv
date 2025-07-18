@@ -16,11 +16,12 @@
  */
 package io.github.photowey.riff.infras.ioc.context.holder;
 
-import io.github.photowey.riff.infras.ioc.context.getter.BeanFactoryGetter;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+
+import io.github.photowey.riff.infras.ioc.context.getter.BeanFactoryGetter;
 
 /**
  * {@code AbstractBeanFactoryHolder}.

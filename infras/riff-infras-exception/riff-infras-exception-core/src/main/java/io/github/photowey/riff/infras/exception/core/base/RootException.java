@@ -19,6 +19,7 @@ package io.github.photowey.riff.infras.exception.core.base;
 import io.github.photowey.riff.infras.common.formatter.StringFormatter;
 import io.github.photowey.riff.infras.exception.core.domain.body.ExceptionBody;
 import io.github.photowey.riff.infras.exception.core.enums.ExceptionStatus;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;

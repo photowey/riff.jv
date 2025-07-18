@@ -16,11 +16,12 @@
  */
 package io.github.photowey.riff.infras.ioc.context.injector;
 
-import io.github.photowey.riff.infras.ioc.context.engine.Engine;
-import io.github.photowey.riff.infras.ioc.context.engine.EngineAware;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.Aware;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+
+import io.github.photowey.riff.infras.ioc.context.engine.Engine;
+import io.github.photowey.riff.infras.ioc.context.engine.EngineAware;
 
 /**
  * {@code AbstractEngineAwareBeanFactoryPostProcessor}.

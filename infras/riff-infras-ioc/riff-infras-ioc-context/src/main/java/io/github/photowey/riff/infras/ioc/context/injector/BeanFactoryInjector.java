@@ -16,11 +16,12 @@
  */
 package io.github.photowey.riff.infras.ioc.context.injector;
 
-import io.github.photowey.riff.infras.ioc.core.enums.holder.BeanFactoryHolder;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+
+import io.github.photowey.riff.infras.ioc.core.enums.holder.BeanFactoryHolder;
 
 /**
  * {@code BeanFactoryInjector}.

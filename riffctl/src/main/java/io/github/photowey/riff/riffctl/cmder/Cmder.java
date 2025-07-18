@@ -16,8 +16,10 @@
  */
 package io.github.photowey.riff.riffctl.cmder;
 
-import io.github.photowey.riff.riffctl.core.command.GreetCommand;
 import org.springframework.stereotype.Component;
+
+import io.github.photowey.riff.riffctl.core.command.GreetCommand;
+
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 

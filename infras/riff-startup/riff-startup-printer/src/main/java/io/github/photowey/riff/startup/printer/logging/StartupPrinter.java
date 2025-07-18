@@ -20,13 +20,14 @@ import java.net.InetAddress;
 import java.util.Optional;
 import java.util.function.Supplier;
 
-import io.github.photowey.riff.startup.core.domain.logging.context.DocumentContext;
-import io.github.photowey.riff.startup.core.util.AssertionErrors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.util.StringUtils;
+
+import io.github.photowey.riff.startup.core.domain.logging.context.DocumentContext;
+import io.github.photowey.riff.startup.core.util.AssertionErrors;
 
 /**
  * {@code StartupPrinter}.

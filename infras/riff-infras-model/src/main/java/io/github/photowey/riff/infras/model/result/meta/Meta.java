@@ -22,10 +22,12 @@ import java.io.Serializable;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+
 import io.github.photowey.riff.infras.model.constant.PaginationConstants;
 import io.github.photowey.riff.infras.model.query.pagination.AbstractPaginationQuery;
 import io.github.photowey.riff.infras.model.result.PageResult;
 import io.swagger.v3.oas.annotations.media.Schema;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

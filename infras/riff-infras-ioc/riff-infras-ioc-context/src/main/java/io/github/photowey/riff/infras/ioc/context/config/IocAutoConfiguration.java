@@ -16,14 +16,15 @@
  */
 package io.github.photowey.riff.infras.ioc.context.config;
 
-import io.github.photowey.riff.infras.ioc.context.injector.ApplicationContextInjector;
-import io.github.photowey.riff.infras.ioc.context.injector.BeanFactoryInjector;
-import io.github.photowey.riff.infras.ioc.context.validator.DefaultEntityValidator;
-import io.github.photowey.riff.infras.ioc.context.validator.EntityValidator;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+
+import io.github.photowey.riff.infras.ioc.context.injector.ApplicationContextInjector;
+import io.github.photowey.riff.infras.ioc.context.injector.BeanFactoryInjector;
+import io.github.photowey.riff.infras.ioc.context.validator.DefaultEntityValidator;
+import io.github.photowey.riff.infras.ioc.context.validator.EntityValidator;
 
 /**
  * {@code IocAutoConfiguration}.

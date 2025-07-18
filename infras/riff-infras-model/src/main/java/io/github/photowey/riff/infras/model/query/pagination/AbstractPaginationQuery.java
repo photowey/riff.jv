@@ -18,6 +18,7 @@ package io.github.photowey.riff.infras.model.query.pagination;
 
 import io.github.photowey.riff.infras.model.constant.PaginationConstants;
 import io.swagger.v3.oas.annotations.media.Schema;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

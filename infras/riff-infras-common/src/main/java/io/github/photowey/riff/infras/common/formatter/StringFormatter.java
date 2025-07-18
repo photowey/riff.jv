@@ -16,9 +16,10 @@
  */
 package io.github.photowey.riff.infras.common.formatter;
 
-import io.github.photowey.riff.infras.common.util.Strings;
 import org.slf4j.helpers.FormattingTuple;
 import org.slf4j.helpers.MessageFormatter;
+
+import io.github.photowey.riff.infras.common.util.Strings;
 
 /**
  * {@code StringFormatter}.

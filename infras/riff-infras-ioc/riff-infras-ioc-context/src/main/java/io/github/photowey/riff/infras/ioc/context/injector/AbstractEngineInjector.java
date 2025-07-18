@@ -16,9 +16,10 @@
  */
 package io.github.photowey.riff.infras.ioc.context.injector;
 
+import org.springframework.beans.factory.Aware;
+
 import io.github.photowey.riff.infras.ioc.context.engine.Engine;
 import io.github.photowey.riff.infras.ioc.context.engine.EngineAware;
-import org.springframework.beans.factory.Aware;
 
 // @formatter:off
 

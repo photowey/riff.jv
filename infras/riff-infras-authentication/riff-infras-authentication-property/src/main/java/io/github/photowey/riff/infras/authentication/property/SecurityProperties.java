@@ -25,15 +25,17 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.cors.CorsConfiguration;
+
 import io.github.photowey.riff.infras.common.util.Collections;
 import io.github.photowey.riff.infras.common.util.Objects;
 import io.github.photowey.riff.infras.common.util.Strings;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.cors.CorsConfiguration;
 
 /**
  * {@code SecurityProperties}.
@@ -74,12 +76,54 @@ public class SecurityProperties implements Serializable {
         @Valid
         private Jwt jwt = new Jwt();
 
+        @Valid
+        private Loader loader = new Loader();
+        @Valid
+        private Checker checker = new Checker();
+
         public Issuer issuer() {
             return issuer;
         }
 
         public Jwt jwt() {
             return jwt;
+        }
+
+        public Loader loader() {
+            return loader;
+        }
+
+        public Checker checker() {
+            return checker;
+        }
+    }
+
+
+    @Data
+    @Validated
+    public static class Loader implements Serializable {
+
+        @Serial
+        private static final long serialVersionUID = 5802519965188417802L;
+
+        private String name = "local";
+
+        public String name() {
+            return name;
+        }
+    }
+
+    @Data
+    @Validated
+    public static class Checker implements Serializable {
+
+        @Serial
+        private static final long serialVersionUID = 5016582036943907532L;
+
+        private String name = "local";
+
+        public String name() {
+            return name;
         }
     }
 

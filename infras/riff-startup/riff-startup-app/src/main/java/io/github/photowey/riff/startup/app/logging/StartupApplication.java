@@ -19,15 +19,17 @@ package io.github.photowey.riff.startup.app.logging;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-import io.github.photowey.riff.startup.core.domain.logging.context.DocumentContext;
-import io.github.photowey.riff.startup.core.event.ApplicationStartedLocalEvent;
-import io.github.photowey.riff.startup.printer.logging.StartupPrinter;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.Banner;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.util.StopWatch;
+
+import io.github.photowey.riff.startup.core.domain.logging.context.DocumentContext;
+import io.github.photowey.riff.startup.core.event.ApplicationStartedLocalEvent;
+import io.github.photowey.riff.startup.printer.logging.StartupPrinter;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * {@code StartupApplication}.

@@ -104,6 +104,56 @@ public enum AuthenticationDictionary {
 
         ;
 
+        public enum Type {
+
+            // USER TYPE
+
+            /**
+             * |- Username
+             * |- Password
+             */
+            BOSS("BOSS", "boss", 1),
+            /**
+             * |- AccessKey
+             * |- AccessSecret
+             */
+            OAUTH_CLIENT("OAUTH_CLIENT", "oauthclient", 2),
+
+            ;
+
+            private final String name;
+            private final String code;
+            private final int value;
+
+            Type(String name, String code, int value) {
+                this.name = name;
+                this.code = code;
+                this.value = value;
+            }
+
+            public String wrap() {
+                return name;
+            }
+
+            public String code() {
+                return code;
+            }
+
+            public int value() {
+                return value;
+            }
+
+            public static Type valueOf(int value) {
+                for (Type type : values()) {
+                    if (type.value() == value) {
+                        return type;
+                    }
+                }
+
+                throw new RuntimeException("riff: Invalid user type value.");
+            }
+        }
+
         public enum Status {
 
             // USER STATUS

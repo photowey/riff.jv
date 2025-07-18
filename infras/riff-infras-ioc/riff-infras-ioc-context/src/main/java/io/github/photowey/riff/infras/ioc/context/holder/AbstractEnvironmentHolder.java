@@ -16,10 +16,11 @@
  */
 package io.github.photowey.riff.infras.ioc.context.holder;
 
-import io.github.photowey.riff.infras.ioc.context.getter.EnvironmentGetter;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.Environment;
+
+import io.github.photowey.riff.infras.ioc.context.getter.EnvironmentGetter;
 
 /**
  * {@code AbstractEnvironmentHolder}.

@@ -17,6 +17,7 @@
 package io.github.photowey.riff.riffctl.core.command;
 
 import org.springframework.stereotype.Component;
+
 import picocli.CommandLine;
 
 /**

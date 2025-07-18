@@ -23,8 +23,9 @@ import java.util.function.Supplier;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
 
-import io.github.photowey.riff.infras.common.util.Collections;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+
+import io.github.photowey.riff.infras.common.util.Collections;
 
 /**
  * {@code DefaultEntityValidator}.

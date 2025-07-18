@@ -141,6 +141,12 @@
             </dependency>
             <!--endregion Authentication -->
 
+            <!--region IoC -->
+            <dependency>
+                <groupId>io.github.photowey</groupId>
+                <artifactId>riff-infras-ioc-binder</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <dependency>
                 <groupId>io.github.photowey</groupId>
                 <artifactId>riff-infras-ioc-context</artifactId>
@@ -151,6 +157,7 @@
                 <artifactId>riff-infras-ioc-core</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <!--endregion IoC -->
 
             <dependency>
                 <groupId>io.github.photowey</groupId>

@@ -17,6 +17,7 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>riff-infras-ioc-binder</module>
         <module>riff-infras-ioc-context</module>
         <module>riff-infras-ioc-core</module>
     </modules>
@@ -29,6 +30,11 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>io.github.photowey</groupId>
+                <artifactId>riff-infras-ioc-binder</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <dependency>
                 <groupId>io.github.photowey</groupId>
                 <artifactId>riff-infras-ioc-context</artifactId>

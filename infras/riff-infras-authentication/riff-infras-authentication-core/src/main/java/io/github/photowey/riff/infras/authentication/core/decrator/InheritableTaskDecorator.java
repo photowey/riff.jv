@@ -18,14 +18,15 @@ package io.github.photowey.riff.infras.authentication.core.decrator;
 
 import java.util.Map;
 
-import io.github.photowey.riff.infras.authentication.core.domain.authenticated.LoginUser;
-import io.github.photowey.riff.infras.authentication.core.threadlocal.LoginUserHolder;
-import io.github.photowey.riff.infras.common.util.Maps;
-import io.github.photowey.riff.infras.common.util.Objects;
 import org.slf4j.MDC;
 import org.springframework.core.task.TaskDecorator;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
+
+import io.github.photowey.riff.infras.authentication.core.domain.authenticated.LoginUser;
+import io.github.photowey.riff.infras.authentication.core.threadlocal.LoginUserHolder;
+import io.github.photowey.riff.infras.common.util.Maps;
+import io.github.photowey.riff.infras.common.util.Objects;
 
 /**
  * {@code InheritableTaskDecorator}.

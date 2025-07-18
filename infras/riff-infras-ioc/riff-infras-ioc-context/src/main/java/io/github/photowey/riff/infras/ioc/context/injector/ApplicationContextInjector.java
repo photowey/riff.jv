@@ -16,15 +16,17 @@
  */
 package io.github.photowey.riff.infras.ioc.context.injector;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import io.github.photowey.riff.infras.common.json.JSON;
-import io.github.photowey.riff.infras.ioc.core.enums.holder.ApplicationContextHolder;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.lang.NonNull;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import io.github.photowey.riff.infras.common.json.JSON;
+import io.github.photowey.riff.infras.ioc.core.enums.holder.ApplicationContextHolder;
 
 /**
  * {@code ApplicationContextInjector}.

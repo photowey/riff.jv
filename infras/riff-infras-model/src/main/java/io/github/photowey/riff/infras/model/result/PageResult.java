@@ -25,6 +25,7 @@ import io.github.photowey.riff.infras.model.enums.ApiDictionary;
 import io.github.photowey.riff.infras.model.result.meta.Meta;
 import io.github.photowey.riff.infras.model.result.row.Row;
 import io.swagger.v3.oas.annotations.media.Schema;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

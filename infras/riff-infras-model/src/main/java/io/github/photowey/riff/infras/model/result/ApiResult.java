@@ -24,6 +24,7 @@ import java.util.function.Supplier;
 import io.github.photowey.riff.infras.common.formatter.StringFormatter;
 import io.github.photowey.riff.infras.model.enums.ApiDictionary;
 import io.swagger.v3.oas.annotations.media.Schema;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

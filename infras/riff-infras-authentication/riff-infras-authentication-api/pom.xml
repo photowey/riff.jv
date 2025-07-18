@@ -19,14 +19,29 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-autoconfigure</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-autoconfigure-processor</artifactId>
+            <groupId>io.github.photowey</groupId>
+            <artifactId>riff-infras-ioc-binder</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>io.github.photowey</groupId>
+            <artifactId>riff-infras-authentication-property</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.github.photowey</groupId>
+            <artifactId>riff-infras-ioc-context</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.github.photowey</groupId>
+            <artifactId>riff-infras-crypto</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
 
     <build>

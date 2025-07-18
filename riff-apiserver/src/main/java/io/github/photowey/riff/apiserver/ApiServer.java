@@ -16,8 +16,9 @@
  */
 package io.github.photowey.riff.apiserver;
 
-import io.github.photowey.riff.startup.app.logging.StartupApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import io.github.photowey.riff.startup.app.logging.StartupApplication;
 
 /**
  * {@code ApiServer}.

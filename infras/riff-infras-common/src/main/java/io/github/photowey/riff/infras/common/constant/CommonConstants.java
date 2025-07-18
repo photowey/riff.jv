@@ -33,6 +33,8 @@ public interface CommonConstants {
         String SEMICOLON = ";";
         String UNDERLINE = "_";
         String DASH = "-";
+
+        String EMPTY = "";
     }
 
     interface Byte {

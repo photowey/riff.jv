@@ -16,7 +16,6 @@
  */
 package io.github.photowey.riff.infras.exception.advice;
 
-import io.github.photowey.riff.infras.exception.core.domain.body.ExceptionBody;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +24,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import io.github.photowey.riff.infras.exception.core.domain.body.ExceptionBody;
 
 /**
  * {@code RethrowGlobalExceptionAdvice}.

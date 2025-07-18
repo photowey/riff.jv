@@ -16,7 +16,6 @@
  */
 package io.github.photowey.riff.riffctl;
 
-import io.github.photowey.riff.riffctl.cmder.Cmder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
 import org.springframework.boot.CommandLineRunner;
@@ -25,6 +24,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
+
+import io.github.photowey.riff.riffctl.cmder.Cmder;
+
 import picocli.CommandLine;
 import picocli.CommandLine.IFactory;
 
@@ -58,10 +60,10 @@ public class Riffctl implements CommandLineRunner, ExitCodeGenerator {
 
     public static void main(String[] args) {
         ConfigurableApplicationContext ctx = new SpringApplicationBuilder(Riffctl.class)
-                .bannerMode(Banner.Mode.OFF)
-                .logStartupInfo(true)
-                .build(args)
-                .run(args);
+            .bannerMode(Banner.Mode.OFF)
+            .logStartupInfo(true)
+            .build(args)
+            .run(args);
 
         System.exit(SpringApplication.exit(ctx));
     }

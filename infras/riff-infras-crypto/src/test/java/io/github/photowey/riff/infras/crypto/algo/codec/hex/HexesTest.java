@@ -18,9 +18,10 @@ package io.github.photowey.riff.infras.crypto.algo.codec.hex;
 
 import java.nio.charset.StandardCharsets;
 
-import io.github.photowey.riff.infras.crypto.AbstractCryptoTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import io.github.photowey.riff.infras.crypto.AbstractCryptoTest;
 
 /**
  * {@code HexesTest}.

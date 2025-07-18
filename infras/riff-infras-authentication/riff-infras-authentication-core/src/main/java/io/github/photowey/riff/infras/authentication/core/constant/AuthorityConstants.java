@@ -43,21 +43,27 @@ public interface AuthorityConstants {
 
     // ----------------------------------------------------------
 
-    String PASSPORT_AUTHENTICATION_CLIENT_WEB = "web";
-    String PASSPORT_AUTHENTICATION_CLIENT_OAUTHCLIENT = "oauthclient";
+    String PASSPORT_AUTHENTICATION_CLIENT_WEB = DEFAULT_CLIENT;
+    String PASSPORT_AUTHENTICATION_CLIENT_OAUTH_CLIENT = "oauthclient";
+
+    // ----------------------------------------------------------
+
+    String TENANT_HEADER = "X-Tenant";
+    String PLATFORM_HEADER = "X-Platform";
+    String APP_HEADER = "X-App";
+    String CLIENT_HEADER = "X-Client";
 
     // ----------------------------------------------------------
 
     String SPRING_SECURITY_AUTHORITY_PREFIX = "ROLE_";
     String SPRING_OAUTH2_SCOPE_PREFIX = "SCOPE_";
 
-    String AUTHORITY_SCOPE_KEY = "scopes";
-    String AUTHORITY_ROLE_KEY = "roles";
+    String CLAIM_SCOPE_KEY = "scopes";
+    String CLAIM_ROLE_KEY = "roles";
 
     String WEB_AUTH_SCOPE = "web";
-    String OAUTHCLIENT_AUTH_SCOPE = "oauth";
-    String THIRDPARTY_AUTH_SCOPE = "thirdparty";
-
+    String OAUTH_CLIENT_AUTH_SCOPE = "oauth";
+    String THIRD_PARTY_AUTH_SCOPE = "thirdparty";
 
     String PASSWORD_MODE_AUTH_SCOPE = "pwd";
 
@@ -70,14 +76,18 @@ public interface AuthorityConstants {
 
     // ----------------------------------------------------------
 
-    String AUTHORITY_ISSUER_KEY = "iss";
-    String AUTHORITY_ISSUE_AT_KEY = "iat";
-    String AUTHORITY_JWT_ID_KEY = "jti";
-    String AUTHORITY_AUDIT_KEY = "aud";
-    String AUTHORITY_CLIENT_KEY = "xci";
-    String AUTHORITY_AUTH_KEY = "ath";
+    String CLAIM_ISSUER_KEY = "iss";
+    String CLAIM_ISSUE_AT_KEY = "iat";
+    String CLAIM_JWT_ID_KEY = "jti";
+    String CLAIM_AUDIT_KEY = "aud";
+    String CLAIM_CLIENT_KEY = "xci";
+    String CLAIM_AUTHORITY_KEY = "ath";
+    /**
+     * TOKEN TYPE
+     */
+    String CLAIM_TOKEN_TYPE_KEY = "xtt";
 
-    String AUTHORITY_ALL = "*.*";
+    String CLAIM_AUTHORITY_ALL = "*.*";
 
     // ----------------------------------------------------------
 
@@ -89,6 +99,11 @@ public interface AuthorityConstants {
     // ---------------------------------------------------------- Token
 
     String TOKEN_ALGO_HS512 = "HmacSHA512";
+
+    // ----------------------------------------------------------
+
+    int CLAIM_TOKEN_TYPE_NORMAL = 1;
+    int CLAIM_TOKEN_TYPE_REFRESH = 2;
 
     // ----------------------------------------------------------
 

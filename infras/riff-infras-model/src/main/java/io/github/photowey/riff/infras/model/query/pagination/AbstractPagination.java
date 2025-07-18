@@ -19,6 +19,7 @@ package io.github.photowey.riff.infras.model.query.pagination;
 import java.io.Serial;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

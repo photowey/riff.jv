@@ -16,8 +16,9 @@
  */
 package io.github.photowey.riff.infras.ioc.context.strategy.string;
 
-import io.github.photowey.riff.infras.ioc.context.getter.BeanFactoryGetter;
 import org.springframework.beans.factory.BeanFactoryAware;
+
+import io.github.photowey.riff.infras.ioc.context.getter.BeanFactoryGetter;
 
 // @formatter:off
 

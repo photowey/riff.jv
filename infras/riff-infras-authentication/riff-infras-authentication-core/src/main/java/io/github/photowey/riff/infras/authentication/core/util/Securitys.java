@@ -20,6 +20,13 @@ import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import jakarta.servlet.http.HttpServletRequest;
 
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.util.StringUtils;
+
 import io.github.photowey.riff.infras.authentication.core.constant.AuthorityConstants;
 import io.github.photowey.riff.infras.authentication.core.domain.authenticated.LoginUser;
 import io.github.photowey.riff.infras.authentication.core.exception.SecurityAuthenticationException;
@@ -28,12 +35,6 @@ import io.github.photowey.riff.infras.common.thrower.AssertionErrors;
 import io.github.photowey.riff.infras.common.util.Objects;
 import io.github.photowey.riff.infras.common.util.Strings;
 import io.github.photowey.riff.infras.exception.core.enums.ExceptionStatus;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
-import org.springframework.util.StringUtils;
 
 /**
  * {@code Securitys}.

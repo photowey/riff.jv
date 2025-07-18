@@ -21,13 +21,14 @@ import java.security.Provider;
 import java.security.Security;
 import java.util.concurrent.Callable;
 
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+
 import io.github.photowey.riff.infras.common.formatter.StringFormatter;
 import io.github.photowey.riff.infras.common.thrower.AssertionErrors;
 import io.github.photowey.riff.infras.common.util.Objects;
 import io.github.photowey.riff.infras.crypto.algo.aes.AESs;
 import io.github.photowey.riff.infras.crypto.algo.hash.Hashes;
 import io.github.photowey.riff.infras.crypto.core.runner.SneakyRunners;
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 /**
  * {@code Cryptos}.

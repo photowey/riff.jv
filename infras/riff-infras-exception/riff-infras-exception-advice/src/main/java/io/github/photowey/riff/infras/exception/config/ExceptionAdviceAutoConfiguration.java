@@ -16,9 +16,10 @@
  */
 package io.github.photowey.riff.infras.exception.config;
 
-import io.github.photowey.riff.infras.exception.advice.RethrowGlobalExceptionAdvice;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
+
+import io.github.photowey.riff.infras.exception.advice.RethrowGlobalExceptionAdvice;
 
 /**
  * {@code ExceptionAdviceAutoConfiguration}.
