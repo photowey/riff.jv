@@ -6,7 +6,7 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Java CI with Maven | GraalVM (JDK 21)
+name: Java CI with Maven | GraalVM (JDK 21) | act
 
 on:
   push:
@@ -16,28 +16,14 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-    
+
     env:
-      ACT: false
+      ACT: true
       MAVEN_REPO_PATH: "/home/runner/m2/repository"
 
     steps:
       - uses: actions/checkout@v4
-
-      - name: Setup GraalVM (JDK 21)
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'graalvm'
-          java-version: '21'
-          cache: maven
-
-      - name: Install Maven (for act)
-        if: ${{ env.ACT }}
-        run: |
-          sudo apt update
-          sudo apt install -y maven
 
       - name: Verify Java & GraalVM & Maven
         run: |
@@ -63,6 +49,14 @@ jobs:
             xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
             xsi:schemaLocation=\"http://maven.apache.org/SETTINGS/1.0.0 https://maven.apache.org/xsd/settings-1.0.0.xsd\">
             <localRepository>/home/runner/m2/repository</localRepository>
+            <mirrors>
+              <mirror>
+                <id>aliyunmaven</id>
+                <mirrorOf>central</mirrorOf>
+                <name>Aliyun Maven</name>
+                <url>https://maven.aliyun.com/repository/central</url>
+              </mirror>
+            </mirrors>
           </settings>" > /home/runner/.m2/settings.xml
 
       - name: Deploy with Maven (Local Repository)
@@ -70,7 +64,3 @@ jobs:
 
       - name: Build with Maven
         run: mvn -B package --file pom.xml
-
-    # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
-    #- name: Update dependency graph
-    #  uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6

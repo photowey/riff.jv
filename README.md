@@ -37,3 +37,7 @@ $ source ~/.bashrc
 </distributionManagement>
 ```
 
+## 1.2.`Act actions`
+```shell
+$ act --action-offline-mode -v -W .github/workflows/maven.act.yml -P ubuntu-latest=photowey/ubuntu:act-latest
+```
