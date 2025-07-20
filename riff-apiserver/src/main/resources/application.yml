@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: "riff-apiserver"
+    version: "1.0.0"
+  profiles:
+    active: dev
+  threads:
+    virtual:
+      enabled: true

@@ -19,6 +19,7 @@ package io.github.photowey.riff.infras.authentication.api.config;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
 import org.springframework.core.env.Environment;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -45,6 +46,9 @@ import io.github.photowey.riff.infras.ioc.binder.PropertyBinders;
  * @since 2025/07/18
  */
 @AutoConfiguration
+@Import(value = {
+    VirtualThreadExecutorConfiguration.class,
+})
 public class AuthenticationAPIAutoConfiguration {
 
     @Bean
