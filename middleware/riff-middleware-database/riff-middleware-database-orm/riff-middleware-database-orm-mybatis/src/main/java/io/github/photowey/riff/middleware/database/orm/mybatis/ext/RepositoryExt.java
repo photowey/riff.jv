@@ -14,25 +14,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.photowey.riff.storage.orm.mybatis.assembler;
+package io.github.photowey.riff.middleware.database.orm.mybatis.ext;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.MappingConstants;
-
-import io.github.photowey.riff.core.domain.entity.SystemUser;
-import io.github.photowey.riff.infras.model.assembler.EntityAssembler;
-import io.github.photowey.riff.middleware.database.orm.mybatis.core.domain.po.SystemUserPO;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 // @formatter:off
 
 /**
- * {@code SystemUserAssembler}.
+ * {@code RepositoryExt}.
  *
+ * @param <T> The {@code Database} entity type.
  * @author photowey
  * @version 1.0.0
  * @since 2025/07/21
  */
-@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
-public interface SystemUserAssembler extends EntityAssembler<SystemUser, SystemUserPO> { }
+public interface RepositoryExt<T> extends BaseMapper<T> { }
 
 // @formatter:on

@@ -184,7 +184,7 @@
             </dependency>
             <dependency>
                 <groupId>io.github.photowey</groupId>
-                <artifactId>riff-middleware-database-orm</artifactId>
+                <artifactId>riff-middleware-database-persistence</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -195,7 +195,7 @@
             </dependency>
             <dependency>
                 <groupId>io.github.photowey</groupId>
-                <artifactId>riff-middleware-database-persistence-mybatis</artifactId>
+                <artifactId>riff-middleware-database-orm-mybatis</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

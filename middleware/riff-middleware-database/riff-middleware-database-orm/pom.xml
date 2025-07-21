@@ -13,29 +13,16 @@
     <artifactId>riff-middleware-database-orm</artifactId>
     <name>riff-middleware-database-orm</name>
     <description>middleware-database orm module for riff.jv</description>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>riff-middleware-database-orm-mybatis</module>
+    </modules>
 
     <properties>
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-autoconfigure</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-autoconfigure-processor</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-jdbc</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>io.github.photowey</groupId>
-            <artifactId>riff-middleware-database-core</artifactId>
-        </dependency>
     </dependencies>
 
     <build>

@@ -21,7 +21,7 @@
         <module>riff-middleware-database-meta</module>
         <module>riff-middleware-database-orm</module>
 
-        <module>riff-middleware-database-persistence-mybatis</module>
+        <module>riff-middleware-database-persistence</module>
 
         <module>riff-middleware-database-mysql</module>
         <module>riff-middleware-database-postgresql</module>

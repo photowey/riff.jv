@@ -17,33 +17,33 @@ dir:
 
 clean: dir
 	@echo "Cleaning the project..."
-	$(MVN) clean
+	$(MVN) clean -T 1C
 
 # ----------------------------------------------------------------
 
 compile: clean
 	@echo "Using $(MVN) to compile the project..."
-	$(MVN) compile
+	$(MVN) compile -T 1C
 
 # ----------------------------------------------------------------
 
 install: clean
 	@echo "Using $(MVN) to install the project..."
-	$(MVN) install
+	$(MVN) install -T 1C
 
 # ----------------------------------------------------------------
 
 test: clean
 	@echo "Using $(MVN) to test the project..."
-	$(MVN) test
+	$(MVN) test -T 1C
 
 deploy: clean
 	@echo "Using $(MVN) to deploy the project..."
-	$(MVN) -DskipTests=true source:jar deploy
+	$(MVN) -DskipTests=true source:jar deploy -T 1C
 
 package: clean
 	@echo "Using $(MVN) to package the project..."
-	$(MVN) -DskipTests=true package
+	$(MVN) -DskipTests=true package -T 1C
 
 tree:
 	@echo "Using $(MVN) to show dependency tree..."
@@ -63,7 +63,7 @@ perform:
 
 check:
 	@echo "Using $(MVN) to checkstyle:check the project..."
-	$(MVN) checkstyle:check
+	$(MVN) checkstyle:check -T 1C
 
 # ----------------------------------------------------------------
 

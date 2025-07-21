@@ -34,8 +34,8 @@ import io.github.photowey.riff.infras.common.util.Objects;
 import io.github.photowey.riff.infras.model.query.AbstractQuery;
 import io.github.photowey.riff.infras.model.query.pagination.AbstractPaginationQuery;
 import io.github.photowey.riff.infras.model.result.meta.Meta;
-import io.github.photowey.riff.middleware.database.persistence.mybatis.core.domain.po.SystemUserPO;
-import io.github.photowey.riff.middleware.database.persistence.mybatis.repository.SystemUserRepository;
+import io.github.photowey.riff.middleware.database.orm.mybatis.core.domain.po.SystemUserPO;
+import io.github.photowey.riff.middleware.database.orm.mybatis.repository.SystemUserRepository;
 import io.github.photowey.riff.storage.api.SystemUserStorage;
 import io.github.photowey.riff.storage.orm.mybatis.assembler.SystemUserAssembler;
 
