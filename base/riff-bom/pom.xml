@@ -190,7 +190,13 @@
             <dependency>
                 <groupId>io.github.photowey</groupId>
                 <artifactId>riff-middleware-database-mysql-mybatis</artifactId>
-                <version>${reversion}</version>
+                <version>${project.version}</version>
+                <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>io.github.photowey</groupId>
+                <artifactId>riff-middleware-database-persistence-mybatis</artifactId>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.photowey</groupId>
@@ -217,10 +223,18 @@
                 <artifactId>riff-storage-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>io.github.photowey</groupId>
+                <artifactId>riff-storage-orm-mybatis</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>io.github.photowey</groupId>
                 <artifactId>riff-storage-mysql-mybatis</artifactId>
                 <version>${project.version}</version>
+                <type>pom</type>
             </dependency>
             <dependency>
                 <groupId>io.github.photowey</groupId>

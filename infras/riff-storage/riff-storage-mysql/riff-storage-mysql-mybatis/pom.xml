@@ -13,6 +13,7 @@
     <artifactId>riff-storage-mysql-mybatis</artifactId>
     <name>riff-storage-mysql-mybatis</name>
     <description>storage-mysql mybatis module for riff.jv</description>
+    <packaging>pom</packaging>
 
     <properties>
     </properties>
@@ -20,12 +21,13 @@
     <dependencies>
         <dependency>
             <groupId>io.github.photowey</groupId>
-            <artifactId>riff-storage-api</artifactId>
+            <artifactId>riff-storage-orm-mybatis</artifactId>
         </dependency>
 
         <dependency>
             <groupId>io.github.photowey</groupId>
             <artifactId>riff-middleware-database-mysql-mybatis</artifactId>
+            <type>pom</type>
         </dependency>
     </dependencies>
 

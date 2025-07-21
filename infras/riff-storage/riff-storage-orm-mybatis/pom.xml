@@ -6,23 +6,23 @@
 
     <parent>
         <groupId>io.github.photowey</groupId>
-        <artifactId>riff-middleware-database-mysql</artifactId>
+        <artifactId>riff-storage</artifactId>
         <version>${reversion}</version>
     </parent>
 
-    <artifactId>riff-middleware-database-mysql-mybatis</artifactId>
-    <name>riff-middleware-database-mysql-mybatis</name>
-    <description>middleware-database mysql-mybatis module for riff.jv</description>
-    <packaging>pom</packaging>
+    <artifactId>riff-storage-orm-mybatis</artifactId>
+    <name>riff-storage-orm-mybatis</name>
+    <description>storage-orm mybatis module for riff.jv</description>
 
     <properties>
     </properties>
 
     <dependencies>
         <dependency>
-            <groupId>com.mysql</groupId>
-            <artifactId>mysql-connector-j</artifactId>
+            <groupId>io.github.photowey</groupId>
+            <artifactId>riff-storage-api</artifactId>
         </dependency>
+
         <dependency>
             <groupId>io.github.photowey</groupId>
             <artifactId>riff-middleware-database-persistence-mybatis</artifactId>

@@ -18,6 +18,9 @@
 
     <modules>
         <module>riff-storage-api</module>
+
+        <module>riff-storage-orm-mybatis</module>
+
         <module>riff-storage-mysql</module>
         <module>riff-storage-postgresql</module>
         <module>riff-storage-sqlite</module>
@@ -28,6 +31,11 @@
 
     <dependencies>
     </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <plugins>
