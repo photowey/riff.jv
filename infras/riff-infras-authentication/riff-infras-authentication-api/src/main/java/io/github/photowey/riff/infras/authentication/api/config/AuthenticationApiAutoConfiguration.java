@@ -39,7 +39,7 @@ import io.github.photowey.riff.infras.authentication.property.SecurityProperties
 import io.github.photowey.riff.infras.ioc.binder.PropertyBinders;
 
 /**
- * {@code AuthenticationAPIAutoConfiguration}.
+ * {@code AuthenticationApiAutoConfiguration}.
  *
  * @author photowey
  * @version 1.0.0
@@ -49,7 +49,7 @@ import io.github.photowey.riff.infras.ioc.binder.PropertyBinders;
 @Import(value = {
     VirtualThreadExecutorConfiguration.class,
 })
-public class AuthenticationAPIAutoConfiguration {
+public class AuthenticationApiAutoConfiguration {
 
     @Bean
     public SecurityProperties securityProperties(Environment environment) {

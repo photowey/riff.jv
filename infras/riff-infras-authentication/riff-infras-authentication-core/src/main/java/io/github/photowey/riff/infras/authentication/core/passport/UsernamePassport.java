@@ -21,6 +21,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import io.github.photowey.riff.infras.authentication.core.exception.SecurityAuthenticationException;
+import io.github.photowey.riff.infras.common.formatter.StringFormatter;
 import io.github.photowey.riff.infras.common.util.Strings;
 
 import lombok.AllArgsConstructor;
@@ -42,8 +43,9 @@ import lombok.NoArgsConstructor;
 public class UsernamePassport implements Serializable {
 
     private static final String DUMMY_VALUE = "-";
+    private static final String PASSPORT_TEMPLATE = "{}:@:{}:@:{}:@:{}:@:{}:@:{}:@:{}:@:{}";
     private static final Pattern PT =
-        Pattern.compile("(.*):@:(.*):@:(.*):@:(.*):@:(.*):@:(.*):@:(.*):@:(.*):@:(.*)");
+        Pattern.compile("(.*):@:(.*):@:(.*):@:(.*):@:(.*):@:(.*):@:(.*):@:(.*)");
 
     private String tenant;
     private String platform;
@@ -59,13 +61,29 @@ public class UsernamePassport implements Serializable {
     private String subject;
 
     public String compact() {
-        throw new UnsupportedOperationException("Not implemented");
+        this.subject = StringFormatter.format(
+            PASSPORT_TEMPLATE,
+            this.tenant, this.platform, this.app, this.client,
+            this.userId, this.username,
+            Strings.isNotEmpty(this.mobile) ? this.mobile : DUMMY_VALUE,
+            this.type
+        );
+
+        return subject;
     }
 
     public static UsernamePassport parse(String proxy) {
         Matcher matcher = PT.matcher(proxy);
         if (matcher.matches()) {
             return UsernamePassport.builder()
+                .tenant(matcher.group(1))
+                .platform(matcher.group(2))
+                .app(matcher.group(3))
+                .client(matcher.group(4))
+                .userId(Long.parseLong(matcher.group(5)))
+                .username(matcher.group(6))
+                .mobile(cleanMobileIfNecessary(matcher.group(7)))
+                .type(Integer.parseInt(matcher.group(8)))
                 .build();
         }
 
@@ -133,6 +151,14 @@ public class UsernamePassport implements Serializable {
     }
 
     public static boolean determineIsDummyValue(String target) {
-        return target.equalsIgnoreCase(DUMMY_VALUE);
+        return target.equalsIgnoreCase(dummyValue());
+    }
+
+    private static String cleanMobileIfNecessary(String mobile) {
+        if (determineIsDummyValue(mobile)) {
+            return null;
+        }
+
+        return mobile;
     }
 }
