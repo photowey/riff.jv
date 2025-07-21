@@ -13,6 +13,11 @@
     <artifactId>riff-storage-mysql</artifactId>
     <name>riff-storage-mysql</name>
     <description>storage-mysql module for riff.jv</description>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>riff-storage-mysql-mybatis</module>
+    </modules>
 
     <properties>
     </properties>

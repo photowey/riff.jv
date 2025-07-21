@@ -23,6 +23,16 @@
             <groupId>io.github.photowey</groupId>
             <artifactId>riff-infras-exception-core</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>io.github.photowey</groupId>
+            <artifactId>riff-middleware-database-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.github.photowey</groupId>
+            <artifactId>riff-infras-model</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="io.github.photowey.riff.middleware.database.mysql.mybatis.repository.SystemUserRepository">
+
+    <!--
+    @author photowey
+    @version 1.0.0
+    @since 2025/07/21
+    -->
+
+    <resultMap id="SystemUserPO"
+               type="io.github.photowey.riff.middleware.database.mysql.mybatis.core.domain.po.SystemUserPO">
+
+    </resultMap>
+
+    <delete id="physicalDelete">
+        DELETE FROM riff_system_user WHERE id = #{id}
+    </delete>
+
+    <select id="selectList" resultMap="SystemUserPO">
+
+    </select>
+
+    <select id="selectPage" resultMap="SystemUserPO">
+
+    </select>
+
+
+    <!--
+    <update id="logicalDelete">
+        UPDATE riff_system_user SET deleted = 1 WHERE id = #{id}
+    </update>
+    -->
+</mapper>

@@ -36,6 +36,9 @@
         <module>../../infras/riff-infras-model</module>
         <module>../../infras/riff-infras-transport</module>
 
+        <!-- Business -->
+        <module>../../business/riff-business-uaa</module>
+
         <!-- Middleware -->
         <module>../../middleware/riff-middleware-database</module>
     </modules>

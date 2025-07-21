@@ -189,8 +189,8 @@
             </dependency>
             <dependency>
                 <groupId>io.github.photowey</groupId>
-                <artifactId>riff-middleware-database-mysql</artifactId>
-                <version>${project.version}</version>
+                <artifactId>riff-middleware-database-mysql-mybatis</artifactId>
+                <version>${reversion}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.photowey</groupId>
@@ -219,7 +219,7 @@
             </dependency>
             <dependency>
                 <groupId>io.github.photowey</groupId>
-                <artifactId>riff-storage-mysql</artifactId>
+                <artifactId>riff-storage-mysql-mybatis</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

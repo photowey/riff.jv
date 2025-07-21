@@ -13,6 +13,11 @@
     <artifactId>riff-middleware-database-mysql</artifactId>
     <name>riff-middleware-database-mysql</name>
     <description>middleware-database mysql module for riff.jv</description>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>riff-middleware-database-mysql-mybatis</module>
+    </modules>
 
     <properties>
     </properties>

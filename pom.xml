@@ -15,7 +15,9 @@
     <version>${reversion}</version>
 
     <name>${project.groupId}:${project.artifactId}</name>
-    <description>This is a distributed task scheduling framework built in Java, inspired by the open-source project XXL-Job.</description>
+    <description>This is a distributed task scheduling framework built in Java, inspired by the open-source project
+        XXL-Job.
+    </description>
     <packaging>pom</packaging>
 
     <url>${io.github.photowey.project.url}</url>
@@ -77,6 +79,8 @@
 
         <spring-boot.version>3.5.3</spring-boot.version>
         <spring.version>6.2.8</spring.version>
+
+        <mapstruct.version>1.6.3</mapstruct.version>
     </properties>
     <!-- @formatter:on -->
 
@@ -85,6 +89,11 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct-processor</artifactId>
+                <version>${mapstruct.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -107,6 +116,19 @@
                     <source>${java.version}</source>
                     <target>${java.version}</target>
                     <encoding>${project.build.sourceEncoding}</encoding>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </path>
+                        <path>
+                            <groupId>org.mapstruct</groupId>
+                            <artifactId>mapstruct-processor</artifactId>
+                        </path>
+                    </annotationProcessorPaths>
+                    <compilerArgs>
+                        <arg>-parameters</arg>
+                    </compilerArgs>
                 </configuration>
             </plugin>
             <plugin>

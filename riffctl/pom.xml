@@ -72,6 +72,10 @@
                             <artifactId>lombok</artifactId>
                         </path>
                         <path>
+                            <groupId>org.mapstruct</groupId>
+                            <artifactId>mapstruct-processor</artifactId>
+                        </path>
+                        <path>
                             <groupId>info.picocli</groupId>
                             <artifactId>picocli-codegen</artifactId>
                         </path>
