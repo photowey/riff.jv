@@ -17,7 +17,9 @@
 package io.github.photowey.riff.storage.orm.mybatis.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
+import io.github.photowey.riff.infras.model.query.pagination.AbstractPaginationQuery;
 import io.github.photowey.riff.infras.model.result.meta.Meta;
 
 /**
@@ -39,4 +41,7 @@ public interface PaginationMetaStorage<PO> {
             .build();
     }
 
+    default <T> IPage<T> copyPage(AbstractPaginationQuery<?> query) {
+        return new Page<>(query.pageNo(), query.pageSize());
+    }
 }

@@ -63,6 +63,16 @@ public class PageResult<T> extends AbstractResult<T, PageResult<T>> {
         super(code, message);
     }
 
+    protected PageResult(List<T> rows) {
+        super(ApiDictionary.Status.API_OK.value(), ApiDictionary.Status.API_OK.message());
+        this.data = new Row<>(rows);
+    }
+
+    protected PageResult(List<T> rows, Meta meta) {
+        super(ApiDictionary.Status.API_OK.value(), ApiDictionary.Status.API_OK.message());
+        this.data = new Row<>(rows, meta);
+    }
+
     protected PageResult(String code, String message, List<T> rows, Meta meta) {
         super(code, message);
         this.data = new Row<>(rows, meta);
@@ -72,6 +82,14 @@ public class PageResult<T> extends AbstractResult<T, PageResult<T>> {
 
     public static <T> PageResult<T> create() {
         return new PageResult<>();
+    }
+
+    public static <T> PageResult<T> success(List<T> rows) {
+        return new PageResult<>(rows);
+    }
+
+    public static <T> PageResult<T> success(List<T> rows, Meta meta) {
+        return new PageResult<>(rows, meta);
     }
 
     // ----------------------------------------------------------

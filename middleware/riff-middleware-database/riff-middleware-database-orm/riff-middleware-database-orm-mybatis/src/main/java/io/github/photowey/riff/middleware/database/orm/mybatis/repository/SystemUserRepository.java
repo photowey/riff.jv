@@ -38,9 +38,9 @@ public interface SystemUserRepository extends BatchRepositoryExt<SystemUserPO> {
 
     void physicalDelete(@Param("id") Long id);
 
-    List<SystemUserPO> selectList(AbstractQuery<?> query);
+    <Q extends AbstractQuery<?>> List<SystemUserPO> selectList(Q query);
 
-    IPage<SystemUserPO> selectPage(IPage<SystemUserPO> page, AbstractPaginationQuery<?> query);
+    <Q extends AbstractPaginationQuery<?>> IPage<SystemUserPO> selectPage(IPage<SystemUserPO> page, Q query);
 
 
     // void logicalDelete(@Param("id") Long id);

@@ -18,19 +18,20 @@ package io.github.photowey.riff.storage.orm.mybatis.impl;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Consumer;
 
 import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 import io.github.photowey.riff.core.domain.entity.SystemUser;
 import io.github.photowey.riff.infras.common.util.Objects;
+import io.github.photowey.riff.infras.model.assembler.EntityAssembler;
 import io.github.photowey.riff.infras.model.query.AbstractQuery;
 import io.github.photowey.riff.infras.model.query.pagination.AbstractPaginationQuery;
 import io.github.photowey.riff.infras.model.result.meta.Meta;
@@ -55,6 +56,15 @@ public class SystemUserStorageImpl implements SystemUserStorage<SystemUserPO>, P
     @Autowired
     private SystemUserAssembler systemUserAssembler;
 
+    // ----------------------------------------------------------------
+
+    @Override
+    public EntityAssembler<SystemUser, SystemUserPO> entityAssembler() {
+        return this.systemUserAssembler;
+    }
+
+    // ----------------------------------------------------------------
+
     @Override
     public void save(@Nonnull SystemUser entity) {
         this.systemUserRepository.insert(this.toPo(entity));
@@ -65,10 +75,12 @@ public class SystemUserStorageImpl implements SystemUserStorage<SystemUserPO>, P
         this.systemUserRepository.batchInserts(this.toPos(entities), SystemUserPO.class);
     }
 
+    // ----------------------------------------------------------------
+
     @Override
     public void delete(@Nonnull SystemUser entity) {
         if (Objects.isNull(entity.id())) {
-            throw new NullPointerException("the entity id can't be NULL");
+            throw new NullPointerException("orm: the entity id can't be NULL");
         }
 
         this.deleteById(entity.id());
@@ -84,10 +96,23 @@ public class SystemUserStorageImpl implements SystemUserStorage<SystemUserPO>, P
         this.systemUserRepository.deleteByIds(ids);
     }
 
+    // ----------------------------------------------------------------
+
     @Override
     public void updateById(@Nonnull SystemUser entity) {
         this.systemUserRepository.updateById(this.toPo(entity));
     }
+
+    // ----------------------------------------------------------------
+
+    @Override
+    public Optional<SystemUser> tryFindSystemUser(@Nonnull String username) {
+        SystemUserPO selected = this.trySelectSystemUser(username);
+
+        return Optional.ofNullable(this.toEntity(selected));
+    }
+
+    // ----------------------------------------------------------------
 
     @Override
     public SystemUser selectOne(@Nonnull Long id) {
@@ -95,13 +120,15 @@ public class SystemUserStorageImpl implements SystemUserStorage<SystemUserPO>, P
     }
 
     @Override
-    public List<SystemUser> selectList(@Nonnull AbstractQuery<SystemUser> query) {
+    public <Q extends AbstractQuery<SystemUser>> List<SystemUser> selectList(@Nonnull Q query) {
         return this.toEntities(this.systemUserRepository.selectList(query));
     }
 
     @Override
-    public List<SystemUser> selectPage(@Nonnull AbstractPaginationQuery<SystemUser> query, Consumer<Meta> fx) {
-        IPage<SystemUserPO> page = new Page<>(query.pageNo(), query.pageSize());
+    public <Q extends AbstractPaginationQuery<SystemUser>> List<SystemUser> selectPage(
+        @Nonnull Q query,
+        Consumer<Meta> fx) {
+        IPage<SystemUserPO> page = this.copyPage(query);
         this.systemUserRepository.selectPage(page, query);
 
         Meta meta = this.toMeta(page);
@@ -110,21 +137,25 @@ public class SystemUserStorageImpl implements SystemUserStorage<SystemUserPO>, P
         return this.toEntities(page.getRecords());
     }
 
-    @Override
-    public SystemUserPO toPo(@Nullable SystemUser tt) {
-        if (Objects.isNull(tt)) {
-            return null;
-        }
+    // ----------------------------------------------------------------
 
-        return this.systemUserAssembler.toEntity(tt);
-    }
-
-    @Override
-    public SystemUser toEntity(@Nullable SystemUserPO po) {
-        if (Objects.isNull(po)) {
-            return null;
-        }
-
-        return this.systemUserAssembler.toDto(po);
+    private SystemUserPO trySelectSystemUser(String username) {
+        return this.systemUserRepository.selectOne(new LambdaQueryWrapper<SystemUserPO>()
+            .select(
+                SystemUserPO::getId,
+                SystemUserPO::getCreateTime,
+                SystemUserPO::getCreateBy,
+                SystemUserPO::getTenant,
+                SystemUserPO::getPlatform,
+                SystemUserPO::getApp,
+                SystemUserPO::getUsername,
+                SystemUserPO::getPassword,
+                SystemUserPO::getMobile,
+                SystemUserPO::getAvatar,
+                SystemUserPO::getTwofaEnabled,
+                SystemUserPO::getTwofaSecret
+            )
+            .eq(SystemUserPO::getUsername, username)
+        );
     }
 }

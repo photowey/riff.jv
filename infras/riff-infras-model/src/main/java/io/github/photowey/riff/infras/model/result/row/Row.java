@@ -21,6 +21,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.github.photowey.riff.infras.common.util.Collections;
 import io.github.photowey.riff.infras.common.util.Objects;
 import io.github.photowey.riff.infras.model.result.meta.Meta;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -82,6 +83,27 @@ public class Row<T> implements Serializable {
         this.total = Objects.defaultIfNull(total, 0L);
 
         this.rows = rows;
+    }
+
+    // ----------------------------------------------------------------
+
+    public void resetMeta(Meta meta) {
+        this.pageNo = Objects.defaultIfNull(pageNo, 1L);
+        this.pageSize = Objects.defaultIfNull(pageSize, 10L);
+        this.total = Objects.defaultIfNull(total, 0L);
+    }
+
+    // ----------------------------------------------------------------
+
+    public void resetRows(List<T> rows) {
+        if (Objects.isNull(this.rows)) {
+            this.rows = rows;
+            return;
+        }
+
+        if (Collections.isNotEmpty(rows)) {
+            this.rows.addAll(rows);
+        }
     }
 
     // ----------------------------------------------------------------

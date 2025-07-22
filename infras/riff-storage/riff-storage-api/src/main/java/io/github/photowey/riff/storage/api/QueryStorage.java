@@ -24,6 +24,7 @@ import jakarta.annotation.Nonnull;
 import io.github.photowey.riff.core.domain.table.TableId;
 import io.github.photowey.riff.infras.model.query.AbstractQuery;
 import io.github.photowey.riff.infras.model.query.pagination.AbstractPaginationQuery;
+import io.github.photowey.riff.infras.model.result.PageResult;
 import io.github.photowey.riff.infras.model.result.meta.Meta;
 
 /**
@@ -38,7 +39,18 @@ public interface QueryStorage<T extends TableId> {
 
     T selectOne(@Nonnull Long id);
 
-    List<T> selectList(@Nonnull AbstractQuery<T> query);
+    <Q extends AbstractQuery<T>> List<T> selectList(@Nonnull Q query);
 
-    List<T> selectPage(@Nonnull AbstractPaginationQuery<T> query, Consumer<Meta> fx);
+    <Q extends AbstractPaginationQuery<T>> List<T> selectPage(@Nonnull Q query, Consumer<Meta> fx);
+
+    default <Q extends AbstractPaginationQuery<T>> PageResult<T> selectPage(@Nonnull Q query) {
+        PageResult<T> result = PageResult.empty();
+        List<T> systemUsers = this.selectPage(query, (meta) -> {
+            result.data().resetMeta(meta);
+        });
+
+        result.data().resetRows(systemUsers);
+
+        return result;
+    }
 }

@@ -16,9 +16,11 @@
  */
 package io.github.photowey.riff.storage.api;
 
-import io.github.photowey.riff.core.domain.entity.SystemUser;
+import java.util.Optional;
 
-// @formatter:off
+import jakarta.annotation.Nonnull;
+
+import io.github.photowey.riff.core.domain.entity.SystemUser;
 
 /**
  * {@code SystemUserStorage}.
@@ -28,6 +30,13 @@ import io.github.photowey.riff.core.domain.entity.SystemUser;
  * @version 1.0.0
  * @since 2025/07/21
  */
-public interface SystemUserStorage<PO> extends EntityStorage<SystemUser, PO> { }
+public interface SystemUserStorage<PO> extends EntityStorage<SystemUser, PO> {
 
-// @formatter:on
+    /**
+     * Select one {@link SystemUser} by username.
+     *
+     * @param username the username.
+     * @return the {@link SystemUser}.
+     */
+    Optional<SystemUser> tryFindSystemUser(@Nonnull String username);
+}

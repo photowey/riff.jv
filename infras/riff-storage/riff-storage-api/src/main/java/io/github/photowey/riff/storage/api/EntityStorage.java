@@ -25,6 +25,8 @@ import jakarta.annotation.Nullable;
 
 import io.github.photowey.riff.core.domain.table.TableId;
 import io.github.photowey.riff.infras.common.util.Collections;
+import io.github.photowey.riff.infras.common.util.Objects;
+import io.github.photowey.riff.infras.model.assembler.EntityAssembler;
 
 /**
  * {@code EntityStorage}.
@@ -38,13 +40,23 @@ import io.github.photowey.riff.infras.common.util.Collections;
 public interface EntityStorage<T extends TableId, PO>
     extends QueryStorage<T>, DeleteStorage<T>, UpdateStorage<T>, SaveStorage<T> {
 
+    default EntityAssembler<T, PO> entityAssembler() {
+        return null;
+    }
+
     /**
      * Convert {@code Database} entity to {@code Database} persistence entity.
      *
      * @param entity the {@code Database} entity.
      * @return the {@code Database} persistence entity.
      */
-    PO toPo(@Nullable T entity);
+    default PO toPo(@Nullable T entity) {
+        if (Objects.isNull(this.entityAssembler()) || Objects.isNull(entity)) {
+            return null;
+        }
+
+        return this.entityAssembler().toEntity(entity);
+    }
 
     default List<PO> toPos(@Nonnull Collection<T> entities) {
         if (Collections.isEmpty(entities)) {
@@ -56,7 +68,13 @@ public interface EntityStorage<T extends TableId, PO>
             .collect(Collectors.toList());
     }
 
-    T toEntity(@Nullable PO po);
+    default T toEntity(@Nullable PO po) {
+        if (Objects.isNull(this.entityAssembler()) || Objects.isNull(po)) {
+            return null;
+        }
+
+        return this.entityAssembler().toDto(po);
+    }
 
     default List<T> toEntities(@Nonnull Collection<PO> pos) {
         if (Collections.isEmpty(pos)) {
