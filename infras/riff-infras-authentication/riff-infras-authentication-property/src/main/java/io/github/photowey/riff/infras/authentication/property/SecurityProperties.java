@@ -53,9 +53,9 @@ public class SecurityProperties implements Serializable {
     @Serial
     private static final long serialVersionUID = 4844136551777056675L;
 
-    private static final String DEFAULT_PREFIX = "spring.security.riff.global.security";
+    private static final String DEFAULT_PREFIX = "spring.security.riff.security";
     private static final String RIFF_SECURITY_PROPERTY_ENV_KEY = "RIFF_SECURITY_PROPERTY_PREFIX";
-    private static final String RIFF_SECURITY_PROPERTY_PROPERTY_KEY = "io.github.photowey.riff.global.security.prefix";
+    private static final String RIFF_SECURITY_PROPERTY_PROPERTY_KEY = "io.github.photowey.riff.security.prefix";
 
     @Valid
     private CorsConfiguration cors = new CorsConfiguration();

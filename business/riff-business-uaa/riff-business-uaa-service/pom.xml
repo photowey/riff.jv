@@ -10,31 +10,17 @@
         <version>${reversion}</version>
     </parent>
 
-    <artifactId>riff-business-uaa-web</artifactId>
-    <name>riff-business-uaa-web</name>
-    <description>infras uaa web module for riff.jv</description>
+    <artifactId>riff-business-uaa-service</artifactId>
+    <name>riff-business-uaa-service</name>
+    <description>infras uaa service module for riff.jv</description>
 
     <properties>
     </properties>
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>io.github.photowey</groupId>
-            <artifactId>riff-business-uaa-service</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>io.github.photowey</groupId>
-            <artifactId>riff-infras-exception-advice</artifactId>
+            <artifactId>riff-business-uaa-security</artifactId>
         </dependency>
     </dependencies>
 

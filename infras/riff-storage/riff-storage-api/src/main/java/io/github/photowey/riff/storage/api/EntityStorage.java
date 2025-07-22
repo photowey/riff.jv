@@ -23,10 +23,10 @@ import java.util.stream.Collectors;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
-import io.github.photowey.riff.core.domain.table.TableId;
 import io.github.photowey.riff.infras.common.util.Collections;
 import io.github.photowey.riff.infras.common.util.Objects;
 import io.github.photowey.riff.infras.model.assembler.EntityAssembler;
+import io.github.photowey.riff.middleware.database.core.domain.entity.Entity;
 
 /**
  * {@code EntityStorage}.
@@ -37,7 +37,7 @@ import io.github.photowey.riff.infras.model.assembler.EntityAssembler;
  * @version 1.0.0
  * @since 2025/07/21
  */
-public interface EntityStorage<T extends TableId, PO>
+public interface EntityStorage<T extends Entity, PO>
     extends QueryStorage<T>, DeleteStorage<T>, UpdateStorage<T>, SaveStorage<T> {
 
     default EntityAssembler<T, PO> entityAssembler() {

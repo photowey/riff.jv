@@ -61,6 +61,28 @@ public abstract class AbstractGlobalExceptionAdvice extends AbstractEnvironmentA
 
     protected static final UrlPathHelper HELPER = new UrlPathHelper();
 
+    // ----------------------------------------------------------------
+
+    protected String determineRequestMethod(HttpServletRequest request) {
+        return request.getMethod().toUpperCase();
+    }
+
+    protected String determineRequestPath(HttpServletRequest request) {
+        return HELPER.getLookupPathForRequest(request);
+    }
+
+    protected <E extends Exception> String determineExceptionMessage(E exception) {
+        String message = exception.getMessage();
+        if (Objects.isNotNull(exception.getCause())
+            && StringUtils.hasText(exception.getCause().getMessage())) {
+            message = exception.getCause().getMessage();
+        }
+
+        return message;
+    }
+
+    // ----------------------------------------------------------------
+
     @ResponseBody
     @ExceptionHandler(value = SocketTimeoutException.class)
     public ResponseEntity<ExceptionBody> handleSocketTimeoutException(
@@ -101,8 +123,8 @@ public abstract class AbstractGlobalExceptionAdvice extends AbstractEnvironmentA
         HttpServletResponse response,
         MissingServletRequestParameterException exception) {
         this.populateContentType(response);
-        String method = request.getMethod().toUpperCase();
-        String path = HELPER.getLookupPathForRequest(request);
+        String method = this.determineRequestMethod(request);
+        String path = this.determineRequestPath(request);
 
         ExceptionBody body = ExceptionBody.badRequest();
 
@@ -125,8 +147,8 @@ public abstract class AbstractGlobalExceptionAdvice extends AbstractEnvironmentA
         HttpServletResponse response,
         MethodArgumentNotValidException exception) {
         this.populateContentType(response);
-        String method = request.getMethod().toUpperCase();
-        String path = HELPER.getLookupPathForRequest(request);
+        String method = this.determineRequestMethod(request);
+        String path = this.determineRequestPath(request);
 
         ExceptionBody body = ExceptionBody.badRequest();
         String[] profileActivated = this.environment.getActiveProfiles();
@@ -148,8 +170,8 @@ public abstract class AbstractGlobalExceptionAdvice extends AbstractEnvironmentA
         HttpServletResponse response,
         ValidationException exception) {
         this.populateContentType(response);
-        String method = request.getMethod().toUpperCase();
-        String path = HELPER.getLookupPathForRequest(request);
+        String method = this.determineRequestMethod(request);
+        String path = this.determineRequestPath(request);
 
         ExceptionBody body = ExceptionBody.badRequest();
         String[] profileActivated = this.environment.getActiveProfiles();
@@ -171,8 +193,8 @@ public abstract class AbstractGlobalExceptionAdvice extends AbstractEnvironmentA
         HttpServletResponse response,
         BindException exception) {
         this.populateContentType(response);
-        String method = request.getMethod().toUpperCase();
-        String path = HELPER.getLookupPathForRequest(request);
+        String method = this.determineRequestMethod(request);
+        String path = this.determineRequestPath(request);
 
         ExceptionBody body = ExceptionBody.badRequest();
         String[] profileActivated = this.environment.getActiveProfiles();
@@ -194,8 +216,8 @@ public abstract class AbstractGlobalExceptionAdvice extends AbstractEnvironmentA
         HttpServletResponse response,
         BadCredentialsException exception) {
         this.applyJSONContentType(response);
-        String method = request.getMethod().toUpperCase();
-        String path = HELPER.getLookupPathForRequest(request);
+        String method = this.determineRequestMethod(request);
+        String path = this.determineRequestPath(request);
 
         ExceptionBody body = ExceptionBody.unauthorized(
             AUTHORIZATION_ACCOUNT_OR_PASSWORD_INVALID_MESSAGE
@@ -215,8 +237,8 @@ public abstract class AbstractGlobalExceptionAdvice extends AbstractEnvironmentA
         HttpServletResponse response,
         NullPointerException exception) {
         this.populateContentType(response);
-        String method = request.getMethod().toUpperCase();
-        String path = HELPER.getLookupPathForRequest(request);
+        String method = this.determineRequestMethod(request);
+        String path = this.determineRequestPath(request);
 
         ExceptionBody body = ExceptionBody.nullPointer();
         String[] profileActivated = this.environment.getActiveProfiles();
@@ -234,8 +256,8 @@ public abstract class AbstractGlobalExceptionAdvice extends AbstractEnvironmentA
         HttpServletResponse response,
         IllegalArgumentException exception) {
         this.populateContentType(response);
-        String method = request.getMethod().toUpperCase();
-        String path = HELPER.getLookupPathForRequest(request);
+        String method = this.determineRequestMethod(request);
+        String path = this.determineRequestPath(request);
 
         ExceptionBody body = ExceptionBody.illegalArgument();
         String[] profileActivated = this.environment.getActiveProfiles();
@@ -253,8 +275,8 @@ public abstract class AbstractGlobalExceptionAdvice extends AbstractEnvironmentA
         HttpServletResponse response,
         UnsupportedOperationException exception) {
         this.populateContentType(response);
-        String method = request.getMethod().toUpperCase();
-        String path = HELPER.getLookupPathForRequest(request);
+        String method = this.determineRequestMethod(request);
+        String path = this.determineRequestPath(request);
 
         ExceptionBody body = ExceptionBody.unsupportedOperation();
         String[] profileActivated = this.environment.getActiveProfiles();
@@ -269,13 +291,14 @@ public abstract class AbstractGlobalExceptionAdvice extends AbstractEnvironmentA
 
     @ResponseBody
     @ExceptionHandler(value = SQLException.class)
+    @SuppressWarnings("all")
     public ResponseEntity<ExceptionBody> handleSQLException(
         HttpServletRequest request,
         HttpServletResponse response,
         SQLException exception) {
         this.populateContentType(response);
-        String method = request.getMethod().toUpperCase();
-        String path = HELPER.getLookupPathForRequest(request);
+        String method = this.determineRequestMethod(request);
+        String path = this.determineRequestPath(request);
 
         ExceptionBody body = ExceptionBody.badUnHandle();
         String[] profileActivated = this.environment.getActiveProfiles();
@@ -295,13 +318,9 @@ public abstract class AbstractGlobalExceptionAdvice extends AbstractEnvironmentA
         HttpServletResponse response,
         FormattableException exception) {
         this.populateContentType(response);
-        String method = request.getMethod().toUpperCase();
-        String path = HELPER.getLookupPathForRequest(request);
-        String message = exception.getMessage();
-        if (Objects.isNotNull(exception.getCause())
-            && StringUtils.hasText(exception.getCause().getMessage())) {
-            message = exception.getCause().getMessage();
-        }
+        String method = this.determineRequestMethod(request);
+        String path = this.determineRequestPath(request);
+        String message = this.determineExceptionMessage(exception);
 
         ExceptionBody body = ExceptionBody.badRequest(message);
         String[] profileActivated = this.environment.getActiveProfiles();
@@ -321,13 +340,9 @@ public abstract class AbstractGlobalExceptionAdvice extends AbstractEnvironmentA
         HttpServletResponse response,
         RuntimeException exception) {
         this.populateContentType(response);
-        String method = request.getMethod().toUpperCase();
-        String path = HELPER.getLookupPathForRequest(request);
-        String message = exception.getMessage();
-        if (Objects.nonNull(exception.getCause())
-            && StringUtils.hasText(exception.getCause().getMessage())) {
-            message = exception.getCause().getMessage();
-        }
+        String method = this.determineRequestMethod(request);
+        String path = this.determineRequestPath(request);
+        String message = this.determineExceptionMessage(exception);
 
         ExceptionBody body = ExceptionBody.runtime(message);
         String[] profileActivated = this.environment.getActiveProfiles();
@@ -345,8 +360,8 @@ public abstract class AbstractGlobalExceptionAdvice extends AbstractEnvironmentA
         HttpServletResponse response,
         Throwable exception) {
         this.populateContentType(response);
-        String method = request.getMethod().toUpperCase();
-        String path = HELPER.getLookupPathForRequest(request);
+        String method = this.determineRequestMethod(request);
+        String path = this.determineRequestPath(request);
 
         ExceptionBody body = ExceptionBody.badUnHandle();
         String[] profileActivated = this.environment.getActiveProfiles();

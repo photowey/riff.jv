@@ -24,6 +24,12 @@
         </dependency>
 
         <dependency>
+            <groupId>io.github.photowey</groupId>
+            <artifactId>riff-storage-mysql-mybatis</artifactId>
+            <type>pom</type>
+        </dependency>
+
+        <dependency>
             <groupId>jakarta.servlet</groupId>
             <artifactId>jakarta.servlet-api</artifactId>
             <optional>true</optional>

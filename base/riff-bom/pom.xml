@@ -247,6 +247,25 @@
                 <version>${project.version}</version>
             </dependency>
             <!--endregion Storage -->
+
+            <!--region Uaa -->
+            <dependency>
+                <groupId>io.github.photowey</groupId>
+                <artifactId>riff-business-uaa-security</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.photowey</groupId>
+                <artifactId>riff-business-uaa-service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.photowey</groupId>
+                <artifactId>riff-business-uaa-web</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <!--endregion Uaa -->
+
         </dependencies>
     </dependencyManagement>
 

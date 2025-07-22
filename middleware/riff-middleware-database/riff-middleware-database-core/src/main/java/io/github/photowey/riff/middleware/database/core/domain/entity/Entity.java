@@ -16,9 +16,10 @@
  */
 package io.github.photowey.riff.middleware.database.core.domain.entity;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
+
+import io.github.photowey.riff.middleware.database.core.domain.table.TableId;
 
 /**
  * {@code Entity}.
@@ -27,10 +28,10 @@ import java.util.Objects;
  * @version 1.0.0
  * @since 2025/07/21
  */
-public interface Entity extends Serializable {
+public interface Entity extends TableId {
 
     default Long id() {
-        return null;
+        return this.getId();
     }
 
     default String stringId() {
@@ -42,10 +43,6 @@ public interface Entity extends Serializable {
     }
 
     // ----------------------------------------------------------------
-
-    default void setId(Long id) {
-
-    }
 
     /**
      * The create-by.

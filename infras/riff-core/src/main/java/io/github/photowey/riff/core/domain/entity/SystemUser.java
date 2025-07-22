@@ -18,8 +18,8 @@ package io.github.photowey.riff.core.domain.entity;
 
 import java.io.Serial;
 
-import io.github.photowey.riff.core.domain.table.TableId;
 import io.github.photowey.riff.middleware.database.core.domain.entity.AbstractTenantEntity;
+import io.github.photowey.riff.middleware.database.core.domain.table.TableId;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

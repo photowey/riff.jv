@@ -18,7 +18,7 @@ package io.github.photowey.riff.storage.api;
 
 import jakarta.annotation.Nonnull;
 
-import io.github.photowey.riff.core.domain.table.TableId;
+import io.github.photowey.riff.middleware.database.core.domain.table.TableId;
 
 /**
  * {@code UpdateStorage}.

@@ -36,7 +36,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public abstract class AbstractTenantEntity extends AbstractEntity {
+public abstract class AbstractTenantEntity extends AbstractEntityExt {
 
     @Serial
     private static final long serialVersionUID = -2002227164220292318L;

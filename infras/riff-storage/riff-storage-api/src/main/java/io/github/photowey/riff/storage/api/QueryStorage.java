@@ -21,11 +21,11 @@ import java.util.function.Consumer;
 
 import jakarta.annotation.Nonnull;
 
-import io.github.photowey.riff.core.domain.table.TableId;
 import io.github.photowey.riff.infras.model.query.AbstractQuery;
 import io.github.photowey.riff.infras.model.query.pagination.AbstractPaginationQuery;
 import io.github.photowey.riff.infras.model.result.PageResult;
 import io.github.photowey.riff.infras.model.result.meta.Meta;
+import io.github.photowey.riff.middleware.database.core.domain.table.TableId;
 
 /**
  * {@code QueryStorage}.

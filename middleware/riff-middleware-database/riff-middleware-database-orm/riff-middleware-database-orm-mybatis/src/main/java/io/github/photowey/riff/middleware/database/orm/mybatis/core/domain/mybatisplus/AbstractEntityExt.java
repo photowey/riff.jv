@@ -28,7 +28,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 /**
- * {@code AbstractTenantEntity}.
+ * {@code AbstractEntityExt}.
  *
  * @author photowey
  * @version 1.0.0
@@ -39,41 +39,23 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public abstract class AbstractTenantEntity extends AbstractEntityExt {
+public abstract class AbstractEntityExt extends AbstractEntity {
 
     @Serial
-    private static final long serialVersionUID = -2002227164220292318L;
+    private static final long serialVersionUID = -57105932654898440L;
 
-    /**
-     * Tenant
-     * |- Default: saas
-     */
+    @TableField(exist = false, fill = FieldFill.INSERT)
+    protected Integer version;
     @TableField(fill = FieldFill.INSERT)
-    protected String tenant;
-    /**
-     * Platform
-     * |- Default: saas
-     */
-    @TableField(fill = FieldFill.INSERT)
-    protected String platform;
-    /**
-     * App
-     * |- Default: saas
-     */
-    @TableField(fill = FieldFill.INSERT)
-    protected String app;
+    protected Integer deleted;
 
     // ----------------------------------------------------------------
 
-    public String tenant() {
-        return tenant;
+    public Integer version() {
+        return version;
     }
 
-    public String platform() {
-        return platform;
-    }
-
-    public String app() {
-        return app;
+    public Integer deleted() {
+        return deleted;
     }
 }

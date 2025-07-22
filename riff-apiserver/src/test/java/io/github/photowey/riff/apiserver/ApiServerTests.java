@@ -14,27 +14,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.photowey.riff.storage.api;
+package io.github.photowey.riff.apiserver;
 
-import java.util.Collection;
-
-import jakarta.annotation.Nonnull;
-
-import io.github.photowey.riff.middleware.database.core.domain.table.TableId;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Profile;
 
 /**
- * {@code DeleteStorage}.
+ * {@code ApiServerTests}.
  *
- * @param <T> The {@code Database} entity type.
  * @author photowey
  * @version 1.0.0
- * @since 2025/07/21
+ * @since 2025/07/22
  */
-public interface DeleteStorage<T extends TableId> {
+@SpringBootTest
+@Profile(value = "local")
+class ApiServerTests {
 
-    void delete(@Nonnull T entity);
+    // @formatter:off
 
-    void deleteById(@Nonnull Long id);
+    @Test
+    void contextLoads() { }
 
-    void batchDelete(@Nonnull Collection<Long> ids);
+    // @formatter:on
 }

@@ -16,6 +16,7 @@
  */
 package io.github.photowey.riff.storage.orm.mybatis.impl;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -30,11 +31,15 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 
 import io.github.photowey.riff.core.domain.entity.SystemUser;
+import io.github.photowey.riff.infras.common.util.Collections;
 import io.github.photowey.riff.infras.common.util.Objects;
 import io.github.photowey.riff.infras.model.assembler.EntityAssembler;
 import io.github.photowey.riff.infras.model.query.AbstractQuery;
 import io.github.photowey.riff.infras.model.query.pagination.AbstractPaginationQuery;
 import io.github.photowey.riff.infras.model.result.meta.Meta;
+import io.github.photowey.riff.middleware.database.core.domain.entity.Entity;
+import io.github.photowey.riff.middleware.database.orm.mybatis.core.domain.mybatisplus.AbstractEntityExt;
+import io.github.photowey.riff.middleware.database.orm.mybatis.core.domain.mybatisplus.AbstractTenantEntity;
 import io.github.photowey.riff.middleware.database.orm.mybatis.core.domain.po.SystemUserPO;
 import io.github.photowey.riff.middleware.database.orm.mybatis.repository.SystemUserRepository;
 import io.github.photowey.riff.storage.api.SystemUserStorage;
@@ -67,12 +72,31 @@ public class SystemUserStorageImpl implements SystemUserStorage<SystemUserPO>, P
 
     @Override
     public void save(@Nonnull SystemUser entity) {
-        this.systemUserRepository.insert(this.toPo(entity));
+        SystemUserPO po = this.toPo(entity);
+        this.systemUserRepository.insert(po);
+
+        this.copyBase(entity, po);
     }
 
     @Override
     public void batchSave(@Nonnull Collection<SystemUser> entities) {
-        this.systemUserRepository.batchInserts(this.toPos(entities), SystemUserPO.class);
+        if (Collections.isEmpty(entities)) {
+            return;
+        }
+
+        List<SystemUser> images = new ArrayList<>(entities);
+        List<SystemUserPO> pos = this.toPos(images);
+        this.systemUserRepository.batchInserts(pos, SystemUserPO.class);
+
+        for (int i = 0; i < pos.size(); i++) {
+            this.copyBase(images.get(i), pos.get(i));
+        }
+
+        images.clear();
+        pos.clear();
+
+        images = null;
+        pos = null;
     }
 
     // ----------------------------------------------------------------
@@ -135,6 +159,29 @@ public class SystemUserStorageImpl implements SystemUserStorage<SystemUserPO>, P
         fx.accept(meta);
 
         return this.toEntities(page.getRecords());
+    }
+
+    // ----------------------------------------------------------------
+
+    @Override
+    public <P extends Entity> void copyTenant(@Nonnull SystemUser entity, @Nonnull P po) {
+        SystemUserStorage.super.copyTenant(entity, po);
+
+        if (po instanceof AbstractTenantEntity ptt) {
+            entity.setTenant(ptt.tenant());
+            entity.setPlatform(ptt.platform());
+            entity.setApp(ptt.app());
+        }
+    }
+
+    @Override
+    public <P extends Entity> void copyExt(@Nonnull SystemUser entity, @Nonnull P po) {
+        SystemUserStorage.super.copyExt(entity, po);
+
+        if (po instanceof AbstractEntityExt ett) {
+            entity.setVersion(ett.version());
+            entity.setDeleted(ett.deleted());
+        }
     }
 
     // ----------------------------------------------------------------
