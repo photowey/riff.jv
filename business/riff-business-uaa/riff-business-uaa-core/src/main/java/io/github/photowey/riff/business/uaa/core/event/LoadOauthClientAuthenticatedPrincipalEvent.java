@@ -18,7 +18,7 @@ package io.github.photowey.riff.business.uaa.core.event;
 
 import org.springframework.context.ApplicationEvent;
 
-import io.github.photowey.riff.infras.authentication.core.domain.authenticated.AuthenticatedPrincipal;
+import io.github.photowey.riff.infras.authentication.core.domain.authenticated.AuthenticationPrincipal;
 import io.github.photowey.riff.infras.authentication.core.username.Username;
 
 /**
@@ -30,7 +30,7 @@ import io.github.photowey.riff.infras.authentication.core.username.Username;
  */
 public class LoadOauthClientAuthenticatedPrincipalEvent extends ApplicationEvent {
 
-    private AuthenticatedPrincipal principal;
+    private AuthenticationPrincipal principal;
 
     public LoadOauthClientAuthenticatedPrincipalEvent(Username source) {
         super(source);
@@ -40,11 +40,11 @@ public class LoadOauthClientAuthenticatedPrincipalEvent extends ApplicationEvent
         return (Username) this.getSource();
     }
 
-    public void principal(AuthenticatedPrincipal principal) {
+    public void principal(AuthenticationPrincipal principal) {
         this.principal = principal;
     }
 
-    public AuthenticatedPrincipal principal() {
+    public AuthenticationPrincipal principal() {
         return principal;
     }
 }

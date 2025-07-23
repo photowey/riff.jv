@@ -18,7 +18,7 @@ package io.github.photowey.riff.business.uaa.security.checker;
 
 import org.springframework.core.Ordered;
 
-import io.github.photowey.riff.infras.authentication.core.domain.authenticated.AuthenticatedPrincipal;
+import io.github.photowey.riff.infras.authentication.core.domain.authenticated.AuthenticationPrincipal;
 
 /**
  * {@code DefaultAuthenticationAccountChecker}.
@@ -40,16 +40,16 @@ public class DefaultAuthenticationAccountChecker extends AbstractAuthenticationA
     }
 
     @Override
-    public void check(AuthenticatedPrincipal principal) {
+    public void check(AuthenticationPrincipal principal) {
         this.checkUserStatus(principal);
         this.checkAuthorizeStatus(principal);
     }
 
-    private void checkUserStatus(AuthenticatedPrincipal principal) {
+    private void checkUserStatus(AuthenticationPrincipal principal) {
 
     }
 
-    private void checkAuthorizeStatus(AuthenticatedPrincipal principal) {
+    private void checkAuthorizeStatus(AuthenticationPrincipal principal) {
 
     }
 }

@@ -192,6 +192,7 @@ public class SystemUserStorageImpl implements SystemUserStorage<SystemUserPO>, P
                 SystemUserPO::getId,
                 SystemUserPO::getCreateTime,
                 SystemUserPO::getCreateBy,
+                SystemUserPO::getDeleted,
                 SystemUserPO::getTenant,
                 SystemUserPO::getPlatform,
                 SystemUserPO::getApp,
@@ -200,7 +201,9 @@ public class SystemUserStorageImpl implements SystemUserStorage<SystemUserPO>, P
                 SystemUserPO::getMobile,
                 SystemUserPO::getAvatar,
                 SystemUserPO::getTwofaEnabled,
-                SystemUserPO::getTwofaSecret
+                SystemUserPO::getTwofaSecret,
+                SystemUserPO::getStatus,
+                SystemUserPO::getAuthenticationStatus
             )
             .eq(SystemUserPO::getUsername, username)
         );

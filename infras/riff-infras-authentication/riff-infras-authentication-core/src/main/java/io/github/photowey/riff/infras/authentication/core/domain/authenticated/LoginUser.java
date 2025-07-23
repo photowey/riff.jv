@@ -344,7 +344,7 @@ public class LoginUser implements UserDetails, IScope, IRole {
     // ----------------------------------------------------------------
 
 
-    public void injectPrincipalAuthorities(AuthenticatedPrincipal principal) {
+    public void injectPrincipalAuthorities(AuthenticationPrincipal principal) {
         this.appendAuthoritySets(principal.authorities());
         this.appendRoles(principal.roles());
         this.appendScopes(principal.scopes());

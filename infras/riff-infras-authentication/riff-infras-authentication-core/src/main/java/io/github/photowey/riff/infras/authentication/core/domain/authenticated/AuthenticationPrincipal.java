@@ -46,7 +46,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AuthenticatedPrincipal implements Serializable {
+public class AuthenticationPrincipal implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 158172152192799193L;

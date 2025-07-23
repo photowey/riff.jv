@@ -14,21 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.photowey.riff.infras.authentication.api.loader;
-
-import io.github.photowey.riff.infras.authentication.core.domain.authenticated.AuthenticationPrincipal;
-import io.github.photowey.riff.infras.authentication.property.getter.SecurityPropertiesGetter;
-import io.github.photowey.riff.infras.ioc.context.strategy.string.StringOrderedBeanFactoryStrategySupporter;
+package io.github.photowey.riff.business.uaa.service;
 
 /**
- * {@code AuthenticatedPrincipalLoader}.
+ * {@code LoginService}.
  *
  * @author photowey
  * @version 1.0.0
- * @since 2025/07/18
+ * @since 2025/07/23
  */
-public interface AuthenticatedPrincipalLoader
-    extends SecurityPropertiesGetter, StringOrderedBeanFactoryStrategySupporter {
-
-    AuthenticationPrincipal load(Long userId);
+public interface LoginService {
 }

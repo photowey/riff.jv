@@ -22,7 +22,7 @@ import org.springframework.core.Ordered;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import io.github.photowey.riff.infras.authentication.core.domain.authenticated.AuthenticatedPrincipal;
+import io.github.photowey.riff.infras.authentication.core.domain.authenticated.AuthenticationPrincipal;
 import io.github.photowey.riff.infras.authentication.core.domain.authenticated.LoginUser;
 import io.github.photowey.riff.infras.authentication.core.exception.SecurityAuthenticationException;
 import io.github.photowey.riff.infras.authentication.core.threadlocal.LoginUserHolder;
@@ -121,17 +121,17 @@ public class DefaultAuthenticatedHandler extends AbstractApplicationContextHolde
     }
 
     protected void checkUnAuthed() {
-        this.doCheckUnAuthed(AuthenticatedPrincipal::determineIsForbiddenRequest);
+        this.doCheckUnAuthed(AuthenticationPrincipal::determineIsForbiddenRequest);
     }
 
     protected void tryCheckUnAuthed() {
-        this.doCheckUnAuthed(AuthenticatedPrincipal::tryDetermineIsForbiddenRequest);
+        this.doCheckUnAuthed(AuthenticationPrincipal::tryDetermineIsForbiddenRequest);
     }
 
-    protected void doCheckUnAuthed(Function<AuthenticatedPrincipal, Boolean> fx) {
+    protected void doCheckUnAuthed(Function<AuthenticationPrincipal, Boolean> fx) {
         LoginUser loginUser = LoginUserHolder.get();
         if (Objects.isNotNull(loginUser)) {
-            AuthenticatedPrincipal principal = this.tryLoadAuthenticatedPrincipal(loginUser);
+            AuthenticationPrincipal principal = this.tryLoadAuthenticatedPrincipal(loginUser);
 
             if (fx.apply(principal)) {
                 throw new SecurityAuthenticationException(ExceptionStatus.UNAUTHORIZED);
@@ -142,7 +142,7 @@ public class DefaultAuthenticatedHandler extends AbstractApplicationContextHolde
         // TODO Not implemented
     }
 
-    private AuthenticatedPrincipal tryLoadAuthenticatedPrincipal(LoginUser loginUser) {
+    private AuthenticationPrincipal tryLoadAuthenticatedPrincipal(LoginUser loginUser) {
         // TODO Not implemented
         throw new UnsupportedOperationException("Not implemented");
     }

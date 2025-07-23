@@ -12,16 +12,104 @@
 
     <resultMap id="SystemUserPO"
                type="io.github.photowey.riff.middleware.database.orm.mybatis.core.domain.po.SystemUserPO">
-        <!-- TODO -->
+        <id column="id" property="id"/>
+
+        <result column="create_by" property="createBy"/>
+        <result column="create_time" property="createTime"/>
+        <result column="deleted" property="deleted"/>
+
+        <result column="tenant" property="tenant"/>
+        <result column="platform" property="platform"/>
+        <result column="app" property="app"/>
+
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="email" property="email"/>
+        <result column="mobile" property="mobile"/>
+        <result column="avatar" property="avatar"/>
+        <result column="twofa_enabled" property="twofaEnabled"/>
+        <result column="twofa_secret" property="twofaSecret"/>
+        <result column="status" property="status"/>
+        <result column="authentication_status" property="authenticationStatus"/>
     </resultMap>
 
-    <select id="selectList" resultMap="SystemUserPO">
-        <!-- TODO -->
-    </select>
+    <!-- ****_****_****_****__****_****_****_**** -->
 
-    <select id="selectPage" resultMap="SystemUserPO">
-        <!-- TODO -->
+    <sql id="DynamicQuerySQL">
+        <where>
+            <if test="query.id != null">
+                AND id = #{query.id}
+            </if>
+            <if test="query.status != null">
+                AND status = #{query.status}
+            </if>
+
+            <if test="query.authenticationStatus != null">
+                AND authentication_status = #{query.authenticationStatus}
+            </if>
+
+            <if test="query.username != null and query.username != ''">
+                AND username LIKE CONCAT('%',#{query.username},'%')
+            </if>
+            <if test="query.mobile != null and query.mobile != ''">
+                AND mobile LIKE CONCAT('%',#{query.mobile},'%')
+            </if>
+
+            <if test="1 == 1">
+                AND deleted = 0
+            </if>
+        </where>
+    </sql>
+
+    <!-- ****_****_****_****__****_****_****_**** -->
+
+    <!-- @formatter:off -->
+    <select id="selectList" resultMap="SystemUserPO">
+        SELECT
+            id,
+            create_by,
+            create_time,
+            deleted,
+            tenant,
+            platform,
+            app,
+            username,
+            password,
+            email,
+            mobile,
+            avatar,
+            twofa_enabled,
+            twofa_secret,
+            status,
+            authentication_status
+        FROM riff_system_user
+        <include refid="DynamicQuerySQL" />
     </select>
+    <!-- @formatter:on -->
+
+    <!-- @formatter:off -->
+    <select id="selectPage" resultMap="SystemUserPO">
+        SELECT
+            id,
+            create_by,
+            create_time,
+            deleted,
+            tenant,
+            platform,
+            app,
+            username,
+            password,
+            email,
+            mobile,
+            avatar,
+            twofa_enabled,
+            twofa_secret,
+            status,
+            authentication_status
+        FROM riff_system_user
+        <include refid="DynamicQuerySQL" />
+    </select>
+    <!-- @formatter:on -->
 
     <!-- ****_****_****_****__****_****_****_**** -->
 
@@ -29,9 +117,4 @@
         DELETE FROM riff_system_user WHERE id = #{id}
     </delete>
 
-    <!--
-    <update id="logicalDelete">
-        UPDATE riff_system_user SET deleted = 1 WHERE id = #{id}
-    </update>
-    -->
 </mapper>

@@ -14,21 +14,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.photowey.riff.infras.authentication.api.loader;
+package io.github.photowey.riff.middleware.database.orm.mybatis.repository;
 
-import io.github.photowey.riff.infras.authentication.core.domain.authenticated.AuthenticationPrincipal;
-import io.github.photowey.riff.infras.authentication.property.getter.SecurityPropertiesGetter;
-import io.github.photowey.riff.infras.ioc.context.strategy.string.StringOrderedBeanFactoryStrategySupporter;
+import org.apache.ibatis.annotations.Param;
+
+import io.github.photowey.riff.middleware.database.orm.mybatis.core.domain.po.ScheduleClientPO;
+import io.github.photowey.riff.middleware.database.orm.mybatis.ext.BatchRepositoryExt;
 
 /**
- * {@code AuthenticatedPrincipalLoader}.
+ * {@code ScheduleClientRepository}
  *
  * @author photowey
  * @version 1.0.0
- * @since 2025/07/18
+ * @since 2025/07/21
  */
-public interface AuthenticatedPrincipalLoader
-    extends SecurityPropertiesGetter, StringOrderedBeanFactoryStrategySupporter {
+public interface ScheduleClientRepository extends BatchRepositoryExt<ScheduleClientPO> {
 
-    AuthenticationPrincipal load(Long userId);
+    void physicalDelete(@Param("id") Long id);
 }

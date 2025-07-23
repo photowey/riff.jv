@@ -14,21 +14,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.photowey.riff.infras.authentication.api.loader;
+package io.github.photowey.riff.business.uaa.service.impl;
 
+import org.springframework.stereotype.Service;
+
+import io.github.photowey.riff.business.uaa.service.ScheduleAppService;
 import io.github.photowey.riff.infras.authentication.core.domain.authenticated.AuthenticationPrincipal;
-import io.github.photowey.riff.infras.authentication.property.getter.SecurityPropertiesGetter;
-import io.github.photowey.riff.infras.ioc.context.strategy.string.StringOrderedBeanFactoryStrategySupporter;
+import io.github.photowey.riff.infras.authentication.core.username.Username;
 
 /**
- * {@code AuthenticatedPrincipalLoader}.
+ * {@code ScheduleAppServiceImpl}.
  *
  * @author photowey
  * @version 1.0.0
- * @since 2025/07/18
+ * @since 2025/07/23
  */
-public interface AuthenticatedPrincipalLoader
-    extends SecurityPropertiesGetter, StringOrderedBeanFactoryStrategySupporter {
+@Service
+public class ScheduleAppServiceImpl implements ScheduleAppService {
 
-    AuthenticationPrincipal load(Long userId);
+    @Override
+    public AuthenticationPrincipal loadPrincipal(Username proxy) {
+        return null;
+    }
 }

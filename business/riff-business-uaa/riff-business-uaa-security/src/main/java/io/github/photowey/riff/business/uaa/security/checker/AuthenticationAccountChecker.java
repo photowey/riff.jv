@@ -16,7 +16,7 @@
  */
 package io.github.photowey.riff.business.uaa.security.checker;
 
-import io.github.photowey.riff.infras.authentication.core.domain.authenticated.AuthenticatedPrincipal;
+import io.github.photowey.riff.infras.authentication.core.domain.authenticated.AuthenticationPrincipal;
 import io.github.photowey.riff.infras.authentication.property.getter.SecurityPropertiesGetter;
 
 /**
@@ -28,5 +28,5 @@ import io.github.photowey.riff.infras.authentication.property.getter.SecurityPro
  */
 public interface AuthenticationAccountChecker extends AccountChecker, SecurityPropertiesGetter {
 
-    void check(AuthenticatedPrincipal principal);
+    void check(AuthenticationPrincipal principal);
 }

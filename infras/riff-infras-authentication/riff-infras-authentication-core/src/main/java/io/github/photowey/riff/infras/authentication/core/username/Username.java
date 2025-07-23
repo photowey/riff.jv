@@ -68,4 +68,34 @@ public class Username implements Serializable {
     public static Username parse(String proxy) {
         throw new UnsupportedOperationException("Not implemented");
     }
+
+    // ----------------------------------------------------------------
+
+    public String tenant() {
+        return tenant;
+    }
+
+    public String platform() {
+        return platform;
+    }
+
+    public String app() {
+        return app;
+    }
+
+    public String client() {
+        return client;
+    }
+
+    public Integer type() {
+        return type;
+    }
+
+    public String username() {
+        return username;
+    }
+
+    public String password() {
+        return password;
+    }
 }

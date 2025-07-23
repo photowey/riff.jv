@@ -14,37 +14,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.photowey.riff.business.uaa.core.event;
+package io.github.photowey.riff.business.uaa.service.listener;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEvent;
+import org.springframework.context.ApplicationListener;
 
-import io.github.photowey.riff.infras.authentication.core.domain.authenticated.AuthenticationPrincipal;
-import io.github.photowey.riff.infras.authentication.core.username.Username;
+import io.github.photowey.riff.business.uaa.service.ScheduleAppService;
+import io.github.photowey.riff.business.uaa.service.SystemUserService;
+
+import lombok.Getter;
+import lombok.experimental.Accessors;
 
 /**
- * {@code LoadAuthenticatedPrincipalEvent}.
+ * {@code AbstractApplicationListener}.
  *
+ * @param <E> The type of the event
  * @author photowey
  * @version 1.0.0
- * @since 2025/07/22
+ * @since 2025/07/23
  */
-public class LoadAuthenticatedPrincipalEvent extends ApplicationEvent {
+@Getter
+@Accessors(fluent = true)
+public abstract class AbstractApplicationListener<E extends ApplicationEvent> implements ApplicationListener<E> {
 
-    private AuthenticationPrincipal principal;
+    @Autowired
+    protected SystemUserService systemUserService;
 
-    public LoadAuthenticatedPrincipalEvent(Username source) {
-        super(source);
-    }
-
-    public Username username() {
-        return (Username) this.getSource();
-    }
-
-    public void principal(AuthenticationPrincipal principal) {
-        this.principal = principal;
-    }
-
-    public AuthenticationPrincipal principal() {
-        return principal;
-    }
+    @Autowired
+    protected ScheduleAppService scheduleAppService;
 }

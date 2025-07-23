@@ -38,6 +38,7 @@ public class UaaWebappAutoConfiguration {
     @ComponentScan(value = {
         "io.github.photowey.riff.business.uaa.web.controller",
         "io.github.photowey.riff.business.uaa.web.global",
+        "io.github.photowey.riff.business.uaa.service",
     })
     public static class UaaWebappConfiguration {
 

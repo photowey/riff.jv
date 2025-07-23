@@ -54,6 +54,6 @@ public class DomainUserDetailsServiceImpl extends AbstractBeanFactoryHolder impl
             }
         }
 
-        throw new UnsupportedOperationException("Unreached here");
+        throw new UnsupportedOperationException("Unreachable here");
     }
 }

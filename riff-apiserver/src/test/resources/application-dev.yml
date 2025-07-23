@@ -2,6 +2,9 @@ server:
   # Valtteri Bottas | Zhou Guanyu
   port: 7724
 
+test:
+  environment: ci
+
 local:
   configurator:
     database:

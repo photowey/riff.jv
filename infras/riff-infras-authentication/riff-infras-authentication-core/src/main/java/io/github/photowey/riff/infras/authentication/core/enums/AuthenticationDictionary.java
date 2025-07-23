@@ -36,6 +36,7 @@ public enum AuthenticationDictionary {
         public enum Status {
 
             // AUTHENTICATION STATUS
+            // 1: Unauthenticated 2: Authenticating 4: Authenticated 8: Authentication Failed
 
             UNAUTHENTICATED("UNAUTHENTICATED", "unauthenticated", 1),
             AUTHENTICATING("AUTHENTICATING", "authenticating", 2),
@@ -161,6 +162,7 @@ public enum AuthenticationDictionary {
         public enum Status {
 
             // USER STATUS
+            // 1: Unactivated 2: Activated 4: Frozen 8: Forbidden 16: Expired 32: Locked
 
             UNACTIVATED("UNACTIVATED", "unactivated", 1),
             /**

@@ -20,15 +20,17 @@ import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Profile;
 import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.junit.jupiter.EnabledIf;
 
+import io.github.photowey.riff.apiserver.AbstractLocalTest;
 import io.github.photowey.riff.apiserver.TestApiServer;
 import io.github.photowey.riff.core.domain.entity.SystemUser;
-import io.github.photowey.riff.middleware.database.orm.mybatis.core.domain.po.SystemUserPO;
-import io.github.photowey.riff.storage.api.SystemUserStorage;
+import io.github.photowey.riff.core.domain.query.SystemUserQuery;
+import io.github.photowey.riff.core.domain.query.pagination.SystemUserPaginationQuery;
+import io.github.photowey.riff.infras.authentication.core.enums.AuthenticationDictionary;
+import io.github.photowey.riff.infras.model.result.PageResult;
 
 /**
  * {@code SystemUserStorageTest}.
@@ -37,14 +39,9 @@ import io.github.photowey.riff.storage.api.SystemUserStorage;
  * @version 1.0.0
  * @since 2025/07/22
  */
-@SpringBootTest(classes = {
-    TestApiServer.class,
-})
-@Profile(value = "local")
-class SystemUserStorageTest {
-
-    @Autowired
-    private SystemUserStorage<SystemUserPO> systemUserStorage;
+@SpringBootTest(classes = TestApiServer.class)
+@EnabledIf(expression = "#{systemProperties['spring.profiles.active'] == 'local'}", loadContext = true)
+class SystemUserStorageTest extends AbstractLocalTest {
 
     @Test
     @Rollback
@@ -55,6 +52,8 @@ class SystemUserStorageTest {
             .email("photowey@gmail.com")
             .mobile("18888888888")
             .twofaEnabled(0)
+            .status(AuthenticationDictionary.User.Status.ACTIVATED.value())
+            .authenticationStatus(AuthenticationDictionary.Authentication.Status.AUTHENTICATED.value())
             .build();
 
         this.systemUserStorage.save(systemUser);
@@ -75,6 +74,8 @@ class SystemUserStorageTest {
             .email("photowey@gmail.com")
             .mobile("18888888888")
             .twofaEnabled(0)
+            .status(AuthenticationDictionary.User.Status.ACTIVATED.value())
+            .authenticationStatus(AuthenticationDictionary.Authentication.Status.AUTHENTICATED.value())
             .build();
 
         SystemUser systemUser01 = SystemUser.builder()
@@ -83,6 +84,8 @@ class SystemUserStorageTest {
             .email("photowey@gmail.com")
             .mobile("18888888888")
             .twofaEnabled(0)
+            .status(AuthenticationDictionary.User.Status.ACTIVATED.value())
+            .authenticationStatus(AuthenticationDictionary.Authentication.Status.AUTHENTICATED.value())
             .build();
 
         this.systemUserStorage.batchSave(List.of(systemUser00, systemUser01));
@@ -95,5 +98,35 @@ class SystemUserStorageTest {
 
         SystemUser selected01 = this.systemUserStorage.selectOne(systemUser01.id());
         Assertions.assertNotNull(selected01);
+    }
+
+    @Test
+    void testSelectList() {
+        SystemUserQuery query = SystemUserQuery.builder()
+            .id(1L)
+            .username("admin")
+            .mobile("18888888888")
+            .status(AuthenticationDictionary.User.Status.ACTIVATED.value())
+            .authenticationStatus(AuthenticationDictionary.Authentication.Status.AUTHENTICATED.value())
+            .build();
+
+        List<SystemUser> systemUsers = this.systemUserStorage.selectList(query);
+        Assertions.assertNotNull(systemUsers);
+        Assertions.assertEquals(0, systemUsers.size());
+    }
+
+    @Test
+    void testSelectPage() {
+        SystemUserPaginationQuery query = SystemUserPaginationQuery.builder()
+            .id(0L)
+            .username("admin")
+            .mobile("18888888888")
+            .status(AuthenticationDictionary.User.Status.ACTIVATED.value())
+            .authenticationStatus(AuthenticationDictionary.Authentication.Status.AUTHENTICATED.value())
+            .build();
+
+        PageResult<SystemUser> result = this.systemUserStorage.selectPage(query);
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals(0, result.data().total());
     }
 }

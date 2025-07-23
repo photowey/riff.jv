@@ -22,6 +22,12 @@
             <groupId>io.github.photowey</groupId>
             <artifactId>riff-business-uaa-security</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>io.github.photowey</groupId>
+            <artifactId>riff-storage-mysql-mybatis</artifactId>
+            <type>pom</type>
+        </dependency>
     </dependencies>
 
     <build>

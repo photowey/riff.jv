@@ -18,7 +18,7 @@ package io.github.photowey.riff.business.uaa.security.loader;
 
 import io.github.photowey.riff.business.uaa.core.event.LoadOauthClientAuthenticatedPrincipalEvent;
 import io.github.photowey.riff.infras.authentication.core.constant.AuthorityConstants;
-import io.github.photowey.riff.infras.authentication.core.domain.authenticated.AuthenticatedPrincipal;
+import io.github.photowey.riff.infras.authentication.core.domain.authenticated.AuthenticationPrincipal;
 import io.github.photowey.riff.infras.authentication.core.passport.UsernamePassport;
 import io.github.photowey.riff.infras.authentication.core.username.Username;
 
@@ -47,7 +47,7 @@ public class OauthClientAuthenticationUserDetailsLoader extends AbstractAuthenti
     }
 
     @Override
-    public AuthenticatedPrincipal toAuthenticatedPrincipal(Username proxy) {
+    public AuthenticationPrincipal toAuthenticatedPrincipal(Username proxy) {
         LoadOauthClientAuthenticatedPrincipalEvent event = new LoadOauthClientAuthenticatedPrincipalEvent(proxy);
         this.publisher().publishEvent(event);
 
@@ -55,7 +55,7 @@ public class OauthClientAuthenticationUserDetailsLoader extends AbstractAuthenti
     }
 
     @Override
-    public UsernamePassport toUsernamePassport(AuthenticatedPrincipal principal) {
+    public UsernamePassport toUsernamePassport(AuthenticationPrincipal principal) {
         this.checkAccountInvalid(principal);
 
         return UsernamePassport.builder()

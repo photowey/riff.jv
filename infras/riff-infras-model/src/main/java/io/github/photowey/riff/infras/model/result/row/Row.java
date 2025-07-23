@@ -88,9 +88,9 @@ public class Row<T> implements Serializable {
     // ----------------------------------------------------------------
 
     public void resetMeta(Meta meta) {
-        this.pageNo = Objects.defaultIfNull(pageNo, 1L);
-        this.pageSize = Objects.defaultIfNull(pageSize, 10L);
-        this.total = Objects.defaultIfNull(total, 0L);
+        this.pageNo = Objects.defaultIfNull(meta.pageNo(), 1L);
+        this.pageSize = Objects.defaultIfNull(meta.pageSize(), 10L);
+        this.total = Objects.defaultIfNull(meta.total(), 0L);
     }
 
     // ----------------------------------------------------------------

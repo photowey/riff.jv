@@ -42,7 +42,7 @@ import io.github.photowey.riff.infras.authentication.api.encryptor.Encryptor;
 import io.github.photowey.riff.infras.authentication.api.encryptor.SubjectEncryptor;
 import io.github.photowey.riff.infras.authentication.api.loader.AuthenticatedPrincipalLoader;
 import io.github.photowey.riff.infras.authentication.core.constant.AuthorityConstants;
-import io.github.photowey.riff.infras.authentication.core.domain.authenticated.AuthenticatedPrincipal;
+import io.github.photowey.riff.infras.authentication.core.domain.authenticated.AuthenticationPrincipal;
 import io.github.photowey.riff.infras.authentication.core.domain.authenticated.LoginUser;
 import io.github.photowey.riff.infras.authentication.core.enums.AuthenticationDictionary;
 import io.github.photowey.riff.infras.authentication.core.passport.UsernamePassport;
@@ -339,7 +339,7 @@ public class JwtTokenServiceImpl extends AbstractBeanFactoryHolder implements Jw
 
         for (AuthenticatedPrincipalLoader loader : loaders) {
             if (loader.supports(strategy)) {
-                AuthenticatedPrincipal principal = loader.load(loginUser.getUserId());
+                AuthenticationPrincipal principal = loader.load(loginUser.getUserId());
                 if (Objects.isNotNull(principal)) {
                     loginUser.injectPrincipalAuthorities(principal);
                 }

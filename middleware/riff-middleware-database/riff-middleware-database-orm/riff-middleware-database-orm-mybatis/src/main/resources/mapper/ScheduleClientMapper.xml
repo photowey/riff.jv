@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="io.github.photowey.riff.middleware.database.orm.mybatis.repository.ScheduleClientRepository">
+
+    <!--
+    @author photowey
+    @version 1.0.0
+    @since 2025/07/21
+    -->
+
+    <!-- ****_****_****_****__****_****_****_**** -->
+
+    <delete id="physicalDelete">
+        DELETE FROM riff_schedule_client WHERE id = #{id}
+    </delete>
+</mapper>

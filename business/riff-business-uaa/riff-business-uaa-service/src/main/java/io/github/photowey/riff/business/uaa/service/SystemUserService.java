@@ -16,6 +16,9 @@
  */
 package io.github.photowey.riff.business.uaa.service;
 
+import io.github.photowey.riff.infras.authentication.core.domain.authenticated.AuthenticationPrincipal;
+import io.github.photowey.riff.infras.authentication.core.username.Username;
+
 /**
  * {@code SystemUserService}.
  *
@@ -24,4 +27,14 @@ package io.github.photowey.riff.business.uaa.service;
  * @since 2025/07/22
  */
 public interface SystemUserService {
+
+    // ----------------------------------------------------------------
+
+    /**
+     * Load the {@link AuthenticationPrincipal}.
+     *
+     * @param proxy the username proxy {@link Username}
+     * @return the {@link AuthenticationPrincipal}
+     */
+    AuthenticationPrincipal loadPrincipal(Username proxy);
 }

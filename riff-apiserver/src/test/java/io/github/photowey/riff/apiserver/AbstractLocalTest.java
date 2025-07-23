@@ -14,21 +14,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.photowey.riff.infras.authentication.api.loader;
+package io.github.photowey.riff.apiserver;
 
-import io.github.photowey.riff.infras.authentication.core.domain.authenticated.AuthenticationPrincipal;
-import io.github.photowey.riff.infras.authentication.property.getter.SecurityPropertiesGetter;
-import io.github.photowey.riff.infras.ioc.context.strategy.string.StringOrderedBeanFactoryStrategySupporter;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import io.github.photowey.riff.infras.authentication.api.handler.password.PasswordHandler;
+import io.github.photowey.riff.middleware.database.orm.mybatis.core.domain.po.SystemUserPO;
+import io.github.photowey.riff.storage.api.SystemUserStorage;
 
 /**
- * {@code AuthenticatedPrincipalLoader}.
+ * {@code AbstractLocalTest}.
  *
  * @author photowey
  * @version 1.0.0
- * @since 2025/07/18
+ * @since 2025/07/23
  */
-public interface AuthenticatedPrincipalLoader
-    extends SecurityPropertiesGetter, StringOrderedBeanFactoryStrategySupporter {
+public abstract class AbstractLocalTest {
 
-    AuthenticationPrincipal load(Long userId);
+    @Autowired
+    protected PasswordHandler passwordHandler;
+
+    @Autowired
+    protected SystemUserStorage<SystemUserPO> systemUserStorage;
 }

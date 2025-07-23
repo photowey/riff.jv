@@ -16,9 +16,17 @@
  */
 package io.github.photowey.riff.business.uaa.service.impl;
 
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import io.github.photowey.riff.business.uaa.service.SystemUserService;
+import io.github.photowey.riff.core.domain.entity.SystemUser;
+import io.github.photowey.riff.infras.authentication.core.domain.authenticated.AuthenticationPrincipal;
+import io.github.photowey.riff.infras.authentication.core.username.Username;
+import io.github.photowey.riff.middleware.database.orm.mybatis.core.domain.po.SystemUserPO;
+import io.github.photowey.riff.storage.api.SystemUserStorage;
 
 /**
  * {@code SystemUserServiceImpl}.
@@ -29,4 +37,37 @@ import io.github.photowey.riff.business.uaa.service.SystemUserService;
  */
 @Service
 public class SystemUserServiceImpl implements SystemUserService {
+
+    @Autowired
+    private SystemUserStorage<SystemUserPO> systemUserStorage;
+
+    @Override
+    public AuthenticationPrincipal loadPrincipal(Username proxy) {
+        Optional<SystemUser> systemUserOpt = this.systemUserStorage.tryFindSystemUser(proxy.username());
+
+        if (systemUserOpt.isPresent()) {
+
+            SystemUser systemUser = systemUserOpt.get();
+
+            return AuthenticationPrincipal.builder()
+                .tenant(systemUser.tenant())
+                .platform(systemUser.platform())
+                .app(systemUser.app())
+                .client(proxy.client())
+                // ----------------------------------------------------------------
+                .userId(systemUser.id())
+                .username(systemUser.username())
+                .password(systemUser.password())
+                .mobile(systemUser.mobile())
+                .type(proxy.type())
+                // ----------------------------------------------------------------
+                .status(systemUser.status())
+                .authenticationStatus(systemUser.authenticationStatus())
+                .deleted(systemUser.deleted())
+                .build();
+        }
+
+
+        return null;
+    }
 }

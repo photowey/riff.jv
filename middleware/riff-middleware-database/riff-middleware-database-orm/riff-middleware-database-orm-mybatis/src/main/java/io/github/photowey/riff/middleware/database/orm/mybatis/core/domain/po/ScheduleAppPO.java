@@ -29,7 +29,8 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 /**
- * {@code SystemUserPO}.
+ * {@code ScheduleAppPO}.
+ * |- riff_schedule_app
  *
  * @author photowey
  * @version 1.0.0
@@ -40,87 +41,73 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@TableName("riff_system_user")
-public class SystemUserPO extends AbstractTenantEntity {
+@TableName("riff_schedule_app")
+public class ScheduleAppPO extends AbstractTenantEntity {
 
     @Serial
-    private static final long serialVersionUID = -9171802724527392334L;
+    private static final long serialVersionUID = -708641287067384113L;
 
     /**
-     * Username
+     * AppCode
      */
-    private String username;
+    private String appCode;
     /**
-     * Password
+     * AppName
      */
-    private String password;
+    private String appName;
     /**
-     * Email
+     * AccessKey
      */
-    private String email;
+    private String accessKey;
     /**
-     * Mobile
+     * AccessSecret
      */
-    private String mobile;
+    private String accessSecret;
     /**
-     * Avatar
+     * Cluster
      */
-    private String avatar;
+    private String cluster;
     /**
-     * TwofaEnabled 0:Disabled 1:Enabled
+     * ConfiguratorNamespace
+     * |- Nullable
+     * |- e.g.: {@code Nacos#Namespace}
      */
-    private Integer twofaEnabled;
+    private String configuratorNamespace;
     /**
-     * TwofaSecret
+     * ConfiguratorGroup
+     * |- Nullable
+     * |- e.g.: {@code Nacos#Group}
      */
-    private String twofaSecret;
-
-    /**
-     * Status
-     * |- 1: Unactivated 2: Activated 4: Frozen 8: Forbidden 16: Expired 32: Locked
-     */
-    private Integer status;
-    /**
-     * Authentication Status
-     * |- 1: Unauthenticated 2: Authenticating 4: Authenticated 8: Authentication Failed
-     */
-    private Integer authenticationStatus;
+    private String configuratorGroup;
 
     // ----------------------------------------------------------------
 
-    public String username() {
-        return this.username;
+    public String appCode() {
+        return this.appCode;
     }
 
-    public String password() {
-        return this.password;
+    public String appName() {
+        return this.appName;
     }
 
-    public String email() {
-        return this.email;
+    public String accessKey() {
+        return this.accessKey;
     }
 
-    public String mobile() {
-        return this.mobile;
+    public String accessSecret() {
+        return this.accessSecret;
     }
 
-    public String avatar() {
-        return this.avatar;
+    public String cluster() {
+        return this.cluster;
     }
 
-    public Integer twofaEnabled() {
-        return this.twofaEnabled;
+    public String configuratorNamespace() {
+        return this.configuratorNamespace;
     }
 
-    public String twofaSecret() {
-        return this.twofaSecret;
+    public String configuratorGroup() {
+        return this.configuratorGroup;
     }
 
-    public Integer status() {
-        return status;
-    }
-
-    public Integer authenticationStatus() {
-        return authenticationStatus;
-    }
 }

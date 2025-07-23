@@ -14,21 +14,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.photowey.riff.infras.authentication.api.loader;
+package io.github.photowey.riff.storage.api;
 
-import io.github.photowey.riff.infras.authentication.core.domain.authenticated.AuthenticationPrincipal;
-import io.github.photowey.riff.infras.authentication.property.getter.SecurityPropertiesGetter;
-import io.github.photowey.riff.infras.ioc.context.strategy.string.StringOrderedBeanFactoryStrategySupporter;
+import io.github.photowey.riff.core.domain.entity.ScheduleClient;
 
 /**
- * {@code AuthenticatedPrincipalLoader}.
+ * {@code ScheduleClientStorage}.
  *
+ * @param <PO> The {@code Database} persistence entity type.
  * @author photowey
  * @version 1.0.0
- * @since 2025/07/18
+ * @since 2025/07/23
  */
-public interface AuthenticatedPrincipalLoader
-    extends SecurityPropertiesGetter, StringOrderedBeanFactoryStrategySupporter {
-
-    AuthenticationPrincipal load(Long userId);
+public interface ScheduleClientStorage<PO> extends EntityStorage<ScheduleClient, PO> {
 }

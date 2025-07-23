@@ -14,27 +14,38 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.photowey.riff.apiserver;
+package io.github.photowey.riff.apiserver.handler.password;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.EnabledIf;
 
+import io.github.photowey.riff.apiserver.AbstractLocalTest;
+import io.github.photowey.riff.apiserver.TestApiServer;
+
+import lombok.extern.slf4j.Slf4j;
+
+
 /**
- * {@code ApiServerTests}.
+ * {@code PasswordHandlerTest}.
  *
  * @author photowey
  * @version 1.0.0
- * @since 2025/07/22
+ * @since 2025/07/23
  */
+@Slf4j
 @SpringBootTest(classes = TestApiServer.class)
 @EnabledIf(expression = "#{systemProperties['spring.profiles.active'] == 'local'}", loadContext = true)
-class ApiServerTests {
-
-    // @formatter:off
+class PasswordHandlerTest extends AbstractLocalTest {
 
     @Test
-    void contextLoads() { }
+    void testPasswordEncode() {
+        String password = "admin@riff.jv";
+        String encoded = this.passwordHandler.encode(password);
+        log.info("the encoded password is:[{},{}]", password, encoded);
 
-    // @formatter:on
+        boolean matches = this.passwordHandler.matches(password, encoded);
+        Assertions.assertTrue(matches);
+    }
 }

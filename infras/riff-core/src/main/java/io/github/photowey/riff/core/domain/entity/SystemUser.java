@@ -74,6 +74,17 @@ public class SystemUser extends AbstractTenantEntity implements TableId {
      */
     private String twofaSecret;
 
+    /**
+     * Status
+     * |- 1: Unactivated 2: Activated 4: Frozen 8: Forbidden 16: Expired 32: Locked
+     */
+    private Integer status;
+    /**
+     * Authentication Status
+     * |- 1: Unauthenticated 2: Authenticating 4: Authenticated 8: Authentication Failed
+     */
+    private Integer authenticationStatus;
+
     // ----------------------------------------------------------------
 
     public String username() {
@@ -102,5 +113,13 @@ public class SystemUser extends AbstractTenantEntity implements TableId {
 
     public String twofaSecret() {
         return this.twofaSecret;
+    }
+
+    public Integer status() {
+        return status;
+    }
+
+    public Integer authenticationStatus() {
+        return authenticationStatus;
     }
 }

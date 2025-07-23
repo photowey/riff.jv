@@ -14,21 +14,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.photowey.riff.infras.authentication.api.loader;
+package io.github.photowey.riff.storage.orm.mybatis.assembler;
 
-import io.github.photowey.riff.infras.authentication.core.domain.authenticated.AuthenticationPrincipal;
-import io.github.photowey.riff.infras.authentication.property.getter.SecurityPropertiesGetter;
-import io.github.photowey.riff.infras.ioc.context.strategy.string.StringOrderedBeanFactoryStrategySupporter;
+import org.mapstruct.Mapper;
+import org.mapstruct.MappingConstants;
+
+import io.github.photowey.riff.core.domain.entity.ScheduleApp;
+import io.github.photowey.riff.infras.model.assembler.EntityAssembler;
+import io.github.photowey.riff.middleware.database.orm.mybatis.core.domain.po.ScheduleAppPO;
+
+// @formatter:off
 
 /**
- * {@code AuthenticatedPrincipalLoader}.
+ * {@code ScheduleAppAssembler}.
  *
  * @author photowey
  * @version 1.0.0
- * @since 2025/07/18
+ * @since 2025/07/23
  */
-public interface AuthenticatedPrincipalLoader
-    extends SecurityPropertiesGetter, StringOrderedBeanFactoryStrategySupporter {
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
+public interface ScheduleAppAssembler extends EntityAssembler<ScheduleApp, ScheduleAppPO> { }
 
-    AuthenticationPrincipal load(Long userId);
-}
+// @formatter:on

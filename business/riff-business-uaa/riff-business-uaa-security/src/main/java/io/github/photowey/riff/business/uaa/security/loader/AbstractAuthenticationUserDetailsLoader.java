@@ -25,7 +25,7 @@ import org.springframework.core.annotation.AnnotationAwareOrderComparator;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import io.github.photowey.riff.business.uaa.security.checker.AuthenticationAccountChecker;
-import io.github.photowey.riff.infras.authentication.core.domain.authenticated.AuthenticatedPrincipal;
+import io.github.photowey.riff.infras.authentication.core.domain.authenticated.AuthenticationPrincipal;
 import io.github.photowey.riff.infras.authentication.core.domain.authenticated.LoginUser;
 import io.github.photowey.riff.infras.authentication.core.passport.UsernamePassport;
 import io.github.photowey.riff.infras.authentication.core.username.Username;
@@ -55,7 +55,7 @@ public abstract class AbstractAuthenticationUserDetailsLoader
     @Override
     public UserDetails load(String proxy) {
         Username username = this.parseUsername(proxy);
-        AuthenticatedPrincipal principal = this.toAuthenticatedPrincipal(username);
+        AuthenticationPrincipal principal = this.toAuthenticatedPrincipal(username);
         this.checkAccount(principal);
 
         return this.toLoginUser(principal, username);
@@ -75,24 +75,24 @@ public abstract class AbstractAuthenticationUserDetailsLoader
     public abstract String protocol();
 
     /**
-     * Load the {@link AuthenticatedPrincipal} by {@link Username}.
+     * Load the {@link AuthenticationPrincipal} by {@link Username}.
      *
      * @param proxy the username proxy {@link Username}.
-     * @return the {@link AuthenticatedPrincipal}.
+     * @return the {@link AuthenticationPrincipal}.
      */
-    public abstract AuthenticatedPrincipal toAuthenticatedPrincipal(Username proxy);
+    public abstract AuthenticationPrincipal toAuthenticatedPrincipal(Username proxy);
 
     /**
-     * Convert the {@link AuthenticatedPrincipal} to {@link UsernamePassport}.
+     * Convert the {@link AuthenticationPrincipal} to {@link UsernamePassport}.
      *
-     * @param principal the {@link AuthenticatedPrincipal}.
+     * @param principal the {@link AuthenticationPrincipal}.
      * @return the {@link UsernamePassport}.
      */
-    public abstract UsernamePassport toUsernamePassport(AuthenticatedPrincipal principal);
+    public abstract UsernamePassport toUsernamePassport(AuthenticationPrincipal principal);
 
     // ----------------------------------------------------------------
 
-    private void checkAccount(AuthenticatedPrincipal principal) {
+    private void checkAccount(AuthenticationPrincipal principal) {
         Map<String, AuthenticationAccountChecker> beans =
             this.listableBeanFactory().getBeansOfType(AuthenticationAccountChecker.class);
         List<AuthenticationAccountChecker> accountCheckers = new ArrayList<>(beans.values());
@@ -108,7 +108,7 @@ public abstract class AbstractAuthenticationUserDetailsLoader
         }
     }
 
-    protected void checkAccountInvalid(AuthenticatedPrincipal principal) {
+    protected void checkAccountInvalid(AuthenticationPrincipal principal) {
 
     }
 
@@ -118,7 +118,7 @@ public abstract class AbstractAuthenticationUserDetailsLoader
         return Username.parse(username);
     }
 
-    protected LoginUser toLoginUser(AuthenticatedPrincipal principal, Username x) {
+    protected LoginUser toLoginUser(AuthenticationPrincipal principal, Username x) {
         UsernamePassport passport = this.toUsernamePassport(principal);
         LoginUser loginUser = this.populateLoginUser(principal, passport);
 
@@ -129,7 +129,7 @@ public abstract class AbstractAuthenticationUserDetailsLoader
 
     @SuppressWarnings("all")
     private LoginUser populateLoginUser(
-        AuthenticatedPrincipal principal,
+        AuthenticationPrincipal principal,
         UsernamePassport passport) {
         String compacted = passport.compact();
 
