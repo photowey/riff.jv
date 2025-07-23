@@ -251,6 +251,11 @@
             <!--region Uaa -->
             <dependency>
                 <groupId>io.github.photowey</groupId>
+                <artifactId>riff-business-uaa-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.photowey</groupId>
                 <artifactId>riff-business-uaa-security</artifactId>
                 <version>${project.version}</version>
             </dependency>

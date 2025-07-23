@@ -1,0 +1,4 @@
+io.github.photowey.riff.business.uaa.security.config.security.SpringSecurityInitAutoConfiguration
+io.github.photowey.riff.business.uaa.security.config.UaaAutoConfiguration
+io.github.photowey.riff.business.uaa.security.config.security.SpringSecurityAutoConfiguration
+io.github.photowey.riff.business.uaa.security.config.AspectAutoConfiguration

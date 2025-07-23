@@ -14,35 +14,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.photowey.riff.infras.authentication.jjwt.config;
+package io.github.photowey.riff.business.uaa.security.config.security;
 
 import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 
-import io.github.photowey.riff.infras.authentication.api.token.TokenService;
-import io.github.photowey.riff.infras.authentication.jjwt.engine.AuthenticationEngine;
-import io.github.photowey.riff.infras.authentication.jjwt.engine.DefaultAuthenticationEngine;
-import io.github.photowey.riff.infras.authentication.jjwt.token.impl.JwtTokenServiceImpl;
-
 /**
- * {@code AuthenticationJjwtAutoConfiguration}.
+ * {@code SpringSecurityInitAutoConfiguration}.
  *
  * @author photowey
  * @version 1.0.0
- * @since 2025/07/18
+ * @since 2025/07/22
  */
 @AutoConfiguration
-public class AuthenticationJjwtAutoConfiguration {
+public class SpringSecurityInitAutoConfiguration {
 
     @Bean
-    @ConditionalOnMissingBean
-    public TokenService tokenService() {
-        return new JwtTokenServiceImpl();
-    }
-
-    @Bean
-    public AuthenticationEngine authenticationEngine() {
-        return new DefaultAuthenticationEngine();
+    public JwtSecurityConfigurer securityConfigurer() {
+        return new JwtSecurityConfigurer();
     }
 }

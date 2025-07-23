@@ -17,6 +17,7 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>riff-business-uaa-core</module>
         <module>riff-business-uaa-security</module>
         <module>riff-business-uaa-service</module>
         <module>riff-business-uaa-web</module>

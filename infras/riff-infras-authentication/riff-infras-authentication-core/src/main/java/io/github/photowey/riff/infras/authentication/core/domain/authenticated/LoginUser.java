@@ -73,8 +73,10 @@ public class LoginUser implements UserDetails, IScope, IRole {
     private String compacted;
 
     /**
-     * 1: Boss(web|dashboard)
-     * 2: OAuth Client
+     * The authentication|user type.
+     * |- 1.account://xxx
+     * |- 2.oauthclient://xxx
+     * |- 4.cmder://xxx
      *
      * @see AuthenticationDictionary.User.Type
      */
@@ -287,11 +289,19 @@ public class LoginUser implements UserDetails, IScope, IRole {
 
     // ----------------------------------------------------------------
 
-    public static boolean determineAuthenticated(LoginUser loginUser) {
-        return !loginUser.isDummy();
+    public static boolean determineIsAuthenticated(LoginUser loginUser) {
+        if (Objects.isNull(loginUser)) {
+            return false;
+        }
+
+        return loginUser.determineIsNotDummy();
     }
 
     // ----------------------------------------------------------------
+
+    public boolean determineIsNotDummy() {
+        return !this.determineIsDummy();
+    }
 
     public boolean determineIsDummy() {
         return this.isDummy();

@@ -85,8 +85,8 @@ public final class Responses {
         return response.getWriter();
     }
 
-    public static void write(String text) {
-        write(text, MediaType.APPLICATION_JSON_VALUE);
+    public static void write(String data) {
+        write(data, MediaType.APPLICATION_JSON_VALUE);
     }
 
     public static void write(String text, String contentType) {

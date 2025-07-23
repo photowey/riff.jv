@@ -118,6 +118,10 @@ public enum AuthenticationDictionary {
              * |- AccessSecret
              */
             OAUTH_CLIENT("OAUTH_CLIENT", "oauthclient", 2),
+            /**
+             * Cmder
+             */
+            CMDER("CMDER", "cmder", 4),
 
             ;
 

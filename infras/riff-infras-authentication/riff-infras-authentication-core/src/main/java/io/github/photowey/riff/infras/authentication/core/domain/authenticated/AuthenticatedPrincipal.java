@@ -26,6 +26,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
+import io.github.photowey.riff.infras.authentication.core.enums.AuthenticationDictionary;
 import io.github.photowey.riff.infras.common.serializer.jackson.timestamp.LocalDateTimeTimestampDeserializer;
 import io.github.photowey.riff.infras.common.serializer.jackson.timestamp.LocalDateTimeTimestampSerializer;
 
@@ -59,15 +60,28 @@ public class AuthenticatedPrincipal implements Serializable {
     private Long userId;
 
     private String username;
+    private String password;
     private String fullname;
     private String mobile;
 
     private String token;
 
+    /**
+     * The authentication|user type.
+     * |- 1.account://xxx
+     * |- 2.oauthclient://xxx
+     * |- 4.cmder://xxx
+     *
+     * @see AuthenticationDictionary.User.Type
+     */
     private Integer type;
     private Integer status;
     private Integer authenticationStatus;
     private Integer deleted;
+
+    // ----------------------------------------------------------------
+
+    private Integer twofaEnabled;
 
     // ----------------------------------------------------------------
 
@@ -82,6 +96,52 @@ public class AuthenticatedPrincipal implements Serializable {
     private Set<String> authorities = new HashSet<>();
     private Set<String> scopes = new HashSet<>();
     private Set<String> roles = new HashSet<>();
+
+    // ----------------------------------------------------------------
+
+    public boolean determineIsAuthenticated() {
+        return AuthenticationDictionary.Authentication.Status.determineIsAuthenticated(this.authenticationStatus);
+    }
+
+    public boolean determineIsUnAuthenticated() {
+        return !this.determineIsAuthenticated();
+    }
+
+    public boolean determineIsDeleted() {
+        return this.deleted != null && this.deleted == 1;
+    }
+
+    public boolean determineIsUnActivated() {
+        return AuthenticationDictionary.User.Status.determineIsUnActivated(this.status);
+    }
+
+    public boolean determineIsActivated() {
+        return AuthenticationDictionary.User.Status.determineIsActivated(this.status);
+    }
+
+    public boolean determineIsFrozen() {
+        return AuthenticationDictionary.User.Status.determineIsFrozen(this.status);
+    }
+
+    public boolean determineIsForbidden() {
+        return AuthenticationDictionary.User.Status.determineIsForbidden(this.status);
+    }
+
+    public boolean determineIsExpired() {
+        return AuthenticationDictionary.User.Status.determineIsExpired(this.status);
+    }
+
+    public boolean determineIsForbiddenRequest() {
+        return this.determineIsUnAuthenticated()
+            || this.tryDetermineIsForbiddenRequest();
+    }
+
+    public boolean tryDetermineIsForbiddenRequest() {
+        return this.determineIsDeleted()
+            || this.determineIsFrozen()
+            || this.determineIsForbidden()
+            || this.determineIsExpired();
+    }
 
     // ----------------------------------------------------------------
 
@@ -107,6 +167,10 @@ public class AuthenticatedPrincipal implements Serializable {
 
     public String username() {
         return username;
+    }
+
+    public String password() {
+        return password;
     }
 
     public String fullname() {
@@ -135,6 +199,10 @@ public class AuthenticatedPrincipal implements Serializable {
 
     public Integer deleted() {
         return deleted;
+    }
+
+    public Integer twofaEnabled() {
+        return twofaEnabled;
     }
 
     public Boolean rememberMe() {

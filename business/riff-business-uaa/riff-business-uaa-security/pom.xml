@@ -19,6 +19,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>io.github.photowey</groupId>
             <artifactId>riff-infras-authentication-jjwt</artifactId>
         </dependency>
@@ -30,9 +35,14 @@
         </dependency>
 
         <dependency>
+            <groupId>io.github.photowey</groupId>
+            <artifactId>riff-business-uaa-core</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>jakarta.servlet</groupId>
             <artifactId>jakarta.servlet-api</artifactId>
-            <optional>true</optional>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
