@@ -14,33 +14,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.photowey.riff.infras.model.payload;
+package io.github.photowey.riff.infras.model.empty;
+
+import java.io.Serial;
+import java.io.Serializable;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
- * {@code AbstractPayload}.
+ * {@code EmptyModel}.
  *
- * @param <T> The Database Entity type.
  * @author photowey
  * @version 1.0.0
- * @since 2025/07/15
+ * @since 2025/07/24
  */
-public abstract class AbstractPayload<T> implements Payload {
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class EmptyModel implements Serializable {
 
-    public void preAction() {
-        this.initAction();
-        this.checkActions();
-    }
+    @Serial
+    private static final long serialVersionUID = 5410595580009762038L;
 
-    public void initAction() {
-        // do nothing now.
-    }
-
-    public void checkActions() {
-        // do nothing now.
-    }
-
-    public void postAction() {
-        // do nothing now.
-    }
+    private Long id;
 }
-

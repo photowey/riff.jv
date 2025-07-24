@@ -16,6 +16,13 @@
  */
 package io.github.photowey.riff.business.uaa.service;
 
+import io.github.photowey.riff.business.uaa.core.domain.dto.TokenDTO;
+import io.github.photowey.riff.business.uaa.core.domain.payload.LoginPayload;
+import io.github.photowey.riff.infras.authentication.jjwt.engine.AuthenticationEngineGetter;
+import io.github.photowey.riff.infras.authentication.property.getter.SecurityPropertiesGetter;
+import io.github.photowey.riff.infras.common.nanoid.NanoId;
+import io.github.photowey.riff.infras.crypto.integrated.Cryptos;
+
 /**
  * {@code LoginService}.
  *
@@ -23,5 +30,34 @@ package io.github.photowey.riff.business.uaa.service;
  * @version 1.0.0
  * @since 2025/07/23
  */
-public interface LoginService {
+public interface LoginService extends AuthenticationEngineGetter, SecurityPropertiesGetter {
+
+    /**
+     * Authenticates a user or client and generates a login token.
+     *
+     * <p>This method supports multiple authentication channels including:
+     * <ul>
+     *     <li>Web login (e.g., user login via browser)</li>
+     *     <li>OAuth client authentication</li>
+     *     <li>Other future authentication methods</li>
+     * </ul>
+     *
+     * @param payload the login payload containing authentication details {@link LoginPayload}
+     * @return a {@link TokenDTO} containing the generated authentication token and related metadata
+     */
+    TokenDTO login(LoginPayload payload);
+
+    // ----------------------------------------------------------------
+
+    default long now() {
+        return System.currentTimeMillis();
+    }
+
+    default String jwtId() {
+        return NanoId.randomNanoId(32);
+    }
+
+    default String audit(String platform) {
+        return Cryptos.HASH.md5(platform);
+    }
 }

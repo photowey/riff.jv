@@ -60,7 +60,7 @@ https://central.sonatype.com/artifact/io.jsonwebtoken/jjwt
 {
   "username":"admin",
   "password": "itsasecret",
-  "rememberMe": true,
+  "rememberMe": 1,
   "captchaId":"63222855815719188245190111831234", 
   "captcha" :"9527" 
 }

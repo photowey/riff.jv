@@ -61,6 +61,8 @@ public class Username implements Serializable {
      */
     private String password;
 
+    private Integer rememberMe;
+
     public String compact() {
         throw new UnsupportedOperationException("Not implemented");
     }
@@ -97,5 +99,9 @@ public class Username implements Serializable {
 
     public String password() {
         return password;
+    }
+
+    public Integer rememberMe() {
+        return rememberMe;
     }
 }

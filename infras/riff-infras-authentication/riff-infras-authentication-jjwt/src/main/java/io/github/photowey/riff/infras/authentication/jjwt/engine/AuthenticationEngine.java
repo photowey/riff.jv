@@ -20,6 +20,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import io.github.photowey.riff.infras.authentication.api.determiner.IgnorePathDeterminer;
+import io.github.photowey.riff.infras.authentication.api.determiner.RequestDeterminer;
 import io.github.photowey.riff.infras.authentication.api.encryptor.SubjectEncryptor;
 import io.github.photowey.riff.infras.authentication.api.enhancer.IgnorePathEnhancer;
 import io.github.photowey.riff.infras.authentication.api.handler.guard.RequestGuardHandler;
@@ -101,6 +102,15 @@ public interface AuthenticationEngine extends SecurityPropertiesGetter, Engine {
      */
     default RequestGuardHandler requestGuardHandler() {
         return this.beanFactory().getBean(RequestGuardHandler.class);
+    }
+
+    /**
+     * Acquire {@link RequestDeterminer} instance.
+     *
+     * @return the {@link RequestDeterminer} instance.
+     */
+    default RequestDeterminer requestDeterminer() {
+        return this.beanFactory().getBean(RequestDeterminer.class);
     }
 
     /**

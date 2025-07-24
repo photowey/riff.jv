@@ -65,7 +65,12 @@ public interface AuthorityConstants {
     String OAUTH_CLIENT_AUTH_SCOPE = "oauth";
     String THIRD_PARTY_AUTH_SCOPE = "thirdparty";
 
+    String OAUTH_CLIENT_MODE_AUTH_SCOPE = "oau";
     String PASSWORD_MODE_AUTH_SCOPE = "pwd";
+
+    // ----------------------------------------------------------
+
+    String AUTHORITY_ROLE_NORMAL = "nm";
 
     // ----------------------------------------------------------
 

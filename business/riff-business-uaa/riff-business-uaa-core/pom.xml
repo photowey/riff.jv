@@ -19,8 +19,22 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+        <dependency>
             <groupId>io.github.photowey</groupId>
             <artifactId>riff-infras-authentication-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-annotations-jakarta</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.github.photowey</groupId>
+            <artifactId>riff-infras-model</artifactId>
         </dependency>
     </dependencies>
 

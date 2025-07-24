@@ -16,6 +16,10 @@
  */
 package io.github.photowey.riff.infras.model.payload;
 
+import java.io.Serializable;
+
+// @formatter:off
+
 /**
  * {@code Payload}.
  *
@@ -23,5 +27,6 @@ package io.github.photowey.riff.infras.model.payload;
  * @version 1.0.0
  * @since 2025/07/15
  */
-public interface Payload {
-}
+public interface Payload extends Serializable { }
+
+// @formatter:on
