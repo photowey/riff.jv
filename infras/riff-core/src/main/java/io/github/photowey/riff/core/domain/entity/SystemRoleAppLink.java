@@ -16,6 +16,8 @@
  */
 package io.github.photowey.riff.core.domain.entity;
 
+import java.io.Serial;
+
 import io.github.photowey.riff.middleware.database.core.domain.entity.AbstractLinkEntity;
 
 import lombok.AllArgsConstructor;
@@ -38,6 +40,9 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class SystemRoleAppLink extends AbstractLinkEntity {
+
+    @Serial
+    private static final long serialVersionUID = 1328381206043726872L;
 
     /**
      * RoleID

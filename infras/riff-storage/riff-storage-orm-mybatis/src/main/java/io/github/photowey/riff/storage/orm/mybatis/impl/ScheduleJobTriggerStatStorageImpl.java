@@ -26,7 +26,7 @@ import jakarta.annotation.Nonnull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import io.github.photowey.riff.core.domain.entity.ScheduleJobTriggerRecord;
+import io.github.photowey.riff.core.domain.entity.ScheduleJobTriggerStat;
 import io.github.photowey.riff.infras.common.util.Collections;
 import io.github.photowey.riff.infras.common.util.Objects;
 import io.github.photowey.riff.infras.model.assembler.EntityAssembler;
@@ -36,13 +36,13 @@ import io.github.photowey.riff.infras.model.result.meta.Meta;
 import io.github.photowey.riff.middleware.database.core.domain.entity.Entity;
 import io.github.photowey.riff.middleware.database.orm.mybatis.core.domain.mybatisplus.AbstractEntityExt;
 import io.github.photowey.riff.middleware.database.orm.mybatis.core.domain.mybatisplus.AbstractTenantEntity;
-import io.github.photowey.riff.middleware.database.orm.mybatis.core.domain.po.ScheduleJobTriggerRecordPO;
-import io.github.photowey.riff.middleware.database.orm.mybatis.repository.ScheduleJobTriggerRecordRepository;
-import io.github.photowey.riff.storage.api.ScheduleJobTriggerRecordStorage;
-import io.github.photowey.riff.storage.orm.mybatis.assembler.ScheduleJobTriggerRecordAssembler;
+import io.github.photowey.riff.middleware.database.orm.mybatis.core.domain.po.ScheduleJobTriggerStatPO;
+import io.github.photowey.riff.middleware.database.orm.mybatis.repository.ScheduleJobTriggerStatRepository;
+import io.github.photowey.riff.storage.api.ScheduleJobTriggerStatStorage;
+import io.github.photowey.riff.storage.orm.mybatis.assembler.ScheduleJobTriggerStatAssembler;
 
 /**
- * {@code ScheduleJobTriggerRecordStorageImpl}.
+ * {@code ScheduleJobTriggerStatStorageImpl}.
  *
  * @author photowey
  * @version 1.0.0
@@ -50,41 +50,41 @@ import io.github.photowey.riff.storage.orm.mybatis.assembler.ScheduleJobTriggerR
  */
 @Component
 public class ScheduleJobTriggerStatStorageImpl
-    implements ScheduleJobTriggerRecordStorage<ScheduleJobTriggerRecordPO>,
-    PaginationMetaStorage<ScheduleJobTriggerRecordPO> {
+    implements ScheduleJobTriggerStatStorage<ScheduleJobTriggerStatPO>,
+    PaginationMetaStorage<ScheduleJobTriggerStatPO> {
 
     @Autowired
-    private ScheduleJobTriggerRecordRepository scheduleJobTriggerRecordRepository;
+    private ScheduleJobTriggerStatRepository scheduleJobTriggerStatRepository;
 
     @Autowired
-    private ScheduleJobTriggerRecordAssembler scheduleJobTriggerRecordAssembler;
+    private ScheduleJobTriggerStatAssembler scheduleJobTriggerStatAssembler;
 
     // ----------------------------------------------------------------
 
     @Override
-    public EntityAssembler<ScheduleJobTriggerRecord, ScheduleJobTriggerRecordPO> entityAssembler() {
-        return this.scheduleJobTriggerRecordAssembler;
+    public EntityAssembler<ScheduleJobTriggerStat, ScheduleJobTriggerStatPO> entityAssembler() {
+        return this.scheduleJobTriggerStatAssembler;
     }
 
     // ----------------------------------------------------------------
 
     @Override
-    public void save(@Nonnull ScheduleJobTriggerRecord entity) {
-        ScheduleJobTriggerRecordPO po = this.toPo(entity);
-        this.scheduleJobTriggerRecordRepository.insert(po);
+    public void save(@Nonnull ScheduleJobTriggerStat entity) {
+        ScheduleJobTriggerStatPO po = this.toPo(entity);
+        this.scheduleJobTriggerStatRepository.insert(po);
 
         this.copyBase(entity, po);
     }
 
     @Override
-    public void batchSave(@Nonnull Collection<ScheduleJobTriggerRecord> entities) {
+    public void batchSave(@Nonnull Collection<ScheduleJobTriggerStat> entities) {
         if (Collections.isEmpty(entities)) {
             return;
         }
 
-        List<ScheduleJobTriggerRecord> images = new ArrayList<>(entities);
-        List<ScheduleJobTriggerRecordPO> pos = this.toPos(images);
-        this.scheduleJobTriggerRecordRepository.batchInserts(pos, ScheduleJobTriggerRecordPO.class);
+        List<ScheduleJobTriggerStat> images = new ArrayList<>(entities);
+        List<ScheduleJobTriggerStatPO> pos = this.toPos(images);
+        this.scheduleJobTriggerStatRepository.batchInserts(pos, ScheduleJobTriggerStatPO.class);
 
         for (int i = 0; i < pos.size(); i++) {
             this.copyBase(images.get(i), pos.get(i));
@@ -100,7 +100,7 @@ public class ScheduleJobTriggerStatStorageImpl
     // ----------------------------------------------------------------
 
     @Override
-    public void delete(@Nonnull ScheduleJobTriggerRecord entity) {
+    public void delete(@Nonnull ScheduleJobTriggerStat entity) {
         if (Objects.isNull(entity.id())) {
             throw new NullPointerException("orm: the entity id can't be NULL");
         }
@@ -110,36 +110,36 @@ public class ScheduleJobTriggerStatStorageImpl
 
     @Override
     public void deleteById(@Nonnull Long id) {
-        this.scheduleJobTriggerRecordRepository.deleteById(id);
+        this.scheduleJobTriggerStatRepository.deleteById(id);
     }
 
     @Override
     public void batchDelete(@Nonnull Collection<Long> ids) {
-        this.scheduleJobTriggerRecordRepository.deleteByIds(ids);
+        this.scheduleJobTriggerStatRepository.deleteByIds(ids);
     }
 
     // ----------------------------------------------------------------
 
     @Override
-    public void updateById(@Nonnull ScheduleJobTriggerRecord entity) {
-        this.scheduleJobTriggerRecordRepository.updateById(this.toPo(entity));
+    public void updateById(@Nonnull ScheduleJobTriggerStat entity) {
+        this.scheduleJobTriggerStatRepository.updateById(this.toPo(entity));
     }
 
     // ----------------------------------------------------------------
 
     @Override
-    public ScheduleJobTriggerRecord selectOne(@Nonnull Long id) {
-        return this.toEntity(this.scheduleJobTriggerRecordRepository.selectById(id));
+    public ScheduleJobTriggerStat selectOne(@Nonnull Long id) {
+        return this.toEntity(this.scheduleJobTriggerStatRepository.selectById(id));
     }
 
     @Override
-    public <Q extends AbstractQuery<ScheduleJobTriggerRecord>> List<ScheduleJobTriggerRecord> selectList(
+    public <Q extends AbstractQuery<ScheduleJobTriggerStat>> List<ScheduleJobTriggerStat> selectList(
         @Nonnull Q query) {
         throw new UnsupportedOperationException("Unsupported now.");
     }
 
     @Override
-    public <Q extends AbstractPaginationQuery<ScheduleJobTriggerRecord>> List<ScheduleJobTriggerRecord> selectPage(
+    public <Q extends AbstractPaginationQuery<ScheduleJobTriggerStat>> List<ScheduleJobTriggerStat> selectPage(
         @Nonnull Q query,
         Consumer<Meta> fx) {
         throw new UnsupportedOperationException("Unsupported now.");
@@ -148,8 +148,8 @@ public class ScheduleJobTriggerStatStorageImpl
     // ----------------------------------------------------------------
 
     @Override
-    public <P extends Entity> void copyTenant(@Nonnull ScheduleJobTriggerRecord entity, @Nonnull P po) {
-        ScheduleJobTriggerRecordStorage.super.copyTenant(entity, po);
+    public <P extends Entity> void copyTenant(@Nonnull ScheduleJobTriggerStat entity, @Nonnull P po) {
+        ScheduleJobTriggerStatStorage.super.copyTenant(entity, po);
 
         if (po instanceof AbstractTenantEntity ptt) {
             entity.setTenant(ptt.tenant());
@@ -159,8 +159,8 @@ public class ScheduleJobTriggerStatStorageImpl
     }
 
     @Override
-    public <P extends Entity> void copyExt(@Nonnull ScheduleJobTriggerRecord entity, @Nonnull P po) {
-        ScheduleJobTriggerRecordStorage.super.copyExt(entity, po);
+    public <P extends Entity> void copyExt(@Nonnull ScheduleJobTriggerStat entity, @Nonnull P po) {
+        ScheduleJobTriggerStatStorage.super.copyExt(entity, po);
 
         if (po instanceof AbstractEntityExt ett) {
             entity.setVersion(ett.version());

@@ -19,7 +19,6 @@ package io.github.photowey.riff.core.domain.entity;
 import java.io.Serial;
 
 import io.github.photowey.riff.middleware.database.core.domain.entity.AbstractTenantEntity;
-import io.github.photowey.riff.middleware.database.core.domain.table.TableId;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -40,7 +39,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class SystemUser extends AbstractTenantEntity implements TableId {
+public class SystemUser extends AbstractTenantEntity {
 
     @Serial
     private static final long serialVersionUID = 5381845847705667691L;

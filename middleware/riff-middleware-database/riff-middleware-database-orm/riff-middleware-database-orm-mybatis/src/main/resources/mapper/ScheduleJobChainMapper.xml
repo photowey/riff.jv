@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
-<mapper namespace=".yzclouduavplatformbusinessorganization.repository.database.ScheduleJobChainRepository">
+<mapper namespace="io.github.photowey.riff.middleware.database.orm.mybatis.repository.ScheduleJobChainRepository">
 
     <!--
     @author photowey
@@ -10,15 +9,7 @@
     @since 2025/07/21
     -->
 
-    <!-- 物理删除 -->
     <delete id="physicalDelete">
         DELETE FROM riff_schedule_job_chain WHERE id = #{id}
     </delete>
-
-    <!--
-    逻辑删除
-    <update id="logicalDelete">
-        UPDATE riff_schedule_job_chain SET deleted = 1 WHERE id = #{id}
-    </update>
-    -->
 </mapper>

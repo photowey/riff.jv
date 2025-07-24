@@ -16,15 +16,15 @@
  */
 package io.github.photowey.riff.storage.api;
 
-import io.github.photowey.riff.core.domain.entity.ScheduleClient;
+import io.github.photowey.riff.core.domain.entity.ScheduleJobTriggerStat;
 
 /**
- * {@code ScheduleClientStorage}.
+ * {@code ScheduleJobTriggerStatStorage}.
  *
  * @param <PO> The {@code Database} persistence entity type.
  * @author photowey
  * @version 1.0.0
- * @since 2025/07/23
+ * @since 2025/07/24
  */
-public interface ScheduleJobTriggerStatStorage<PO> extends EntityStorage<ScheduleClient, PO> {
+public interface ScheduleJobTriggerStatStorage<PO> extends EntityStorage<ScheduleJobTriggerStat, PO> {
 }

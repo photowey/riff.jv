@@ -16,13 +16,20 @@
  */
 package io.github.photowey.riff.middleware.database.orm.mybatis.core.domain.po;
 
+import java.io.Serial;
+
+import com.baomidou.mybatisplus.annotation.TableName;
+
+import io.github.photowey.riff.middleware.database.core.domain.entity.AbstractLinkEntity;
+
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 /**
- * {@code ScheduleLock}.
+ * {@code ScheduleLockPO}.
  * |- riff_schedule_lock
  *
  * @author photowey
@@ -30,24 +37,22 @@ import lombok.NoArgsConstructor;
  * @since 2025/07/21
  */
 @Data
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ScheduleLock {
-    /**
-     * ID
-     */
-    private Long id;
+@EqualsAndHashCode(callSuper = true)
+@TableName("riff_schedule_lock")
+public class ScheduleLockPO extends AbstractLinkEntity {
+
+    @Serial
+    private static final long serialVersionUID = 333285725439242398L;
+
     /**
      * LockKey
      */
     private String lockKey;
 
     // ----------------------------------------------------------------
-
-    public Long id() {
-        return this.id;
-    }
 
     public String lockKey() {
         return this.lockKey;

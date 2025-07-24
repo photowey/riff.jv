@@ -26,63 +26,61 @@ import jakarta.annotation.Nonnull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import io.github.photowey.riff.core.domain.entity.SystemRole;
+import io.github.photowey.riff.core.domain.entity.SystemRoleAppLink;
 import io.github.photowey.riff.infras.common.util.Collections;
 import io.github.photowey.riff.infras.common.util.Objects;
 import io.github.photowey.riff.infras.model.assembler.EntityAssembler;
 import io.github.photowey.riff.infras.model.query.AbstractQuery;
 import io.github.photowey.riff.infras.model.query.pagination.AbstractPaginationQuery;
 import io.github.photowey.riff.infras.model.result.meta.Meta;
-import io.github.photowey.riff.middleware.database.core.domain.entity.Entity;
-import io.github.photowey.riff.middleware.database.orm.mybatis.core.domain.mybatisplus.AbstractEntityExt;
-import io.github.photowey.riff.middleware.database.orm.mybatis.core.domain.mybatisplus.AbstractTenantEntity;
-import io.github.photowey.riff.middleware.database.orm.mybatis.core.domain.po.SystemRolePO;
-import io.github.photowey.riff.middleware.database.orm.mybatis.repository.SystemRoleRepository;
-import io.github.photowey.riff.storage.api.SystemRoleStorage;
-import io.github.photowey.riff.storage.orm.mybatis.assembler.SystemRoleAssembler;
+import io.github.photowey.riff.middleware.database.orm.mybatis.core.domain.po.SystemRoleAppLinkPO;
+import io.github.photowey.riff.middleware.database.orm.mybatis.repository.SystemRoleAppLinkRepository;
+import io.github.photowey.riff.storage.api.SystemRoleAppLinkStorage;
+import io.github.photowey.riff.storage.orm.mybatis.assembler.SystemRoleAppLinkAssembler;
 
 /**
- * {@code SystemRoleStorageImpl}.
+ * {@code SystemRoleAppLinkStorageImpl}.
  *
  * @author photowey
  * @version 1.0.0
  * @since 2025/07/24
  */
 @Component
-public class SystemRoleAppLinkStorageImpl implements SystemRoleStorage<SystemRolePO>, PaginationMetaStorage<SystemRolePO> {
+public class SystemRoleAppLinkStorageImpl
+    implements SystemRoleAppLinkStorage<SystemRoleAppLinkPO>, PaginationMetaStorage<SystemRoleAppLinkPO> {
 
     @Autowired
-    private SystemRoleRepository systemRoleRepository;
+    private SystemRoleAppLinkRepository systemRoleAppLinkRepository;
 
     @Autowired
-    private SystemRoleAssembler systemRoleAssembler;
+    private SystemRoleAppLinkAssembler systemRoleAppLinkAssembler;
 
     // ----------------------------------------------------------------
 
     @Override
-    public EntityAssembler<SystemRole, SystemRolePO> entityAssembler() {
-        return this.systemRoleAssembler;
+    public EntityAssembler<SystemRoleAppLink, SystemRoleAppLinkPO> entityAssembler() {
+        return this.systemRoleAppLinkAssembler;
     }
 
     // ----------------------------------------------------------------
 
     @Override
-    public void save(@Nonnull SystemRole entity) {
-        SystemRolePO po = this.toPo(entity);
-        this.systemRoleRepository.insert(po);
+    public void save(@Nonnull SystemRoleAppLink entity) {
+        SystemRoleAppLinkPO po = this.toPo(entity);
+        this.systemRoleAppLinkRepository.insert(po);
 
         this.copyBase(entity, po);
     }
 
     @Override
-    public void batchSave(@Nonnull Collection<SystemRole> entities) {
+    public void batchSave(@Nonnull Collection<SystemRoleAppLink> entities) {
         if (Collections.isEmpty(entities)) {
             return;
         }
 
-        List<SystemRole> images = new ArrayList<>(entities);
-        List<SystemRolePO> pos = this.toPos(images);
-        this.systemRoleRepository.batchInserts(pos, SystemRolePO.class);
+        List<SystemRoleAppLink> images = new ArrayList<>(entities);
+        List<SystemRoleAppLinkPO> pos = this.toPos(images);
+        this.systemRoleAppLinkRepository.batchInserts(pos, SystemRoleAppLinkPO.class);
 
         for (int i = 0; i < pos.size(); i++) {
             this.copyBase(images.get(i), pos.get(i));
@@ -98,7 +96,7 @@ public class SystemRoleAppLinkStorageImpl implements SystemRoleStorage<SystemRol
     // ----------------------------------------------------------------
 
     @Override
-    public void delete(@Nonnull SystemRole entity) {
+    public void delete(@Nonnull SystemRoleAppLink entity) {
         if (Objects.isNull(entity.id())) {
             throw new NullPointerException("orm: the entity id can't be NULL");
         }
@@ -108,60 +106,37 @@ public class SystemRoleAppLinkStorageImpl implements SystemRoleStorage<SystemRol
 
     @Override
     public void deleteById(@Nonnull Long id) {
-        this.systemRoleRepository.deleteById(id);
+        this.systemRoleAppLinkRepository.deleteById(id);
     }
 
     @Override
     public void batchDelete(@Nonnull Collection<Long> ids) {
-        this.systemRoleRepository.deleteByIds(ids);
+        this.systemRoleAppLinkRepository.deleteByIds(ids);
     }
 
     // ----------------------------------------------------------------
 
     @Override
-    public void updateById(@Nonnull SystemRole entity) {
-        this.systemRoleRepository.updateById(this.toPo(entity));
+    public void updateById(@Nonnull SystemRoleAppLink entity) {
+        this.systemRoleAppLinkRepository.updateById(this.toPo(entity));
     }
 
     // ----------------------------------------------------------------
 
     @Override
-    public SystemRole selectOne(@Nonnull Long id) {
-        return this.toEntity(this.systemRoleRepository.selectById(id));
+    public SystemRoleAppLink selectOne(@Nonnull Long id) {
+        return this.toEntity(this.systemRoleAppLinkRepository.selectById(id));
     }
 
     @Override
-    public <Q extends AbstractQuery<SystemRole>> List<SystemRole> selectList(@Nonnull Q query) {
+    public <Q extends AbstractQuery<SystemRoleAppLink>> List<SystemRoleAppLink> selectList(@Nonnull Q query) {
         throw new UnsupportedOperationException("Unsupported now.");
     }
 
     @Override
-    public <Q extends AbstractPaginationQuery<SystemRole>> List<SystemRole> selectPage(
+    public <Q extends AbstractPaginationQuery<SystemRoleAppLink>> List<SystemRoleAppLink> selectPage(
         @Nonnull Q query,
         Consumer<Meta> fx) {
         throw new UnsupportedOperationException("Unsupported now.");
-    }
-
-    // ----------------------------------------------------------------
-
-    @Override
-    public <P extends Entity> void copyTenant(@Nonnull SystemRole entity, @Nonnull P po) {
-        SystemRoleStorage.super.copyTenant(entity, po);
-
-        if (po instanceof AbstractTenantEntity ptt) {
-            entity.setTenant(ptt.tenant());
-            entity.setPlatform(ptt.platform());
-            entity.setApp(ptt.app());
-        }
-    }
-
-    @Override
-    public <P extends Entity> void copyExt(@Nonnull SystemRole entity, @Nonnull P po) {
-        SystemRoleStorage.super.copyExt(entity, po);
-
-        if (po instanceof AbstractEntityExt ett) {
-            entity.setVersion(ett.version());
-            entity.setDeleted(ett.deleted());
-        }
     }
 }

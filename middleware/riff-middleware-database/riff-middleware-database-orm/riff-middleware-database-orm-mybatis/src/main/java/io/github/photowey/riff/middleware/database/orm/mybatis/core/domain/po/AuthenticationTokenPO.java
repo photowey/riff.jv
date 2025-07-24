@@ -19,7 +19,9 @@ package io.github.photowey.riff.middleware.database.orm.mybatis.core.domain.po;
 import java.io.Serial;
 import java.time.LocalDateTime;
 
-import io.github.photowey.riff.middleware.database.core.domain.entity.AbstractTenantEntity;
+import com.baomidou.mybatisplus.annotation.TableName;
+
+import io.github.photowey.riff.middleware.database.orm.mybatis.core.domain.mybatisplus.AbstractTenantEntity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,7 +30,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 /**
- * {@code AuthenticationToken}.
+ * {@code AuthenticationTokenPO}.
  * |- riff_authentication_token
  *
  * @author photowey
@@ -40,6 +42,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@TableName("riff_authentication_token")
 public class AuthenticationTokenPO extends AbstractTenantEntity {
 
     @Serial

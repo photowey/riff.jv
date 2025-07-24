@@ -16,6 +16,7 @@
  */
 package io.github.photowey.riff.core.domain.entity;
 
+import java.io.Serial;
 import java.time.LocalDateTime;
 
 import io.github.photowey.riff.middleware.database.core.domain.entity.AbstractTenantEntity;
@@ -40,6 +41,9 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class ScheduleClient extends AbstractTenantEntity {
+
+    @Serial
+    private static final long serialVersionUID = 6119818793412790575L;
 
     /**
      * AppID

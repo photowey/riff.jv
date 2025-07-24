@@ -29,7 +29,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 /**
- * {@code SystemRole}.
+ * {@code SystemRolePO}.
  * |- riff_system_role
  *
  * @author photowey
@@ -42,7 +42,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @TableName("riff_system_role")
-public class SystemRole extends AbstractTenantEntity {
+public class SystemRolePO extends AbstractTenantEntity {
 
     @Serial
     private static final long serialVersionUID = 879565378031440385L;

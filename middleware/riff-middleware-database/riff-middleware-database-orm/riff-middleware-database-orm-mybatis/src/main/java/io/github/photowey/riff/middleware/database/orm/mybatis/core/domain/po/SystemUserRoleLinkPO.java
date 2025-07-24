@@ -18,6 +18,8 @@ package io.github.photowey.riff.middleware.database.orm.mybatis.core.domain.po;
 
 import java.io.Serial;
 
+import com.baomidou.mybatisplus.annotation.TableName;
+
 import io.github.photowey.riff.middleware.database.core.domain.entity.AbstractLinkEntity;
 
 import lombok.AllArgsConstructor;
@@ -27,7 +29,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 /**
- * {@code SystemUserRoleLink}.
+ * {@code SystemUserRoleLinkPO}.
  * |- riff_system_user_role_link
  *
  * @author photowey
@@ -39,7 +41,8 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class SystemUserRoleLink extends AbstractLinkEntity {
+@TableName("riff_system_user_role_link")
+public class SystemUserRoleLinkPO extends AbstractLinkEntity {
 
     @Serial
     private static final long serialVersionUID = -5979520501073187762L;

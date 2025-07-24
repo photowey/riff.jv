@@ -63,18 +63,6 @@ public class SystemRole extends AbstractTenantEntity {
 
     // ----------------------------------------------------------------
 
-    public String tenant() {
-        return this.tenant;
-    }
-
-    public String platform() {
-        return this.platform;
-    }
-
-    public String app() {
-        return this.app;
-    }
-
     public String roleCode() {
         return this.roleCode;
     }

@@ -16,9 +16,12 @@
  */
 package io.github.photowey.riff.middleware.database.orm.mybatis.core.domain.po;
 
+import java.io.Serial;
 import java.time.LocalDateTime;
 
-import io.github.photowey.riff.middleware.database.core.domain.entity.AbstractEntity;
+import com.baomidou.mybatisplus.annotation.TableName;
+
+import io.github.photowey.riff.middleware.database.orm.mybatis.core.domain.mybatisplus.AbstractTenantEntity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,7 +30,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 /**
- * {@code ScheduleJobTriggerRecord}.
+ * {@code ScheduleJobTriggerRecordPO}.
  * |- riff_schedule_job_trigger_record
  *
  * @author photowey
@@ -39,43 +42,12 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class ScheduleJobTriggerRecord extends AbstractEntity {
-    /**
-     * ID
-     */
-    private Long id;
-    /**
-     * CreateBy
-     */
-    private Long createBy;
-    /**
-     * UpdateBy
-     */
-    private Long updateBy;
-    /**
-     * CreateTime
-     */
-    private LocalDateTime createTime;
-    /**
-     * UpdateTime
-     */
-    private LocalDateTime updateTime;
-    /**
-     * Deleted 0:Normal 1:Deleted
-     */
-    private Integer deleted;
-    /**
-     * Tenant
-     */
-    private String tenant;
-    /**
-     * Platform
-     */
-    private String platform;
-    /**
-     * App
-     */
-    private String app;
+@TableName("riff_schedule_job_trigger_record")
+public class ScheduleJobTriggerRecordPO extends AbstractTenantEntity {
+
+    @Serial
+    private static final long serialVersionUID = 7650455941678412760L;
+
     /**
      * AppID
      */
@@ -154,41 +126,6 @@ public class ScheduleJobTriggerRecord extends AbstractEntity {
     private String alarmContext;
 
     // ----------------------------------------------------------------
-    public Long id() {
-        return this.id;
-    }
-
-    public Long createBy() {
-        return this.createBy;
-    }
-
-    public Long updateBy() {
-        return this.updateBy;
-    }
-
-    public LocalDateTime createTime() {
-        return this.createTime;
-    }
-
-    public LocalDateTime updateTime() {
-        return this.updateTime;
-    }
-
-    public Integer deleted() {
-        return this.deleted;
-    }
-
-    public String tenant() {
-        return this.tenant;
-    }
-
-    public String platform() {
-        return this.platform;
-    }
-
-    public String app() {
-        return this.app;
-    }
 
     public Long appId() {
         return this.appId;

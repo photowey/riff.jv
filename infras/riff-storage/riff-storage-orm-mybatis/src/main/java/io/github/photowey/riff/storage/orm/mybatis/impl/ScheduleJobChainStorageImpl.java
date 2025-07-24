@@ -26,7 +26,7 @@ import jakarta.annotation.Nonnull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import io.github.photowey.riff.core.domain.entity.ScheduleJob;
+import io.github.photowey.riff.core.domain.entity.ScheduleJobChain;
 import io.github.photowey.riff.infras.common.util.Collections;
 import io.github.photowey.riff.infras.common.util.Objects;
 import io.github.photowey.riff.infras.model.assembler.EntityAssembler;
@@ -36,53 +36,54 @@ import io.github.photowey.riff.infras.model.result.meta.Meta;
 import io.github.photowey.riff.middleware.database.core.domain.entity.Entity;
 import io.github.photowey.riff.middleware.database.orm.mybatis.core.domain.mybatisplus.AbstractEntityExt;
 import io.github.photowey.riff.middleware.database.orm.mybatis.core.domain.mybatisplus.AbstractTenantEntity;
-import io.github.photowey.riff.middleware.database.orm.mybatis.core.domain.po.ScheduleJobPO;
-import io.github.photowey.riff.middleware.database.orm.mybatis.repository.ScheduleJobRepository;
-import io.github.photowey.riff.storage.api.ScheduleJobStorage;
-import io.github.photowey.riff.storage.orm.mybatis.assembler.ScheduleJobAssembler;
+import io.github.photowey.riff.middleware.database.orm.mybatis.core.domain.po.ScheduleJobChainPO;
+import io.github.photowey.riff.middleware.database.orm.mybatis.repository.ScheduleJobChainRepository;
+import io.github.photowey.riff.storage.api.ScheduleJobChainStorage;
+import io.github.photowey.riff.storage.orm.mybatis.assembler.ScheduleJobChainAssembler;
 
 /**
- * {@code ScheduleJobStorageImpl}.
+ * {@code ScheduleJobChainStorageImpl}.
  *
  * @author photowey
  * @version 1.0.0
  * @since 2025/07/24
  */
 @Component
-public class ScheduleJobChainStorageImpl implements ScheduleJobStorage<ScheduleJobPO>, PaginationMetaStorage<ScheduleJobPO> {
+public class ScheduleJobChainStorageImpl
+    implements ScheduleJobChainStorage<ScheduleJobChainPO>, PaginationMetaStorage<ScheduleJobChainPO> {
 
     @Autowired
-    private ScheduleJobRepository scheduleJobRepository;
+    private ScheduleJobChainRepository scheduleJobChainRepository;
 
     @Autowired
-    private ScheduleJobAssembler scheduleJobAssembler;
+    private ScheduleJobChainAssembler scheduleJobChainAssembler;
 
     // ----------------------------------------------------------------
 
     @Override
-    public EntityAssembler<ScheduleJob, ScheduleJobPO> entityAssembler() {
-        return this.scheduleJobAssembler;
+    public EntityAssembler<ScheduleJobChain, ScheduleJobChainPO> entityAssembler() {
+        return this.scheduleJobChainAssembler;
     }
 
     // ----------------------------------------------------------------
 
     @Override
-    public void save(@Nonnull ScheduleJob entity) {
-        ScheduleJobPO po = this.toPo(entity);
-        this.scheduleJobRepository.insert(po);
+    public void save(@Nonnull ScheduleJobChain entity) {
+        ScheduleJobChainPO po = this.toPo(entity);
+        this.scheduleJobChainRepository.insert(po);
 
         this.copyBase(entity, po);
     }
 
     @Override
-    public void batchSave(@Nonnull Collection<ScheduleJob> entities) {
+    public void batchSave(@Nonnull Collection<ScheduleJobChain> entities) {
         if (Collections.isEmpty(entities)) {
             return;
         }
 
-        List<ScheduleJob> images = new ArrayList<>(entities);
-        List<ScheduleJobPO> pos = this.toPos(images);
-        this.scheduleJobRepository.batchInserts(pos, ScheduleJobPO.class);
+        List<ScheduleJobChain> images = new ArrayList<>(entities);
+        List<ScheduleJobChainPO> pos = this.toPos(images);
+        this.scheduleJobChainRepository.batchInserts(pos, ScheduleJobChainPO.class);
 
         for (int i = 0; i < pos.size(); i++) {
             this.copyBase(images.get(i), pos.get(i));
@@ -98,7 +99,7 @@ public class ScheduleJobChainStorageImpl implements ScheduleJobStorage<ScheduleJ
     // ----------------------------------------------------------------
 
     @Override
-    public void delete(@Nonnull ScheduleJob entity) {
+    public void delete(@Nonnull ScheduleJobChain entity) {
         if (Objects.isNull(entity.id())) {
             throw new NullPointerException("orm: the entity id can't be NULL");
         }
@@ -108,35 +109,35 @@ public class ScheduleJobChainStorageImpl implements ScheduleJobStorage<ScheduleJ
 
     @Override
     public void deleteById(@Nonnull Long id) {
-        this.scheduleJobRepository.deleteById(id);
+        this.scheduleJobChainRepository.deleteById(id);
     }
 
     @Override
     public void batchDelete(@Nonnull Collection<Long> ids) {
-        this.scheduleJobRepository.deleteByIds(ids);
+        this.scheduleJobChainRepository.deleteByIds(ids);
     }
 
     // ----------------------------------------------------------------
 
     @Override
-    public void updateById(@Nonnull ScheduleJob entity) {
-        this.scheduleJobRepository.updateById(this.toPo(entity));
+    public void updateById(@Nonnull ScheduleJobChain entity) {
+        this.scheduleJobChainRepository.updateById(this.toPo(entity));
     }
 
     // ----------------------------------------------------------------
 
     @Override
-    public ScheduleJob selectOne(@Nonnull Long id) {
-        return this.toEntity(this.scheduleJobRepository.selectById(id));
+    public ScheduleJobChain selectOne(@Nonnull Long id) {
+        return this.toEntity(this.scheduleJobChainRepository.selectById(id));
     }
 
     @Override
-    public <Q extends AbstractQuery<ScheduleJob>> List<ScheduleJob> selectList(@Nonnull Q query) {
+    public <Q extends AbstractQuery<ScheduleJobChain>> List<ScheduleJobChain> selectList(@Nonnull Q query) {
         throw new UnsupportedOperationException("Unsupported now.");
     }
 
     @Override
-    public <Q extends AbstractPaginationQuery<ScheduleJob>> List<ScheduleJob> selectPage(
+    public <Q extends AbstractPaginationQuery<ScheduleJobChain>> List<ScheduleJobChain> selectPage(
         @Nonnull Q query,
         Consumer<Meta> fx) {
         throw new UnsupportedOperationException("Unsupported now.");
@@ -145,8 +146,8 @@ public class ScheduleJobChainStorageImpl implements ScheduleJobStorage<ScheduleJ
     // ----------------------------------------------------------------
 
     @Override
-    public <P extends Entity> void copyTenant(@Nonnull ScheduleJob entity, @Nonnull P po) {
-        ScheduleJobStorage.super.copyTenant(entity, po);
+    public <P extends Entity> void copyTenant(@Nonnull ScheduleJobChain entity, @Nonnull P po) {
+        ScheduleJobChainStorage.super.copyTenant(entity, po);
 
         if (po instanceof AbstractTenantEntity ptt) {
             entity.setTenant(ptt.tenant());
@@ -156,8 +157,8 @@ public class ScheduleJobChainStorageImpl implements ScheduleJobStorage<ScheduleJ
     }
 
     @Override
-    public <P extends Entity> void copyExt(@Nonnull ScheduleJob entity, @Nonnull P po) {
-        ScheduleJobStorage.super.copyExt(entity, po);
+    public <P extends Entity> void copyExt(@Nonnull ScheduleJobChain entity, @Nonnull P po) {
+        ScheduleJobChainStorage.super.copyExt(entity, po);
 
         if (po instanceof AbstractEntityExt ett) {
             entity.setVersion(ett.version());

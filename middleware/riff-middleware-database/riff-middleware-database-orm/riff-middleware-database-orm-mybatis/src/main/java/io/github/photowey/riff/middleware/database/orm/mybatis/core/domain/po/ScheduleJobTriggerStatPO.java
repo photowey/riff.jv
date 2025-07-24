@@ -19,6 +19,8 @@ package io.github.photowey.riff.middleware.database.orm.mybatis.core.domain.po;
 import java.io.Serial;
 import java.time.LocalDateTime;
 
+import com.baomidou.mybatisplus.annotation.TableName;
+
 import io.github.photowey.riff.middleware.database.core.domain.entity.AbstractTenantEntity;
 
 import lombok.AllArgsConstructor;
@@ -28,7 +30,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 /**
- * {@code ScheduleJobTriggerStat}.
+ * {@code ScheduleJobTriggerStatPO}.
  * |- riff_schedule_job_trigger_stat
  *
  * @author photowey
@@ -40,7 +42,8 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class ScheduleJobTriggerStat extends AbstractTenantEntity {
+@TableName("riff_schedule_job_trigger_stat")
+public class ScheduleJobTriggerStatPO extends AbstractTenantEntity {
 
     @Serial
     private static final long serialVersionUID = -5575407420184672502L;

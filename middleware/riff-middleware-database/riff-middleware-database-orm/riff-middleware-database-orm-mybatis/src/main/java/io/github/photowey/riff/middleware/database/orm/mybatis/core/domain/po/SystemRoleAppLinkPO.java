@@ -16,6 +16,8 @@
  */
 package io.github.photowey.riff.middleware.database.orm.mybatis.core.domain.po;
 
+import com.baomidou.mybatisplus.annotation.TableName;
+
 import io.github.photowey.riff.middleware.database.core.domain.entity.AbstractLinkEntity;
 
 import lombok.AllArgsConstructor;
@@ -25,7 +27,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 /**
- * {@code SystemRoleAppLink}.
+ * {@code SystemRoleAppLinkPO}.
  * |- riff_system_role_app_link
  *
  * @author photowey
@@ -37,7 +39,8 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class SystemRoleAppLink extends AbstractLinkEntity {
+@TableName("riff_system_role_app_link")
+public class SystemRoleAppLinkPO extends AbstractLinkEntity {
 
     /**
      * RoleID

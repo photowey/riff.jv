@@ -26,23 +26,20 @@ import jakarta.annotation.Nonnull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import io.github.photowey.riff.core.domain.entity.ScheduleClient;
+import io.github.photowey.riff.core.domain.entity.ScheduleLock;
 import io.github.photowey.riff.infras.common.util.Collections;
 import io.github.photowey.riff.infras.common.util.Objects;
 import io.github.photowey.riff.infras.model.assembler.EntityAssembler;
 import io.github.photowey.riff.infras.model.query.AbstractQuery;
 import io.github.photowey.riff.infras.model.query.pagination.AbstractPaginationQuery;
 import io.github.photowey.riff.infras.model.result.meta.Meta;
-import io.github.photowey.riff.middleware.database.core.domain.entity.Entity;
-import io.github.photowey.riff.middleware.database.orm.mybatis.core.domain.mybatisplus.AbstractEntityExt;
-import io.github.photowey.riff.middleware.database.orm.mybatis.core.domain.mybatisplus.AbstractTenantEntity;
-import io.github.photowey.riff.middleware.database.orm.mybatis.core.domain.po.ScheduleClientPO;
-import io.github.photowey.riff.middleware.database.orm.mybatis.repository.ScheduleClientRepository;
-import io.github.photowey.riff.storage.api.ScheduleClientStorage;
-import io.github.photowey.riff.storage.orm.mybatis.assembler.ScheduleClientAssembler;
+import io.github.photowey.riff.middleware.database.orm.mybatis.core.domain.po.ScheduleLockPO;
+import io.github.photowey.riff.middleware.database.orm.mybatis.repository.ScheduleLockRepository;
+import io.github.photowey.riff.storage.api.ScheduleLockStorage;
+import io.github.photowey.riff.storage.orm.mybatis.assembler.ScheduleLockAssembler;
 
 /**
- * {@code ScheduleClientStorageImpl}.
+ * {@code ScheduleLockStorageImpl}.
  *
  * @author photowey
  * @version 1.0.0
@@ -50,40 +47,40 @@ import io.github.photowey.riff.storage.orm.mybatis.assembler.ScheduleClientAssem
  */
 @Component
 public class ScheduleLockStorageImpl
-    implements ScheduleClientStorage<ScheduleClientPO>, PaginationMetaStorage<ScheduleClientPO> {
+    implements ScheduleLockStorage<ScheduleLockPO>, PaginationMetaStorage<ScheduleLockPO> {
 
     @Autowired
-    private ScheduleClientRepository scheduleClientRepository;
+    private ScheduleLockRepository scheduleLockRepository;
 
     @Autowired
-    private ScheduleClientAssembler scheduleClientAssembler;
+    private ScheduleLockAssembler scheduleLockAssembler;
 
     // ----------------------------------------------------------------
 
     @Override
-    public EntityAssembler<ScheduleClient, ScheduleClientPO> entityAssembler() {
-        return this.scheduleClientAssembler;
+    public EntityAssembler<ScheduleLock, ScheduleLockPO> entityAssembler() {
+        return this.scheduleLockAssembler;
     }
 
     // ----------------------------------------------------------------
 
     @Override
-    public void save(@Nonnull ScheduleClient entity) {
-        ScheduleClientPO po = this.toPo(entity);
-        this.scheduleClientRepository.insert(po);
+    public void save(@Nonnull ScheduleLock entity) {
+        ScheduleLockPO po = this.toPo(entity);
+        this.scheduleLockRepository.insert(po);
 
         this.copyBase(entity, po);
     }
 
     @Override
-    public void batchSave(@Nonnull Collection<ScheduleClient> entities) {
+    public void batchSave(@Nonnull Collection<ScheduleLock> entities) {
         if (Collections.isEmpty(entities)) {
             return;
         }
 
-        List<ScheduleClient> images = new ArrayList<>(entities);
-        List<ScheduleClientPO> pos = this.toPos(images);
-        this.scheduleClientRepository.batchInserts(pos, ScheduleClientPO.class);
+        List<ScheduleLock> images = new ArrayList<>(entities);
+        List<ScheduleLockPO> pos = this.toPos(images);
+        this.scheduleLockRepository.batchInserts(pos, ScheduleLockPO.class);
 
         for (int i = 0; i < pos.size(); i++) {
             this.copyBase(images.get(i), pos.get(i));
@@ -99,7 +96,7 @@ public class ScheduleLockStorageImpl
     // ----------------------------------------------------------------
 
     @Override
-    public void delete(@Nonnull ScheduleClient entity) {
+    public void delete(@Nonnull ScheduleLock entity) {
         if (Objects.isNull(entity.id())) {
             throw new NullPointerException("orm: the entity id can't be NULL");
         }
@@ -109,60 +106,37 @@ public class ScheduleLockStorageImpl
 
     @Override
     public void deleteById(@Nonnull Long id) {
-        this.scheduleClientRepository.deleteById(id);
+        this.scheduleLockRepository.deleteById(id);
     }
 
     @Override
     public void batchDelete(@Nonnull Collection<Long> ids) {
-        this.scheduleClientRepository.deleteByIds(ids);
+        this.scheduleLockRepository.deleteByIds(ids);
     }
 
     // ----------------------------------------------------------------
 
     @Override
-    public void updateById(@Nonnull ScheduleClient entity) {
-        this.scheduleClientRepository.updateById(this.toPo(entity));
+    public void updateById(@Nonnull ScheduleLock entity) {
+        this.scheduleLockRepository.updateById(this.toPo(entity));
     }
 
     // ----------------------------------------------------------------
 
     @Override
-    public ScheduleClient selectOne(@Nonnull Long id) {
-        return this.toEntity(this.scheduleClientRepository.selectById(id));
+    public ScheduleLock selectOne(@Nonnull Long id) {
+        return this.toEntity(this.scheduleLockRepository.selectById(id));
     }
 
     @Override
-    public <Q extends AbstractQuery<ScheduleClient>> List<ScheduleClient> selectList(@Nonnull Q query) {
+    public <Q extends AbstractQuery<ScheduleLock>> List<ScheduleLock> selectList(@Nonnull Q query) {
         throw new UnsupportedOperationException("Unsupported now.");
     }
 
     @Override
-    public <Q extends AbstractPaginationQuery<ScheduleClient>> List<ScheduleClient> selectPage(
+    public <Q extends AbstractPaginationQuery<ScheduleLock>> List<ScheduleLock> selectPage(
         @Nonnull Q query,
         Consumer<Meta> fx) {
         throw new UnsupportedOperationException("Unsupported now.");
-    }
-
-    // ----------------------------------------------------------------
-
-    @Override
-    public <P extends Entity> void copyTenant(@Nonnull ScheduleClient entity, @Nonnull P po) {
-        ScheduleClientStorage.super.copyTenant(entity, po);
-
-        if (po instanceof AbstractTenantEntity ptt) {
-            entity.setTenant(ptt.tenant());
-            entity.setPlatform(ptt.platform());
-            entity.setApp(ptt.app());
-        }
-    }
-
-    @Override
-    public <P extends Entity> void copyExt(@Nonnull ScheduleClient entity, @Nonnull P po) {
-        ScheduleClientStorage.super.copyExt(entity, po);
-
-        if (po instanceof AbstractEntityExt ett) {
-            entity.setVersion(ett.version());
-            entity.setDeleted(ett.deleted());
-        }
     }
 }

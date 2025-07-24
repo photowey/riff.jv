@@ -26,7 +26,7 @@ import jakarta.annotation.Nonnull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import io.github.photowey.riff.core.domain.entity.ScheduleJob;
+import io.github.photowey.riff.core.domain.entity.SystemRole;
 import io.github.photowey.riff.infras.common.util.Collections;
 import io.github.photowey.riff.infras.common.util.Objects;
 import io.github.photowey.riff.infras.model.assembler.EntityAssembler;
@@ -36,53 +36,53 @@ import io.github.photowey.riff.infras.model.result.meta.Meta;
 import io.github.photowey.riff.middleware.database.core.domain.entity.Entity;
 import io.github.photowey.riff.middleware.database.orm.mybatis.core.domain.mybatisplus.AbstractEntityExt;
 import io.github.photowey.riff.middleware.database.orm.mybatis.core.domain.mybatisplus.AbstractTenantEntity;
-import io.github.photowey.riff.middleware.database.orm.mybatis.core.domain.po.ScheduleJobPO;
-import io.github.photowey.riff.middleware.database.orm.mybatis.repository.ScheduleJobRepository;
-import io.github.photowey.riff.storage.api.ScheduleJobStorage;
-import io.github.photowey.riff.storage.orm.mybatis.assembler.ScheduleJobAssembler;
+import io.github.photowey.riff.middleware.database.orm.mybatis.core.domain.po.SystemRolePO;
+import io.github.photowey.riff.middleware.database.orm.mybatis.repository.SystemRoleRepository;
+import io.github.photowey.riff.storage.api.SystemRoleStorage;
+import io.github.photowey.riff.storage.orm.mybatis.assembler.SystemRoleAssembler;
 
 /**
- * {@code ScheduleJobStorageImpl}.
+ * {@code SystemRoleStorageImpl}.
  *
  * @author photowey
  * @version 1.0.0
  * @since 2025/07/24
  */
 @Component
-public class SystemRoleStorageImpl implements ScheduleJobStorage<ScheduleJobPO>, PaginationMetaStorage<ScheduleJobPO> {
+public class SystemRoleStorageImpl implements SystemRoleStorage<SystemRolePO>, PaginationMetaStorage<SystemRolePO> {
 
     @Autowired
-    private ScheduleJobRepository scheduleJobRepository;
+    private SystemRoleRepository systemRoleRepository;
 
     @Autowired
-    private ScheduleJobAssembler scheduleJobAssembler;
+    private SystemRoleAssembler systemRoleAssembler;
 
     // ----------------------------------------------------------------
 
     @Override
-    public EntityAssembler<ScheduleJob, ScheduleJobPO> entityAssembler() {
-        return this.scheduleJobAssembler;
+    public EntityAssembler<SystemRole, SystemRolePO> entityAssembler() {
+        return this.systemRoleAssembler;
     }
 
     // ----------------------------------------------------------------
 
     @Override
-    public void save(@Nonnull ScheduleJob entity) {
-        ScheduleJobPO po = this.toPo(entity);
-        this.scheduleJobRepository.insert(po);
+    public void save(@Nonnull SystemRole entity) {
+        SystemRolePO po = this.toPo(entity);
+        this.systemRoleRepository.insert(po);
 
         this.copyBase(entity, po);
     }
 
     @Override
-    public void batchSave(@Nonnull Collection<ScheduleJob> entities) {
+    public void batchSave(@Nonnull Collection<SystemRole> entities) {
         if (Collections.isEmpty(entities)) {
             return;
         }
 
-        List<ScheduleJob> images = new ArrayList<>(entities);
-        List<ScheduleJobPO> pos = this.toPos(images);
-        this.scheduleJobRepository.batchInserts(pos, ScheduleJobPO.class);
+        List<SystemRole> images = new ArrayList<>(entities);
+        List<SystemRolePO> pos = this.toPos(images);
+        this.systemRoleRepository.batchInserts(pos, SystemRolePO.class);
 
         for (int i = 0; i < pos.size(); i++) {
             this.copyBase(images.get(i), pos.get(i));
@@ -98,7 +98,7 @@ public class SystemRoleStorageImpl implements ScheduleJobStorage<ScheduleJobPO>,
     // ----------------------------------------------------------------
 
     @Override
-    public void delete(@Nonnull ScheduleJob entity) {
+    public void delete(@Nonnull SystemRole entity) {
         if (Objects.isNull(entity.id())) {
             throw new NullPointerException("orm: the entity id can't be NULL");
         }
@@ -108,35 +108,35 @@ public class SystemRoleStorageImpl implements ScheduleJobStorage<ScheduleJobPO>,
 
     @Override
     public void deleteById(@Nonnull Long id) {
-        this.scheduleJobRepository.deleteById(id);
+        this.systemRoleRepository.deleteById(id);
     }
 
     @Override
     public void batchDelete(@Nonnull Collection<Long> ids) {
-        this.scheduleJobRepository.deleteByIds(ids);
+        this.systemRoleRepository.deleteByIds(ids);
     }
 
     // ----------------------------------------------------------------
 
     @Override
-    public void updateById(@Nonnull ScheduleJob entity) {
-        this.scheduleJobRepository.updateById(this.toPo(entity));
+    public void updateById(@Nonnull SystemRole entity) {
+        this.systemRoleRepository.updateById(this.toPo(entity));
     }
 
     // ----------------------------------------------------------------
 
     @Override
-    public ScheduleJob selectOne(@Nonnull Long id) {
-        return this.toEntity(this.scheduleJobRepository.selectById(id));
+    public SystemRole selectOne(@Nonnull Long id) {
+        return this.toEntity(this.systemRoleRepository.selectById(id));
     }
 
     @Override
-    public <Q extends AbstractQuery<ScheduleJob>> List<ScheduleJob> selectList(@Nonnull Q query) {
+    public <Q extends AbstractQuery<SystemRole>> List<SystemRole> selectList(@Nonnull Q query) {
         throw new UnsupportedOperationException("Unsupported now.");
     }
 
     @Override
-    public <Q extends AbstractPaginationQuery<ScheduleJob>> List<ScheduleJob> selectPage(
+    public <Q extends AbstractPaginationQuery<SystemRole>> List<SystemRole> selectPage(
         @Nonnull Q query,
         Consumer<Meta> fx) {
         throw new UnsupportedOperationException("Unsupported now.");
@@ -145,8 +145,8 @@ public class SystemRoleStorageImpl implements ScheduleJobStorage<ScheduleJobPO>,
     // ----------------------------------------------------------------
 
     @Override
-    public <P extends Entity> void copyTenant(@Nonnull ScheduleJob entity, @Nonnull P po) {
-        ScheduleJobStorage.super.copyTenant(entity, po);
+    public <P extends Entity> void copyTenant(@Nonnull SystemRole entity, @Nonnull P po) {
+        SystemRoleStorage.super.copyTenant(entity, po);
 
         if (po instanceof AbstractTenantEntity ptt) {
             entity.setTenant(ptt.tenant());
@@ -156,8 +156,8 @@ public class SystemRoleStorageImpl implements ScheduleJobStorage<ScheduleJobPO>,
     }
 
     @Override
-    public <P extends Entity> void copyExt(@Nonnull ScheduleJob entity, @Nonnull P po) {
-        ScheduleJobStorage.super.copyExt(entity, po);
+    public <P extends Entity> void copyExt(@Nonnull SystemRole entity, @Nonnull P po) {
+        SystemRoleStorage.super.copyExt(entity, po);
 
         if (po instanceof AbstractEntityExt ett) {
             entity.setVersion(ett.version());
