@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 import io.github.photowey.riff.infras.model.query.AbstractQuery;
 import io.github.photowey.riff.infras.model.query.pagination.AbstractPaginationQuery;
@@ -37,12 +38,44 @@ import io.github.photowey.riff.middleware.database.core.domain.table.TableId;
  */
 public interface QueryStorage<T extends TableId> {
 
+    /**
+     * Select One.
+     *
+     * @param id The id.
+     * @return The entity.
+     */
+    @Nullable
     T selectOne(@Nonnull Long id);
 
+    /**
+     * Select List.
+     *
+     * @param query The query.
+     * @param <Q>   The query type.
+     * @return The list of entities.
+     */
+    @Nonnull
     <Q extends AbstractQuery<T>> List<T> selectList(@Nonnull Q query);
 
+    /**
+     * Select Page.
+     *
+     * @param query The query.
+     * @param fx    The meta function.
+     * @param <Q>   The query type.
+     * @return The list of entities.
+     */
+    @Nonnull
     <Q extends AbstractPaginationQuery<T>> List<T> selectPage(@Nonnull Q query, Consumer<Meta> fx);
 
+    /**
+     * Select Page.
+     *
+     * @param query The query.
+     * @param <Q>   The query type.
+     * @return The page result.
+     */
+    @Nonnull
     default <Q extends AbstractPaginationQuery<T>> PageResult<T> selectPage(@Nonnull Q query) {
         PageResult<T> result = PageResult.empty();
         List<T> systemUsers = this.selectPage(query, (meta) -> {

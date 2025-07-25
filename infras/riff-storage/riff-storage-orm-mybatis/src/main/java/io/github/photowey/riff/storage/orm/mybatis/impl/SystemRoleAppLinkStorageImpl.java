@@ -128,11 +128,13 @@ public class SystemRoleAppLinkStorageImpl
         return this.toEntity(this.systemRoleAppLinkRepository.selectById(id));
     }
 
+    @Nonnull
     @Override
     public <Q extends AbstractQuery<SystemRoleAppLink>> List<SystemRoleAppLink> selectList(@Nonnull Q query) {
         throw new UnsupportedOperationException("Unsupported now.");
     }
 
+    @Nonnull
     @Override
     public <Q extends AbstractPaginationQuery<SystemRoleAppLink>> List<SystemRoleAppLink> selectPage(
         @Nonnull Q query,

@@ -16,9 +16,14 @@
  */
 package io.github.photowey.riff.apiserver;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.concurrent.TimeUnit;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mock.web.MockHttpServletRequest;
+
+import io.github.photowey.riff.business.uaa.service.LoginService;
 import io.github.photowey.riff.infras.authentication.api.handler.password.PasswordHandler;
+import io.github.photowey.riff.infras.authentication.core.util.Requests;
 import io.github.photowey.riff.middleware.database.orm.mybatis.core.domain.po.SystemUserPO;
 import io.github.photowey.riff.storage.api.SystemUserStorage;
 
@@ -36,4 +41,35 @@ public abstract class AbstractLocalTest {
 
     @Autowired
     protected SystemUserStorage<SystemUserPO> systemUserStorage;
+
+    @Autowired
+    protected LoginService loginService;
+
+    protected void tryHttpRequestTest(Runnable task) {
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        request.addHeader("X-Tenant", "saas");
+        request.addHeader("X-Platform", "saas");
+        request.addHeader("X-App", "boss");
+
+        try {
+            Requests.resetRequest(request);
+            task.run();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            Requests.cleanRequest();
+        }
+    }
+
+    protected void sleep(long millis) {
+        try {
+            TimeUnit.MILLISECONDS.sleep(millis);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    protected void sleep(long sleepTimes, TimeUnit unit) {
+        this.sleep(unit.toMillis(sleepTimes));
+    }
 }

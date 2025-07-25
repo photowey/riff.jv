@@ -71,6 +71,11 @@ public final class Requests {
         resetRequest(requestWrapper);
     }
 
+    public static void cleanRequest() {
+        RequestContextHolder.resetRequestAttributes();
+    }
+
+
     private static HttpServletRequest checkHttpServletRequest(HttpServletRequest request) {
         if (Objects.isNull(request)) {
             throw new NullPointerException("riff: the request[HttpServletRequest] is NULL.");

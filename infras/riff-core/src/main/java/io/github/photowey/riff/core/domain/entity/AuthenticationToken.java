@@ -46,9 +46,12 @@ public class AuthenticationToken extends AbstractTenantEntity {
     private static final long serialVersionUID = -2233039820293366076L;
 
     /**
+     * UserId
+     * |- authenticationType == Web
      * AppID
+     * |- authenticationType == OAuthClient
      */
-    private Long appId;
+    private Long principalId;
     /**
      * AuthenticationType 1:Web 2:OAuthClient
      */
@@ -92,8 +95,20 @@ public class AuthenticationToken extends AbstractTenantEntity {
 
     // ----------------------------------------------------------------
 
-    public Long appId() {
-        return this.appId;
+    public boolean determineIsExpiresIn(long expiresInSeconds) {
+        // TODO NOT implemented
+        return true;
+    }
+
+    public boolean determineRefreshTokenIsExpired() {
+        // TODO NOT implemented
+        return true;
+    }
+
+    // ----------------------------------------------------------------
+
+    public Long principalId() {
+        return this.principalId;
     }
 
     public Integer authenticationType() {

@@ -48,4 +48,30 @@ public class TokenDTO implements Serializable {
     private Integer twofa;
 
     private RefreshTokenDTO refreshToken;
+
+    // ----------------------------------------------------------------
+
+    public String token() {
+        return token;
+    }
+
+    public String type() {
+        return type;
+    }
+
+    public Long issuedAt() {
+        return issuedAt;
+    }
+
+    public Long expiresIn() {
+        return expiresIn;
+    }
+
+    public Integer twofa() {
+        return twofa;
+    }
+
+    public RefreshTokenDTO refreshToken() {
+        return refreshToken;
+    }
 }

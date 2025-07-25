@@ -130,11 +130,13 @@ public class SystemRoleStorageImpl implements SystemRoleStorage<SystemRolePO>, P
         return this.toEntity(this.systemRoleRepository.selectById(id));
     }
 
+    @Nonnull
     @Override
     public <Q extends AbstractQuery<SystemRole>> List<SystemRole> selectList(@Nonnull Q query) {
         throw new UnsupportedOperationException("Unsupported now.");
     }
 
+    @Nonnull
     @Override
     public <Q extends AbstractPaginationQuery<SystemRole>> List<SystemRole> selectPage(
         @Nonnull Q query,

@@ -17,6 +17,7 @@
 package io.github.photowey.riff.apiserver.storage.authentication;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -32,6 +33,8 @@ import io.github.photowey.riff.core.domain.query.pagination.SystemUserPagination
 import io.github.photowey.riff.infras.authentication.core.enums.AuthenticationDictionary;
 import io.github.photowey.riff.infras.model.result.PageResult;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * {@code SystemUserStorageTest}.
  *
@@ -39,9 +42,17 @@ import io.github.photowey.riff.infras.model.result.PageResult;
  * @version 1.0.0
  * @since 2025/07/22
  */
+@Slf4j
 @SpringBootTest(classes = TestApiServer.class)
-@EnabledIf(expression = "#{systemProperties['spring.profiles.active'] == 'local'}", loadContext = true)
+//@TestPropertySource(properties = "spring.datasource.access.enabled=true")
+@EnabledIf(expression = "${spring.datasource.access.enabled}", loadContext = true)
 class SystemUserStorageTest extends AbstractLocalTest {
+
+    //
+    // DATABASE_MYSQL_ADDRESS=127.0.0.1:3307;DATABASE_MYSQL_DATABASE=riff;DATABASE_MYSQL_USERNAME=root;\
+    // DATABASE_MYSQL_PASSWORD=aZI0cNjQ1lJ6BUnTgapnMHjGA7l1SuNA;SPRING_SECURITY_USER_NAME=admin;\
+    // SPRING_SECURITY_USER_PASSWORD=admin;spring.datasource.access.enabled=true
+    //
 
     @Test
     @Rollback
@@ -128,5 +139,11 @@ class SystemUserStorageTest extends AbstractLocalTest {
         PageResult<SystemUser> result = this.systemUserStorage.selectPage(query);
         Assertions.assertNotNull(result);
         Assertions.assertEquals(0, result.data().total());
+    }
+
+    //@Test
+    void testTryFindByUsername() {
+        Optional<SystemUser> systemUserOpt = this.systemUserStorage.tryFindSystemUser("admin");
+        Assertions.assertTrue(systemUserOpt.isPresent());
     }
 }

@@ -18,12 +18,11 @@ package io.github.photowey.riff.core.domain.entity;
 
 import java.io.Serial;
 
-import io.github.photowey.riff.middleware.database.core.domain.entity.AbstractLinkEntity;
+import io.github.photowey.riff.middleware.database.core.domain.entity.Entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
@@ -38,8 +37,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = true)
-public class ScheduleLock extends AbstractLinkEntity {
+public class ScheduleLock implements Entity {
 
     @Serial
     private static final long serialVersionUID = 3931218181810945720L;

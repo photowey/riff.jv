@@ -143,11 +143,13 @@ public class SystemUserStorageImpl implements SystemUserStorage<SystemUserPO>, P
         return this.toEntity(this.systemUserRepository.selectById(id));
     }
 
+    @Nonnull
     @Override
     public <Q extends AbstractQuery<SystemUser>> List<SystemUser> selectList(@Nonnull Q query) {
-        return this.toEntities(this.systemUserRepository.selectList(query));
+        return this.toEntities(this.systemUserRepository.trySelectList(query));
     }
 
+    @Nonnull
     @Override
     public <Q extends AbstractPaginationQuery<SystemUser>> List<SystemUser> selectPage(
         @Nonnull Q query,

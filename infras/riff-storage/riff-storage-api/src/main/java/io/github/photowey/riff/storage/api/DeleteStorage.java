@@ -32,9 +32,24 @@ import io.github.photowey.riff.middleware.database.core.domain.table.TableId;
  */
 public interface DeleteStorage<T extends TableId> {
 
+    /**
+     * Delete the entity.
+     *
+     * @param entity The entity to delete.
+     */
     void delete(@Nonnull T entity);
 
+    /**
+     * Delete the entity by id.
+     *
+     * @param id The id of the entity to delete.
+     */
     void deleteById(@Nonnull Long id);
 
+    /**
+     * Delete multiple entities by id.
+     *
+     * @param ids The ids of the entities to delete.
+     */
     void batchDelete(@Nonnull Collection<Long> ids);
 }

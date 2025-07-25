@@ -131,11 +131,13 @@ public class ScheduleClientStorageImpl
         return this.toEntity(this.scheduleClientRepository.selectById(id));
     }
 
+    @Nonnull
     @Override
     public <Q extends AbstractQuery<ScheduleClient>> List<ScheduleClient> selectList(@Nonnull Q query) {
         throw new UnsupportedOperationException("Unsupported now.");
     }
 
+    @Nonnull
     @Override
     public <Q extends AbstractPaginationQuery<ScheduleClient>> List<ScheduleClient> selectPage(
         @Nonnull Q query,

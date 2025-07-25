@@ -130,11 +130,13 @@ public class ScheduleJobStorageImpl implements ScheduleJobStorage<ScheduleJobPO>
         return this.toEntity(this.scheduleJobRepository.selectById(id));
     }
 
+    @Nonnull
     @Override
     public <Q extends AbstractQuery<ScheduleJob>> List<ScheduleJob> selectList(@Nonnull Q query) {
         throw new UnsupportedOperationException("Unsupported now.");
     }
 
+    @Nonnull
     @Override
     public <Q extends AbstractPaginationQuery<ScheduleJob>> List<ScheduleJob> selectPage(
         @Nonnull Q query,

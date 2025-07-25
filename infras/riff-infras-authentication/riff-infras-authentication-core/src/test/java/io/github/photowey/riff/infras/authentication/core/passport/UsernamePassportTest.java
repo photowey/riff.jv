@@ -19,6 +19,8 @@ package io.github.photowey.riff.infras.authentication.core.passport;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import io.github.photowey.riff.infras.authentication.core.exception.SecurityAuthenticationException;
+
 /**
  * {@code UsernamePassportTest}.
  *
@@ -42,7 +44,8 @@ class UsernamePassportTest {
             .build();
 
         String compacted = passport.compact();
-        String expected = "saas:@:saas:@:boss:@:web:@:10086:@:admin:@:18888888888:@:1";
+        String expected =
+            "passport://saas?platform=saas&app=boss&client=web&userId=10086&username=admin&mobile=18888888888&type=1";
 
         Assertions.assertEquals(expected, compacted);
     }
@@ -61,14 +64,16 @@ class UsernamePassportTest {
             .build();
 
         String compacted = passport.compact();
-        String expected = "saas:@:saas:@:boss:@:web:@:10086:@:admin:@:-:@:1";
+        String expected =
+            "passport://saas?platform=saas&app=boss&client=web&userId=10086&username=admin&mobile=-&type=1";
 
         Assertions.assertEquals(expected, compacted);
     }
 
     @Test
     void testParse() {
-        String compacted = "saas:@:saas:@:boss:@:web:@:10086:@:admin:@:18888888888:@:1";
+        String compacted =
+            "passport://saas?platform=saas&app=boss&client=web&userId=10086&username=admin&mobile=18888888888&type=1";
         UsernamePassport passport = UsernamePassport.parse(compacted);
 
         Assertions.assertEquals("saas", passport.tenant());
@@ -83,7 +88,8 @@ class UsernamePassportTest {
 
     @Test
     void testParse_mobile_null() {
-        String compacted = "saas:@:saas:@:boss:@:web:@:10086:@:admin:@:-:@:1";
+        String compacted =
+            "passport://saas?platform=saas&app=boss&client=web&userId=10086&username=admin&mobile=-&type=1";
         UsernamePassport passport = UsernamePassport.parse(compacted);
 
         Assertions.assertEquals("saas", passport.tenant());
@@ -96,4 +102,12 @@ class UsernamePassportTest {
         Assertions.assertEquals(1, passport.type());
     }
 
+    @Test
+    void testCompact_bad() {
+        String badCompacted =
+            "passport://saas?platform=saas&app=boss&client=web&userId=10086&username=admin&mobile=-";
+        Assertions.assertThrows(SecurityAuthenticationException.class, () -> {
+            UsernamePassport.parse(badCompacted);
+        });
+    }
 }

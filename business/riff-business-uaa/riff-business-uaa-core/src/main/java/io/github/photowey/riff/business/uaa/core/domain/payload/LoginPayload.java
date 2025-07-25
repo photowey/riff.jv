@@ -26,6 +26,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.github.photowey.riff.infras.authentication.core.constant.AuthorityConstants;
 import io.github.photowey.riff.infras.authentication.core.domain.authenticated.LoginUser;
 import io.github.photowey.riff.infras.authentication.core.enums.AuthenticationDictionary;
+import io.github.photowey.riff.infras.authentication.core.username.Username;
 import io.github.photowey.riff.infras.common.util.Objects;
 import io.github.photowey.riff.infras.model.empty.EmptyModel;
 import io.github.photowey.riff.infras.model.payload.AbstractPayload;
@@ -151,6 +152,20 @@ public class LoginPayload extends AbstractPayload<EmptyModel> {
 
     // ----------------------------------------------------------------
 
+    public Username toUsername(String platform, String proxy) {
+        return Username.builder()
+            .tenant(this.tenant())
+            .platform(platform)
+            .app(this.app())
+            .client(this.client())
+            .type(this.type())
+            .username(proxy)
+            .rememberMe(this.rememberMe())
+            .build();
+    }
+
+    // ----------------------------------------------------------------
+
     public boolean determineIsRememberMe() {
         return Objects.isNotNull(this.rememberMe) && this.rememberMe == 1;
     }
@@ -161,7 +176,22 @@ public class LoginPayload extends AbstractPayload<EmptyModel> {
         }
 
         return AuthorityConstants.PASSWORD_MODE_AUTH_SCOPE;
+    }
 
+    public String determineTokenType() {
+        if (AuthenticationDictionary.User.Type.OAUTH_CLIENT.value() == this.type) {
+            return AuthorityConstants.TOKEN_TYPE_OAUTH;
+        }
+
+        return AuthorityConstants.TOKEN_TYPE_BEARER;
+    }
+
+    public int determineTokenTypeInt() {
+        if (AuthenticationDictionary.User.Type.OAUTH_CLIENT.value() == this.type) {
+            return AuthorityConstants.INT_TOKEN_TYPE_OAUTH;
+        }
+
+        return AuthorityConstants.INT_TOKEN_TYPE_BEARER;
     }
 
     // ----------------------------------------------------------------

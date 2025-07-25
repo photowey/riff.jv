@@ -43,9 +43,10 @@ import lombok.NoArgsConstructor;
 public class UsernamePassport implements Serializable {
 
     private static final String DUMMY_VALUE = "-";
-    private static final String PASSPORT_TEMPLATE = "{}:@:{}:@:{}:@:{}:@:{}:@:{}:@:{}:@:{}";
-    private static final Pattern PT =
-        Pattern.compile("(.*):@:(.*):@:(.*):@:(.*):@:(.*):@:(.*):@:(.*):@:(.*)");
+    private static final String PASSPORT_TEMPLATE =
+        "passport://{}?platform={}&app={}&client={}&userId={}&username={}&mobile={}&type={}";
+    private static final Pattern PT = Pattern.compile(
+        "passport://(.*)\\?platform=(.*)&app=(.*)&client=(.*)&userId=(.*)&username=(.*)&mobile=(.*)&type=(.*)");
 
     private String tenant;
     private String platform;
@@ -87,7 +88,7 @@ public class UsernamePassport implements Serializable {
                 .build();
         }
 
-        throw new SecurityAuthenticationException("Unreachable here.");
+        throw new SecurityAuthenticationException("Invalid username passport pattern:[" + proxy + "]");
     }
 
     // ----------------------------------------------------------------

@@ -54,7 +54,7 @@ public interface LoginService extends AuthenticationEngineGetter, SecurityProper
     }
 
     default String jwtId() {
-        return NanoId.randomNanoId(32);
+        return NanoId.randomNumberNanoId(32);
     }
 
     default String audit(String platform) {

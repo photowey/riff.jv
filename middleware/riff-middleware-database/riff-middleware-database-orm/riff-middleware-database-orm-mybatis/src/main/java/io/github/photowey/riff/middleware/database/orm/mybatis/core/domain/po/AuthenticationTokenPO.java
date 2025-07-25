@@ -49,9 +49,9 @@ public class AuthenticationTokenPO extends AbstractTenantEntity {
     private static final long serialVersionUID = -2233039820293366076L;
 
     /**
-     * AppID
+     * UserId | AppID
      */
-    private Long appId;
+    private Long principalId;
     /**
      * AuthenticationType 1:Web 2:OAuthClient
      */
@@ -95,8 +95,8 @@ public class AuthenticationTokenPO extends AbstractTenantEntity {
 
     // ----------------------------------------------------------------
 
-    public Long appId() {
-        return this.appId;
+    public Long principalId() {
+        return this.principalId;
     }
 
     public Integer authenticationType() {

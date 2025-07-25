@@ -63,7 +63,7 @@
     <!-- ****_****_****_****__****_****_****_**** -->
 
     <!-- @formatter:off -->
-    <select id="selectList" resultMap="SystemUserPO">
+    <select id="trySelectList" resultMap="SystemUserPO">
         SELECT
             id,
             create_by,

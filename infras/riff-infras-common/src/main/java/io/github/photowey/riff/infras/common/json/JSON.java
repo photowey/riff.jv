@@ -94,6 +94,10 @@ public final class JSON {
         }
     }
 
+    public static <T> String toPrettyString(@Nonnull T body) {
+        return toPrettyString(json(), toJSONString(body));
+    }
+
     public static String toPrettyString(@Nonnull String json) {
         return toPrettyString(json(), json);
     }

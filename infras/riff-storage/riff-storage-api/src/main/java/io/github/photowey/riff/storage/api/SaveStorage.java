@@ -35,8 +35,18 @@ import io.github.photowey.riff.middleware.database.core.domain.entity.Entity;
  */
 public interface SaveStorage<T extends Entity> {
 
+    /**
+     * Save the entity.
+     *
+     * @param entity The entity to save.
+     */
     void save(@Nonnull T entity);
 
+    /**
+     * Batch save the entities.
+     *
+     * @param entities The entities to save.
+     */
     void batchSave(@Nonnull Collection<T> entities);
 
     default <P extends Entity> void copyBase(@Nonnull T entity, @Nonnull P po) {

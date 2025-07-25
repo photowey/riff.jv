@@ -9,7 +9,17 @@
     @since 2025/07/21
     -->
 
+    <resultMap id="ScheduleLock"
+               type="io.github.photowey.riff.middleware.database.orm.mybatis.core.domain.po.ScheduleLockPO">
+        <result column="lock_key" property="lockKey"/>
+    </resultMap>
+
     <delete id="physicalDelete">
         DELETE FROM riff_schedule_lock WHERE id = #{id}
     </delete>
+
+    <select id="selectForUpdate" resultMap="ScheduleLock">
+        SELECT * FROM riff_schedule_lock WHERE lock_key = #{lockKey} FOR UPDATE
+    </select>
+
 </mapper>

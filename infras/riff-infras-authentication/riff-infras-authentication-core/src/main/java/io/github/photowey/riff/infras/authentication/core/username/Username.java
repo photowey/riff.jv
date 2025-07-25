@@ -18,6 +18,11 @@ package io.github.photowey.riff.infras.authentication.core.username;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import io.github.photowey.riff.infras.authentication.core.exception.SecurityAuthenticationException;
+import io.github.photowey.riff.infras.common.formatter.StringFormatter;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -40,11 +45,16 @@ public class Username implements Serializable {
     @Serial
     private static final long serialVersionUID = 5477934765906380818L;
 
+    private static final String PASSPORT_TEMPLATE = "{}?tenant={}&platform={}&app={}&client={}&type={}&rememberMe={}";
+    private static final Pattern PT =
+        Pattern.compile("(.*)\\?tenant=(.*)&platform=(.*)&app=(.*)&client=(.*)&type=(.*)&rememberMe=(.*)");
+
     private String tenant;
     private String platform;
     private String app;
 
     private String client;
+
     /**
      * 1: web | username
      * 2: oauthclient | accessKey
@@ -56,19 +66,33 @@ public class Username implements Serializable {
      * Username | AccessKey
      */
     private String username;
-    /**
-     * Password | SecretSecret
-     */
-    private String password;
-
     private Integer rememberMe;
 
     public String compact() {
-        throw new UnsupportedOperationException("Not implemented");
+        return StringFormatter.format(
+            PASSPORT_TEMPLATE,
+            this.username,
+            this.tenant, this.platform, this.app, this.client,
+            this.type,
+            this.rememberMe
+        );
     }
 
     public static Username parse(String proxy) {
-        throw new UnsupportedOperationException("Not implemented");
+        Matcher matcher = PT.matcher(proxy);
+        if (matcher.matches()) {
+            return Username.builder()
+                .username(matcher.group(1))
+                .tenant(matcher.group(2))
+                .platform(matcher.group(3))
+                .app(matcher.group(4))
+                .client(matcher.group(5))
+                .type(Integer.parseInt(matcher.group(6)))
+                .rememberMe(Integer.parseInt(matcher.group(7)))
+                .build();
+        }
+
+        throw new SecurityAuthenticationException("Invalid username proxy pattern:[" + proxy + "]");
     }
 
     // ----------------------------------------------------------------
@@ -95,10 +119,6 @@ public class Username implements Serializable {
 
     public String username() {
         return username;
-    }
-
-    public String password() {
-        return password;
     }
 
     public Integer rememberMe() {

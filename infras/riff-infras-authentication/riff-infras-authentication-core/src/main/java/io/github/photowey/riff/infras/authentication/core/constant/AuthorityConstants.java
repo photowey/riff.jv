@@ -82,17 +82,24 @@ public interface AuthorityConstants {
     // ----------------------------------------------------------
 
     String CLAIM_ISSUER_KEY = "iss";
-    String CLAIM_ISSUE_AT_KEY = "iat";
+    String CLAIM_ISSUED_AT_KEY = "iat";
     String CLAIM_JWT_ID_KEY = "jti";
     String CLAIM_AUDIT_KEY = "aud";
-    String CLAIM_CLIENT_KEY = "xci";
-    String CLAIM_AUTHORITY_KEY = "ath";
+    String CLAIM_CLIENT_KEY = "xct";
     /**
      * TOKEN TYPE
      */
     String CLAIM_TOKEN_TYPE_KEY = "xtt";
 
     String CLAIM_AUTHORITY_ALL = "*.*";
+
+    // ----------------------------------------------------------
+
+    String TOKEN_TYPE_BEARER = "Bearer";
+    String TOKEN_TYPE_OAUTH = "OAuth";
+
+    int INT_TOKEN_TYPE_BEARER = 1;
+    int INT_TOKEN_TYPE_OAUTH = 2;
 
     // ----------------------------------------------------------
 

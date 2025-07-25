@@ -165,6 +165,13 @@ public class SecurityProperties implements Serializable {
         private long refreshTokenValidityInSeconds = TimeUnit.DAYS.toSeconds(30);
         private long tokenValidityInSecondsForRememberMe = TimeUnit.DAYS.toSeconds(7);
 
+        private boolean tokenReuse = true;
+        /**
+         * If the token will expire within the next 5 minutes(default),
+         * attempt to refresh the token; otherwise, reuse the current token.
+         */
+        private long tokenReuseOutSeconds = TimeUnit.MINUTES.toSeconds(5);
+
         public String secret() {
             return secret;
         }
@@ -183,6 +190,14 @@ public class SecurityProperties implements Serializable {
 
         public long tokenValidityInSecondsForRememberMe() {
             return tokenValidityInSecondsForRememberMe;
+        }
+
+        public boolean determineIsTokenReuse() {
+            return tokenReuse;
+        }
+
+        public long tokenReuseOutSeconds() {
+            return tokenReuseOutSeconds;
         }
     }
 

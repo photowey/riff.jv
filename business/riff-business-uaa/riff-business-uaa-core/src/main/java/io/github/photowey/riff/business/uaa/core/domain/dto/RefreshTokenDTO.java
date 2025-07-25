@@ -45,4 +45,26 @@ public class RefreshTokenDTO implements Serializable {
     private String type;
     private Long issuedAt;
     private Long expiresIn;
+
+    // ----------------------------------------------------------------
+
+    public Integer enabled() {
+        return enabled;
+    }
+
+    public String token() {
+        return token;
+    }
+
+    public String type() {
+        return type;
+    }
+
+    public Long issuedAt() {
+        return issuedAt;
+    }
+
+    public Long expiresIn() {
+        return expiresIn;
+    }
 }

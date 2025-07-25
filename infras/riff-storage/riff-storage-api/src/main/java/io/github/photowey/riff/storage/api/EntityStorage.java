@@ -40,6 +40,11 @@ import io.github.photowey.riff.middleware.database.core.domain.entity.Entity;
 public interface EntityStorage<T extends Entity, PO>
     extends QueryStorage<T>, DeleteStorage<T>, UpdateStorage<T>, SaveStorage<T> {
 
+    /**
+     * Acquire the {@code Database} entity assembler.
+     *
+     * @return the {@code Database} entity assembler.
+     */
     default EntityAssembler<T, PO> entityAssembler() {
         return null;
     }
@@ -58,6 +63,12 @@ public interface EntityStorage<T extends Entity, PO>
         return this.entityAssembler().toEntity(entity);
     }
 
+    /**
+     * convert {@code Database} entity to {@code Database} persistence entity.
+     *
+     * @param entities the {@code Database} entities.
+     * @return the {@code Database} persistence entities.
+     */
     default List<PO> toPos(@Nonnull Collection<T> entities) {
         if (Collections.isEmpty(entities)) {
             return Collections.emptyList();
@@ -68,6 +79,12 @@ public interface EntityStorage<T extends Entity, PO>
             .collect(Collectors.toList());
     }
 
+    /**
+     * Convert {@code Database} persistence entity to {@code Database} entity.
+     *
+     * @param po the {@code Database} persistence entity.
+     * @return the {@code Database} entity.
+     */
     default T toEntity(@Nullable PO po) {
         if (Objects.isNull(this.entityAssembler()) || Objects.isNull(po)) {
             return null;
@@ -76,6 +93,12 @@ public interface EntityStorage<T extends Entity, PO>
         return this.entityAssembler().toDto(po);
     }
 
+    /**
+     * Convert {@code Database} persistence entities to {@code Database} entities.
+     *
+     * @param pos the {@code Database} persistence entities.
+     * @return the {@code Database} entities.
+     */
     default List<T> toEntities(@Nonnull Collection<PO> pos) {
         if (Collections.isEmpty(pos)) {
             return Collections.emptyList();

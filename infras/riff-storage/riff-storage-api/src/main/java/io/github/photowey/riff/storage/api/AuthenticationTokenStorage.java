@@ -16,6 +16,10 @@
  */
 package io.github.photowey.riff.storage.api;
 
+import java.util.Optional;
+
+import jakarta.annotation.Nonnull;
+
 import io.github.photowey.riff.core.domain.entity.AuthenticationToken;
 
 /**
@@ -27,4 +31,12 @@ import io.github.photowey.riff.core.domain.entity.AuthenticationToken;
  * @since 2025/07/24
  */
 public interface AuthenticationTokenStorage<PO> extends EntityStorage<AuthenticationToken, PO> {
+
+    /**
+     * Find one {@code AuthenticationToken} by {@code principalId}.
+     *
+     * @param principalId the {@code principalId}
+     * @return the {@code AuthenticationToken}
+     */
+    Optional<AuthenticationToken> tryFindByPrincipalId(@Nonnull Long principalId);
 }

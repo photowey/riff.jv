@@ -5,6 +5,11 @@ server:
 test:
   environment: ci
 
+spring:
+  datasource:
+    access:
+      enabled: ${SPRING_DATASOURCE_ACCESS_ENABLED:false}
+
 local:
   configurator:
     database:

@@ -16,6 +16,7 @@
  */
 package io.github.photowey.riff.infras.authentication.jjwt.engine;
 
+import org.springframework.core.task.VirtualThreadTaskExecutor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -162,6 +163,17 @@ public interface AuthenticationEngine extends SecurityPropertiesGetter, Engine {
      */
     default IgnorePathDeterminer ignorePathDeterminer() {
         return this.beanFactory().getBean(IgnorePathDeterminer.class);
+    }
+
+    // ---------------------------------------------------------------
+
+    /**
+     * Acquire {@link VirtualThreadTaskExecutor} instance.
+     *
+     * @return the {@link VirtualThreadTaskExecutor} instance.
+     */
+    default VirtualThreadTaskExecutor asyncIoVirtualThreadTaskExecutor() {
+        return this.beanFactory().getBean("asyncIoVirtualThreadTaskExecutor", VirtualThreadTaskExecutor.class);
     }
 }
 

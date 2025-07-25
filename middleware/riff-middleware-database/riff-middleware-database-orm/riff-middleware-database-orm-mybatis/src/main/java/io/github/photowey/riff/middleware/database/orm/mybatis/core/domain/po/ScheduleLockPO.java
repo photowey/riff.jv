@@ -17,14 +17,12 @@
 package io.github.photowey.riff.middleware.database.orm.mybatis.core.domain.po;
 
 import java.io.Serial;
+import java.io.Serializable;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 
-import io.github.photowey.riff.middleware.database.core.domain.entity.AbstractLinkEntity;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
@@ -40,9 +38,8 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = true)
 @TableName("riff_schedule_lock")
-public class ScheduleLockPO extends AbstractLinkEntity {
+public class ScheduleLockPO implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 333285725439242398L;

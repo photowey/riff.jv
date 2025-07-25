@@ -132,12 +132,14 @@ public class ScheduleJobTriggerRecordStorageImpl
         return this.toEntity(this.scheduleJobTriggerRecordRepository.selectById(id));
     }
 
+    @Nonnull
     @Override
     public <Q extends AbstractQuery<ScheduleJobTriggerRecord>> List<ScheduleJobTriggerRecord> selectList(
         @Nonnull Q query) {
         throw new UnsupportedOperationException("Unsupported now.");
     }
 
+    @Nonnull
     @Override
     public <Q extends AbstractPaginationQuery<ScheduleJobTriggerRecord>> List<ScheduleJobTriggerRecord> selectPage(
         @Nonnull Q query,

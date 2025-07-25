@@ -16,7 +16,6 @@
  */
 package io.github.photowey.riff.storage.orm.mybatis.impl;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.function.Consumer;
@@ -25,10 +24,9 @@ import jakarta.annotation.Nonnull;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import io.github.photowey.riff.core.domain.entity.ScheduleLock;
-import io.github.photowey.riff.infras.common.util.Collections;
-import io.github.photowey.riff.infras.common.util.Objects;
 import io.github.photowey.riff.infras.model.assembler.EntityAssembler;
 import io.github.photowey.riff.infras.model.query.AbstractQuery;
 import io.github.photowey.riff.infras.model.query.pagination.AbstractPaginationQuery;
@@ -68,71 +66,60 @@ public class ScheduleLockStorageImpl
     public void save(@Nonnull ScheduleLock entity) {
         ScheduleLockPO po = this.toPo(entity);
         this.scheduleLockRepository.insert(po);
-
-        this.copyBase(entity, po);
     }
 
     @Override
     public void batchSave(@Nonnull Collection<ScheduleLock> entities) {
-        if (Collections.isEmpty(entities)) {
-            return;
-        }
-
-        List<ScheduleLock> images = new ArrayList<>(entities);
-        List<ScheduleLockPO> pos = this.toPos(images);
-        this.scheduleLockRepository.batchInserts(pos, ScheduleLockPO.class);
-
-        for (int i = 0; i < pos.size(); i++) {
-            this.copyBase(images.get(i), pos.get(i));
-        }
-
-        images.clear();
-        pos.clear();
-
-        images = null;
-        pos = null;
+        throw new UnsupportedOperationException("Unsupported now");
     }
 
     // ----------------------------------------------------------------
 
     @Override
     public void delete(@Nonnull ScheduleLock entity) {
-        if (Objects.isNull(entity.id())) {
-            throw new NullPointerException("orm: the entity id can't be NULL");
-        }
-
-        this.deleteById(entity.id());
+        throw new UnsupportedOperationException("Unsupported now");
     }
 
     @Override
     public void deleteById(@Nonnull Long id) {
-        this.scheduleLockRepository.deleteById(id);
+        throw new UnsupportedOperationException("Unsupported now");
     }
 
     @Override
     public void batchDelete(@Nonnull Collection<Long> ids) {
-        this.scheduleLockRepository.deleteByIds(ids);
+        throw new UnsupportedOperationException("Unsupported now");
     }
 
     // ----------------------------------------------------------------
 
     @Override
     public void updateById(@Nonnull ScheduleLock entity) {
-        this.scheduleLockRepository.updateById(this.toPo(entity));
+        throw new UnsupportedOperationException("Unsupported now");
+    }
+
+    // ----------------------------------------------------------------
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ScheduleLock tryLock(String lockKey) {
+        ScheduleLockPO po = this.scheduleLockRepository.selectForUpdate(lockKey);
+        return this.scheduleLockAssembler.toDto(po);
     }
 
     // ----------------------------------------------------------------
 
     @Override
     public ScheduleLock selectOne(@Nonnull Long id) {
-        return this.toEntity(this.scheduleLockRepository.selectById(id));
+        throw new UnsupportedOperationException("Unsupported now.");
     }
 
+    @Nonnull
     @Override
     public <Q extends AbstractQuery<ScheduleLock>> List<ScheduleLock> selectList(@Nonnull Q query) {
         throw new UnsupportedOperationException("Unsupported now.");
     }
 
+    @Nonnull
     @Override
     public <Q extends AbstractPaginationQuery<ScheduleLock>> List<ScheduleLock> selectPage(
         @Nonnull Q query,

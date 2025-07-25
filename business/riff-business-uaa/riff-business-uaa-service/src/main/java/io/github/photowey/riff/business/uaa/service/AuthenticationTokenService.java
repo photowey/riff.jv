@@ -14,29 +14,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.photowey.riff.middleware.database.orm.mybatis.repository;
+package io.github.photowey.riff.business.uaa.service;
 
-import org.apache.ibatis.annotations.Param;
-
-import io.github.photowey.riff.middleware.database.orm.mybatis.core.domain.po.ScheduleLockPO;
-import io.github.photowey.riff.middleware.database.orm.mybatis.ext.BatchRepositoryExt;
+import io.github.photowey.riff.core.domain.entity.AuthenticationToken;
 
 /**
- * {@code ScheduleLockRepository}
+ * {@code AuthenticationTokenService}.
  *
  * @author photowey
  * @version 1.0.0
- * @since 2025/07/21
+ * @since 2025/07/25
  */
-public interface ScheduleLockRepository extends BatchRepositoryExt<ScheduleLockPO> {
-
-    void physicalDelete(@Param("id") Long id);
+public interface AuthenticationTokenService {
 
     /**
-     * Try to lock
+     * Refresh token status.
      *
-     * @param lockKey the lock key
-     * @return the lock database entity
+     * @param token the token {@link AuthenticationToken}
      */
-    ScheduleLockPO selectForUpdate(@Param("lockKey") String lockKey);
+    void asyncRefresh(AuthenticationToken token);
+
+    AuthenticationToken tryReuse(String username);
 }
