@@ -34,4 +34,4 @@ ci:
   spring:
     datasource:
       access:
-        enabled: ${SPRING_DATASOURCE_ACCESS_ENABLED:false}
+        enabled: ${CI_SPRING_DATASOURCE_ACCESS_ENABLED:false}

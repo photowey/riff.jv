@@ -21,6 +21,7 @@ jobs:
     
     env:
       ACT: false
+      CI_SPRING_DATASOURCE_ACCESS_ENABLED: false
       MAVEN_REPO_PATH: "/home/runner/m2/repository"
 
     steps:
