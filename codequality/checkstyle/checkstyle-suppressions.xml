@@ -13,6 +13,8 @@
     <suppress files=".*[\\/]constant([\\/])?.*" checks="InterfaceIsType"/>
     <suppress files=".*[\\/]common[\\/]json([\\/])?.*" checks="OverloadMethodsDeclarationOrder"/>
 
-    <suppress files=".*[\\/]apiserver([\\/])?.*" checks="UncommentedMain"/>
+    <suppress files=".*[\\/]apiserver[\\/]ApiServer\.java" checks="UncommentedMain"/>
+    <suppress files=".*[\\/]apiserver([\\/])?.*[\\/]Test.*\.java" checks="UncommentedMain"/>
+    <suppress files=".*[\\/]job([\\/])?.*[\\/]Test.*\.java" checks="UncommentedMain"/>
 </suppressions>
 

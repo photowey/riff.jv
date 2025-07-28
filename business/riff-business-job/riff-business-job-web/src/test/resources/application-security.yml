@@ -1,0 +1,35 @@
+spring:
+  security:
+    riff:
+      security:
+        cors:
+          allowed-origins: "*"
+          allowed-methods: "GET,POST,PUT,PATCH,DELETE,OPTIONS,HEAD"
+          allowed-headers: "*"
+          exposed-headers:
+          allow-credentials: true
+          max-age: 3600
+
+        auth:
+          issuer:
+            secret: "92b2e755579f2ea8ace09c87b7de06f5"
+            uri: "https://issuer.happycoding.dev"
+
+          jwt:
+            secret: "3f7fce75ec4fc5e247aa8460c719e7dc9598ff06947c1d7f947c50da86f64205"
+            authorities: "ath"
+            token-validity-in-seconds: 86400
+            refresh-token-validity-in-seconds: 2592000
+            token-validity-in-seconds-for-remember-me: 604800
+
+          loader:
+            name: "local"
+
+          checker:
+            name: "local"
+
+        ignores:
+          paths:
+            - "/api/v1/login"
+            - "/api/v1/logout"
+            - "api/v1/register"

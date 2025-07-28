@@ -29,7 +29,7 @@ import io.github.photowey.riff.core.domain.entity.ScheduleLock;
 public interface ScheduleLockStorage<PO> extends EntityStorage<ScheduleLock, PO> {
 
     /**
-     * Try acquire a lock.
+     * Try to acquire a lock.
      *
      * @param lockKey the lock key
      * @return the lock database entity

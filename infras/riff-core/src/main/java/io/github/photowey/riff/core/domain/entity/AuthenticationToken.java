@@ -92,6 +92,18 @@ public class AuthenticationToken extends AbstractTenantEntity {
      * RefreshTokenExpireTime
      */
     private LocalDateTime refreshTokenExpireTime;
+    /**
+     * Token Status
+     * |- 0: Invalid
+     * |- 1:Normal|Valid
+     */
+    private Integer tokenStatus;
+    /**
+     * Refresh Token status
+     * |- 0: Invalid
+     * |- 1:Normal|Valid
+     */
+    private Integer refreshTokenStatus;
 
     // ----------------------------------------------------------------
 
@@ -151,4 +163,11 @@ public class AuthenticationToken extends AbstractTenantEntity {
         return this.refreshTokenExpireTime;
     }
 
+    public Integer tokenStatus() {
+        return tokenStatus;
+    }
+
+    public Integer refreshTokenStatus() {
+        return refreshTokenStatus;
+    }
 }

@@ -44,6 +44,7 @@ import io.github.photowey.riff.business.uaa.service.LoginService;
 import io.github.photowey.riff.core.domain.entity.AuthenticationToken;
 import io.github.photowey.riff.infras.authentication.core.constant.AuthorityConstants;
 import io.github.photowey.riff.infras.authentication.core.domain.authenticated.LoginUser;
+import io.github.photowey.riff.infras.authentication.core.enums.AuthenticationDictionary;
 import io.github.photowey.riff.infras.authentication.core.username.Username;
 import io.github.photowey.riff.infras.authentication.jjwt.token.context.DefaultTokenContext;
 import io.github.photowey.riff.infras.authentication.jjwt.token.context.TokenContext;
@@ -94,6 +95,7 @@ public class LoginServiceImpl extends AbstractApplicationContextHolder implement
 
         payload.postAction();
 
+        // TODO Cache token?
         return response;
     }
 
@@ -128,7 +130,7 @@ public class LoginServiceImpl extends AbstractApplicationContextHolder implement
             .callback((builder) -> {
                 this.ext(payload, scopes, roles, builder);
             })
-            .now(System.currentTimeMillis())
+            .now(this.now())
             .build();
 
         String token = this.auth().jwt().createToken(ctx);
@@ -290,7 +292,7 @@ public class LoginServiceImpl extends AbstractApplicationContextHolder implement
         builder.claim(AuthorityConstants.CLAIM_ISSUER_KEY, auth.issuer().uri());
         builder.claim(AuthorityConstants.CLAIM_ISSUED_AT_KEY, this.now());
         builder.claim(AuthorityConstants.CLAIM_JWT_ID_KEY, this.jwtId());
-        builder.claim(AuthorityConstants.CLAIM_AUDIT_KEY, this.audit(payload.platform()));
+        builder.claim(AuthorityConstants.CLAIM_AUDIENCE_KEY, this.audience(payload.username()));
         builder.claim(AuthorityConstants.CLAIM_CLIENT_KEY, payload.client());
     }
 
@@ -365,6 +367,8 @@ public class LoginServiceImpl extends AbstractApplicationContextHolder implement
             .refreshToken(token.refreshToken().getToken())
             .refreshTokenExpiresIn(token.refreshToken().expiresIn().intValue())
             .refreshTokenExpireTime(refreshTokenExpireTime)
+            .tokenStatus(AuthenticationDictionary.Token.Status.VALID.value())
+            .refreshTokenStatus(AuthenticationDictionary.Token.Status.VALID.value())
             .build();
     }
 

@@ -33,10 +33,18 @@ import io.github.photowey.riff.core.domain.entity.AuthenticationToken;
 public interface AuthenticationTokenStorage<PO> extends EntityStorage<AuthenticationToken, PO> {
 
     /**
-     * Find one {@code AuthenticationToken} by {@code principalId}.
+     * Find one {@link AuthenticationToken} by {@code principalId}.
      *
      * @param principalId the {@code principalId}
-     * @return the {@code AuthenticationToken}
+     * @return the {@link  AuthenticationToken}
      */
     Optional<AuthenticationToken> tryFindByPrincipalId(@Nonnull Long principalId);
+
+    /**
+     * Find one {@code AuthenticationToken} by {@code username}.
+     *
+     * @param username the {@code username}
+     * @return the {@link AuthenticationToken}
+     */
+    Optional<AuthenticationToken> tryFindByUsername(@Nonnull String username);
 }

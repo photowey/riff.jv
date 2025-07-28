@@ -1,6 +1,6 @@
 spring:
   application:
-    name: "riff-apiserver"
+    name: "riff-business-uaa"
     version: "1.0.0"
   profiles:
     active: dev

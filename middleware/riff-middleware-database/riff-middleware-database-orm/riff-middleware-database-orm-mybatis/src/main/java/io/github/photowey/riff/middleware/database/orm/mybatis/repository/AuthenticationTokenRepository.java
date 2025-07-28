@@ -16,6 +16,8 @@
  */
 package io.github.photowey.riff.middleware.database.orm.mybatis.repository;
 
+import jakarta.annotation.Nonnull;
+
 import org.apache.ibatis.annotations.Param;
 
 import io.github.photowey.riff.middleware.database.orm.mybatis.core.domain.po.AuthenticationTokenPO;
@@ -30,5 +32,13 @@ import io.github.photowey.riff.middleware.database.orm.mybatis.ext.BatchReposito
  */
 public interface AuthenticationTokenRepository extends BatchRepositoryExt<AuthenticationTokenPO> {
 
-    void physicalDelete(@Param("id") Long id);
+    void physicalDelete(@Nonnull @Param("id") Long id);
+
+    /**
+     * Acquire the authentication token by username.
+     *
+     * @param username the  username
+     * @return the authentication token {@link AuthenticationTokenPO}
+     */
+    AuthenticationTokenPO tryFindByUsername(@Nonnull @Param("username") String username);
 }

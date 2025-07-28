@@ -84,7 +84,7 @@ public interface AuthorityConstants {
     String CLAIM_ISSUER_KEY = "iss";
     String CLAIM_ISSUED_AT_KEY = "iat";
     String CLAIM_JWT_ID_KEY = "jti";
-    String CLAIM_AUDIT_KEY = "aud";
+    String CLAIM_AUDIENCE_KEY = "aud";
     String CLAIM_CLIENT_KEY = "xct";
     /**
      * TOKEN TYPE

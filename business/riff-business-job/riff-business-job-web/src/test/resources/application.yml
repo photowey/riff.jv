@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: "riff-business-job"
+    version: "1.0.0"
+  profiles:
+    active: dev
+    include:
+      - database
+      - security
+  threads:
+    virtual:
+      enabled: true
+  security:
+    user:
+      name: "${local.configurator.spring.security.user.name}"
+      password: "${local.configurator.spring.security.user.password}"
+  jackson:
+    locale: "zh"
+    time-zone: "GMT+8"
+
+logging:
+  level:
+    root: INFO
+    io.github.photowey.riff.middleware.database.orm.mybatis.repository: DEBUG
+  time-rolling-file:
+    file: '${app.base:.}/logs/${spring.application.name}.%d{yyyy-MM-dd}.log'
+  pattern:
+    console: '%red(%d{yyyy-MM-dd HH:mm:ss.SSS}) %red([${spring.application.name}]) %green([%thread]) %highlight(%-5level) %boldMagenta(%logger) - %cyan(%msg%n) %ex{15}'
+    time-rolling-file: '%d{yyyy-MM-dd HH:mm:ss.SSS} [${spring.application.name}] [%X{traceId}] [%thread] %-5level %logger %msg%n %ex{15}'

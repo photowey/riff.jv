@@ -141,6 +141,12 @@ public class AuthenticationTokenStorageImpl
     }
 
     @Override
+    public Optional<AuthenticationToken> tryFindByUsername(@Nonnull String username) {
+        AuthenticationTokenPO tokenPo = this.authenticationTokenRepository.tryFindByUsername(username);
+        return Optional.ofNullable(this.toEntity(tokenPo));
+    }
+
+    @Override
     public AuthenticationToken selectOne(@Nonnull Long id) {
         return this.toEntity(this.authenticationTokenRepository.selectById(id));
     }

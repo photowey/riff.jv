@@ -319,4 +319,51 @@ public enum AuthenticationDictionary {
             throw new RuntimeException("riff: Invalid Client value.");
         }
     }
+
+    public enum Token {
+
+        ;
+
+        public enum Status {
+
+            // TOKEN STATUS 0: Invalid 1:Valid
+
+            INVALID("INVALID", "invalid", 0),
+            VALID("VALID", "valid", 1),
+
+            ;
+
+            private final String name;
+            private final String code;
+            private final int value;
+
+            Status(String name, String code, int value) {
+                this.name = name;
+                this.code = code;
+                this.value = value;
+            }
+
+            public String wrap() {
+                return name;
+            }
+
+            public String code() {
+                return code;
+            }
+
+            public int value() {
+                return value;
+            }
+
+            public static Status valueOf(int value) {
+                for (Status status : values()) {
+                    if (status.value() == value) {
+                        return status;
+                    }
+                }
+
+                throw new RuntimeException("riff: Invalid token status value.");
+            }
+        }
+    }
 }

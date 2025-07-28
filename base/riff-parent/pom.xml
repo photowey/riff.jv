@@ -38,6 +38,7 @@
 
         <!-- Business -->
         <module>../../business/riff-business-uaa</module>
+        <module>../../business/riff-business-job</module>
 
         <!-- Middleware -->
         <module>../../middleware/riff-middleware-database</module>

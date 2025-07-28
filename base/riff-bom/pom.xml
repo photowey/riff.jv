@@ -271,6 +271,30 @@
             </dependency>
             <!--endregion Uaa -->
 
+
+            <!--region Job -->
+            <dependency>
+                <groupId>io.github.photowey</groupId>
+                <artifactId>riff-business-job-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.photowey</groupId>
+                <artifactId>riff-business-job-repository</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.photowey</groupId>
+                <artifactId>riff-business-job-service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.photowey</groupId>
+                <artifactId>riff-business-job-web</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <!--endregion Job -->
+
         </dependencies>
     </dependencyManagement>
 

@@ -262,6 +262,12 @@
   - `refresh_token_expire_time`
     - `${long-time}`
       - `100 YEAR || 1970-01-01`
+  - `token_status`
+    - `0: Invalid`
+    - `1: Valid`
+  - `refresh_token_status`
+    - `0: Invalid`
+    - `1: Valid`
 
 
 

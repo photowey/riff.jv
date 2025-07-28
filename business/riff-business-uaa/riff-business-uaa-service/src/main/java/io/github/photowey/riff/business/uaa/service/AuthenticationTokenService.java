@@ -34,5 +34,11 @@ public interface AuthenticationTokenService {
      */
     void asyncRefresh(AuthenticationToken token);
 
+    /**
+     * Try to acquire the reusable token {@link AuthenticationToken}.
+     *
+     * @param username the  username
+     * @return the reusable token {@link AuthenticationToken}
+     */
     AuthenticationToken tryReuse(String username);
 }

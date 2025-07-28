@@ -22,8 +22,8 @@ import java.util.Optional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit.jupiter.EnabledIf;
+import org.springframework.transaction.annotation.Transactional;
 
 import io.github.photowey.riff.business.uaa.AbstractLocalTest;
 import io.github.photowey.riff.business.uaa.TestUaa;
@@ -55,10 +55,10 @@ class SystemUserStorageTest extends AbstractLocalTest {
     //
 
     @Test
-    @Rollback
+    @Transactional
     void testSave() {
         SystemUser systemUser = SystemUser.builder()
-            .username("admin")
+            .username("amin_0001")
             .password("admin@riff.jv")
             .email("photowey@gmail.com")
             .mobile("18888888888")
@@ -77,7 +77,7 @@ class SystemUserStorageTest extends AbstractLocalTest {
     }
 
     @Test
-    @Rollback
+    @Transactional
     void testBatchSave() {
         SystemUser systemUser00 = SystemUser.builder()
             .username("admin00")

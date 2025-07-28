@@ -57,7 +57,7 @@ public class AuthenticationTokenServiceImpl implements AuthenticationTokenServic
 
     @Override
     public AuthenticationToken tryReuse(String username) {
-        return null;
+        return this.authenticationTokenStorage.tryFindByUsername(username).orElse(null);
     }
 
     private void populateCreateBase(AuthenticationToken token) {

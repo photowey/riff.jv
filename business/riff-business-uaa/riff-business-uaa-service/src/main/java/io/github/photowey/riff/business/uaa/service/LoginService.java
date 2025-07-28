@@ -57,7 +57,7 @@ public interface LoginService extends AuthenticationEngineGetter, SecurityProper
         return NanoId.randomNumberNanoId(32);
     }
 
-    default String audit(String platform) {
-        return Cryptos.HASH.md5(platform);
+    default String audience(String audience) {
+        return Cryptos.HASH.md5(audience);
     }
 }

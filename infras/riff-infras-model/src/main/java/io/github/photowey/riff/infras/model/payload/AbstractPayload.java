@@ -16,6 +16,17 @@
  */
 package io.github.photowey.riff.infras.model.payload;
 
+import java.io.Serial;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+
 /**
  * {@code AbstractPayload}.
  *
@@ -24,7 +35,21 @@ package io.github.photowey.riff.infras.model.payload;
  * @version 1.0.0
  * @since 2025/07/15
  */
+@Data
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
 public abstract class AbstractPayload<T> implements Payload {
+
+    @Serial
+    private static final long serialVersionUID = 5424482441917645927L;
+
+    /**
+     * Unused for now.
+     */
+    @JsonIgnore
+    @Schema(hidden = true)
+    protected String version;
 
     public void preAction() {
         this.initAction();

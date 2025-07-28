@@ -9,7 +9,60 @@
     @since 2025/07/21
     -->
 
+    <resultMap id="AuthenticationTokenPO"
+               type="io.github.photowey.riff.middleware.database.orm.mybatis.core.domain.po.AuthenticationTokenPO">
+        <result column="id" property="id"/>
+        <result column="version" property="version"/>
+        <result column="deleted" property="deleted"/>
+        <result column="tenant" property="tenant"/>
+        <result column="platform" property="platform"/>
+        <result column="app" property="app"/>
+        <result column="principal_id" property="principalId"/>
+        <result column="authentication_type" property="authenticationType"/>
+        <result column="authentication_key" property="authenticationKey"/>
+        <result column="token_type" property="tokenType"/>
+        <result column="token" property="token"/>
+        <result column="token_expires_in" property="tokenExpiresIn"/>
+        <result column="token_expire_time" property="tokenExpireTime"/>
+        <result column="refresh_token_enabled" property="refreshTokenEnabled"/>
+        <result column="refresh_token" property="refreshToken"/>
+        <result column="refresh_token_expires_in" property="refreshTokenExpiresIn"/>
+        <result column="refresh_token_expire_time" property="refreshTokenExpireTime"/>
+        <result column="token_status" property="tokenStatus"/>
+        <result column="refresh_token_status" property="refreshTokenStatus"/>
+    </resultMap>
+
     <delete id="physicalDelete">
         DELETE FROM riff_authentication_token WHERE id = #{id}
     </delete>
+
+    <!-- @formatter:off -->
+    <select id="tryFindByUsername" resultMap="AuthenticationTokenPO">
+        SELECT
+            t.id,
+            t.create_by,
+            t.create_time,
+            t.principal_id,
+            t.tenant,
+            t.platform,
+            t.app,
+            t.token_type,
+            t.token,
+            t.token_expires_in,
+            t.token_expire_time,
+            t.refresh_token_enabled,
+            t.refresh_token,
+            t.refresh_token_expires_in,
+            t.refresh_token_expire_time,
+            t.token_status,
+            t.refresh_token_status
+        FROM
+            riff_authentication_token t
+        INNER JOIN riff_system_user u ON t.principal_id = u.id
+        WHERE
+            u.username = #{username}
+        ORDER BY t.id DESC
+        LIMIT 1
+    </select>
+    <!-- @formatter:on -->
 </mapper>
