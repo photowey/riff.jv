@@ -36,6 +36,17 @@
             <groupId>io.github.photowey</groupId>
             <artifactId>riff-infras-exception-advice</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>io.github.photowey</groupId>
+            <artifactId>riff-startup-app</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>

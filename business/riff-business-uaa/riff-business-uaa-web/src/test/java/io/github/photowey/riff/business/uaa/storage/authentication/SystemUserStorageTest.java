@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.photowey.riff.apiserver.storage.authentication;
+package io.github.photowey.riff.business.uaa.storage.authentication;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,8 +25,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit.jupiter.EnabledIf;
 
-import io.github.photowey.riff.apiserver.AbstractLocalTest;
-import io.github.photowey.riff.apiserver.TestApiServer;
+import io.github.photowey.riff.business.uaa.AbstractLocalTest;
+import io.github.photowey.riff.business.uaa.TestUaa;
 import io.github.photowey.riff.core.domain.entity.SystemUser;
 import io.github.photowey.riff.core.domain.query.SystemUserQuery;
 import io.github.photowey.riff.core.domain.query.pagination.SystemUserPaginationQuery;
@@ -43,7 +43,7 @@ import lombok.extern.slf4j.Slf4j;
  * @since 2025/07/22
  */
 @Slf4j
-@SpringBootTest(classes = TestApiServer.class)
+@SpringBootTest(classes = TestUaa.class)
 //@TestPropertySource(properties = "spring.datasource.access.enabled=true")
 @EnabledIf(expression = "${spring.datasource.access.enabled}", loadContext = true)
 class SystemUserStorageTest extends AbstractLocalTest {

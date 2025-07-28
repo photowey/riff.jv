@@ -1,0 +1,25 @@
+server:
+  # Valtteri Bottas | Zhou Guanyu
+  port: 7724
+
+test:
+  environment: ci
+
+spring:
+  datasource:
+    access:
+      enabled: ${SPRING_DATASOURCE_ACCESS_ENABLED:false}
+
+local:
+  configurator:
+    database:
+      mysql:
+        address: ${DATABASE_MYSQL_ADDRESS:127.0.0.1:3307}
+        database: ${DATABASE_MYSQL_DATABASE:riff}
+        username: ${DATABASE_MYSQL_USERNAME:root}
+        password: ${DATABASE_MYSQL_PASSWORD:root}
+    spring:
+      security:
+        user:
+          name: ${SPRING_SECURITY_USER_NAME:admin}
+          password: ${SPRING_SECURITY_USER_PASSWORD:admin}

@@ -14,15 +14,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.photowey.riff.apiserver.handler.password;
+package io.github.photowey.riff.business.uaa.handler.password;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.EnabledIf;
 
-import io.github.photowey.riff.apiserver.AbstractLocalTest;
-import io.github.photowey.riff.apiserver.TestApiServer;
+import io.github.photowey.riff.business.uaa.AbstractLocalTest;
+import io.github.photowey.riff.business.uaa.TestUaa;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -35,8 +35,9 @@ import lombok.extern.slf4j.Slf4j;
  * @since 2025/07/23
  */
 @Slf4j
-@SpringBootTest(classes = TestApiServer.class)
-@EnabledIf(expression = "#{systemProperties['spring.profiles.active'] == 'local'}", loadContext = true)
+@SpringBootTest(classes = TestUaa.class)
+//@TestPropertySource(properties = "spring.datasource.access.enabled=true")
+@EnabledIf(expression = "${spring.datasource.access.enabled}", loadContext = true)
 class PasswordHandlerTest extends AbstractLocalTest {
 
     @Test

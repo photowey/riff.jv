@@ -14,14 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.photowey.riff.apiserver.service;
+package io.github.photowey.riff.business.uaa.service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.EnabledIf;
 
-import io.github.photowey.riff.apiserver.AbstractLocalTest;
-import io.github.photowey.riff.apiserver.TestApiServer;
+import io.github.photowey.riff.business.uaa.AbstractLocalTest;
+import io.github.photowey.riff.business.uaa.TestUaa;
 import io.github.photowey.riff.business.uaa.core.domain.dto.TokenDTO;
 import io.github.photowey.riff.business.uaa.core.domain.payload.LoginPayload;
 import io.github.photowey.riff.infras.authentication.core.constant.AuthorityConstants;
@@ -37,7 +37,7 @@ import lombok.extern.slf4j.Slf4j;
  * @since 2025/07/25
  */
 @Slf4j
-@SpringBootTest(classes = TestApiServer.class)
+@SpringBootTest(classes = TestUaa.class)
 //@TestPropertySource(properties = "spring.datasource.access.enabled=true")
 @EnabledIf(expression = "${spring.datasource.access.enabled}", loadContext = true)
 class LoginServiceTest extends AbstractLocalTest {
