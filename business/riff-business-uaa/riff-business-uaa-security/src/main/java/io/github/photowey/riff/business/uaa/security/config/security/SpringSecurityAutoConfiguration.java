@@ -21,6 +21,7 @@ import java.util.Optional;
 import jakarta.annotation.PostConstruct;
 
 import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -92,12 +93,12 @@ public class SpringSecurityAutoConfiguration {
     public static class SpringSecurityConfiguration
         extends AbstractBeanFactoryHolder implements Ordered {
 
-        private final UserDetailsService userDetailsService;
+        private final AuthenticationManagerBuilder mgr;
         private final PasswordEncoder passwordEncoder;
+        private final UserDetailsService userDetailsService;
 
         private final SecurityProperties securityProperties;
         private final IgnorePathDeterminer ignorePathDeterminer;
-        private final AuthenticationManagerBuilder auth;
         private final JwtSecurityConfigurer securityConfigurer;
 
         private final AccessDeniedHandler accessDeniedHandler;
@@ -105,36 +106,36 @@ public class SpringSecurityAutoConfiguration {
         private final Environment environment;
 
         public SpringSecurityConfiguration(
-            UserDetailsService userDetailsService,
+            AuthenticationManagerBuilder mgr,
             PasswordEncoder passwordEncoder,
+            UserDetailsService userDetailsService,
             SecurityProperties securityProperties,
             IgnorePathDeterminer ignorePathDeterminer,
-            AuthenticationManagerBuilder auth,
             JwtSecurityConfigurer securityConfigurer,
             AccessDeniedHandler accessDeniedHandler,
             AuthenticationEntryPoint authenticationEntryPoint,
             Environment environment
         ) {
-            this.userDetailsService = userDetailsService;
+            this.mgr = mgr;
             this.passwordEncoder = passwordEncoder;
+            this.userDetailsService = userDetailsService;
             this.ignorePathDeterminer = ignorePathDeterminer;
             this.securityProperties = securityProperties;
-            this.auth = auth;
             this.securityConfigurer = securityConfigurer;
             this.accessDeniedHandler = accessDeniedHandler;
             this.authenticationEntryPoint = authenticationEntryPoint;
             this.environment = environment;
         }
 
+        @PostConstruct
+        public void configure() throws Exception {
+            this.mgr.userDetailsService(this.userDetailsService).passwordEncoder(this.passwordEncoder);
+        }
+
         @Override
         public int getOrder() {
             // 100 WebSecurityConfiguration
             return 100 << 1;
-        }
-
-        @PostConstruct
-        protected void configure() throws Exception {
-            this.auth.userDetailsService(this.userDetailsService).passwordEncoder(this.passwordEncoder);
         }
 
         @Bean
@@ -168,6 +169,7 @@ public class SpringSecurityAutoConfiguration {
         }
 
         @Bean
+        @ConditionalOnMissingBean
         public AuthenticationManager authenticationManager(
             AuthenticationConfiguration configuration) throws Exception {
             return configuration.getAuthenticationManager();

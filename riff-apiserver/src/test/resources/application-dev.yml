@@ -2,14 +2,6 @@ server:
   # Valtteri Bottas | Zhou Guanyu
   port: 7724
 
-test:
-  environment: ci
-
-spring:
-  datasource:
-    access:
-      enabled: ${SPRING_DATASOURCE_ACCESS_ENABLED:false}
-
 local:
   configurator:
     database:
@@ -23,3 +15,11 @@ local:
         user:
           name: ${SPRING_SECURITY_USER_NAME:admin}
           password: ${SPRING_SECURITY_USER_PASSWORD:admin}
+
+# ----------------------------------------------------------------
+
+ci:
+  spring:
+    datasource:
+      access:
+        enabled: ${SPRING_DATASOURCE_ACCESS_ENABLED:false}

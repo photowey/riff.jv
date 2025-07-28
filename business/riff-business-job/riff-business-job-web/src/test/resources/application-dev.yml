@@ -2,11 +2,6 @@ server:
   # Valtteri Bottas | Zhou Guanyu
   port: 7724
 
-spring:
-  datasource:
-    access:
-      enabled: ${SPRING_DATASOURCE_ACCESS_ENABLED:false}
-
 local:
   configurator:
     database:

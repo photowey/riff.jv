@@ -18,6 +18,8 @@ spring:
     locale: "zh"
     time-zone: "GMT+8"
 
+# ----------------------------------------------------------------
+
 logging:
   level:
     root: INFO
@@ -27,3 +29,11 @@ logging:
   pattern:
     console: '%red(%d{yyyy-MM-dd HH:mm:ss.SSS}) %red([${spring.application.name}]) %green([%thread]) %highlight(%-5level) %boldMagenta(%logger) - %cyan(%msg%n) %ex{15}'
     time-rolling-file: '%d{yyyy-MM-dd HH:mm:ss.SSS} [${spring.application.name}] [%X{traceId}] [%thread] %-5level %logger %msg%n %ex{15}'
+
+# ----------------------------------------------------------------
+
+ci:
+  spring:
+    datasource:
+      access:
+        enabled: ${SPRING_DATASOURCE_ACCESS_ENABLED:false}

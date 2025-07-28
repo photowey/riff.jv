@@ -44,21 +44,15 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @SpringBootTest(classes = TestUaa.class)
-//@TestPropertySource(properties = "spring.datasource.access.enabled=true")
-@EnabledIf(expression = "${spring.datasource.access.enabled}", loadContext = true)
+//@TestPropertySource(properties = "ci.spring.datasource.access.enabled=true")
+@EnabledIf(expression = "${ci.spring.datasource.access.enabled}", loadContext = true)
 class SystemUserStorageTest extends AbstractLocalTest {
-
-    //
-    // DATABASE_MYSQL_ADDRESS=127.0.0.1:3307;DATABASE_MYSQL_DATABASE=riff;DATABASE_MYSQL_USERNAME=root;\
-    // DATABASE_MYSQL_PASSWORD=aZI0cNjQ1lJ6BUnTgapnMHjGA7l1SuNA;SPRING_SECURITY_USER_NAME=admin;\
-    // SPRING_SECURITY_USER_PASSWORD=admin;spring.datasource.access.enabled=true
-    //
 
     @Test
     @Transactional
     void testSave() {
         SystemUser systemUser = SystemUser.builder()
-            .username("amin_0001")
+            .username("amin")
             .password("admin@riff.jv")
             .email("photowey@gmail.com")
             .mobile("18888888888")

@@ -28,7 +28,8 @@ import org.springframework.test.context.junit.jupiter.EnabledIf;
  * @since 2025/07/22
  */
 @SpringBootTest(classes = TestApiServer.class)
-@EnabledIf(expression = "#{systemProperties['spring.profiles.active'] == 'local'}", loadContext = true)
+//@TestPropertySource(properties = "ci.spring.datasource.access.enabled=true")
+@EnabledIf(expression = "${ci.spring.datasource.access.enabled}", loadContext = true)
 class ApiServerTests {
 
     // @formatter:off

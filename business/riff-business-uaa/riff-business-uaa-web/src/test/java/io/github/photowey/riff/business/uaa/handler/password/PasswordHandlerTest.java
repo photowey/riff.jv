@@ -36,8 +36,8 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @SpringBootTest(classes = TestUaa.class)
-//@TestPropertySource(properties = "spring.datasource.access.enabled=true")
-@EnabledIf(expression = "${spring.datasource.access.enabled}", loadContext = true)
+//@TestPropertySource(properties = "ci.spring.datasource.access.enabled=true")
+@EnabledIf(expression = "${ci.spring.datasource.access.enabled}", loadContext = true)
 class PasswordHandlerTest extends AbstractLocalTest {
 
     @Test

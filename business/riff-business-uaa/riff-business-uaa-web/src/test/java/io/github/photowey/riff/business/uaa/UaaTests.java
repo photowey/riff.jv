@@ -28,8 +28,8 @@ import org.springframework.test.context.junit.jupiter.EnabledIf;
  * @since 2025/07/22
  */
 @SpringBootTest(classes = TestUaa.class)
-//@TestPropertySource(properties = "spring.datasource.access.enabled=true")
-@EnabledIf(expression = "${spring.datasource.access.enabled}", loadContext = true)
+//@TestPropertySource(properties = "ci.spring.datasource.access.enabled=true")
+@EnabledIf(expression = "${ci.spring.datasource.access.enabled}", loadContext = true)
 class UaaTests {
 
     // @formatter:off
