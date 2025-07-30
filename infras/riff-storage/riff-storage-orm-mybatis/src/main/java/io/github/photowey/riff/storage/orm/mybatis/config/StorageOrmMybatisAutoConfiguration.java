@@ -37,7 +37,8 @@ public class StorageOrmMybatisAutoConfiguration {
     @Configuration
     @ComponentScan(value = {
         "io.github.photowey.riff.storage.orm.mybatis.impl",
-        "io.github.photowey.riff.storage.orm.mybatis.assembler"
+        "io.github.photowey.riff.storage.orm.mybatis.assembler",
+        "io.github.photowey.riff.storage.orm.mybatis.engine",
     })
     public static class StorageOrmMybatisConfiguration {
 

@@ -26,6 +26,7 @@ import io.github.photowey.riff.infras.authentication.api.handler.password.Passwo
 import io.github.photowey.riff.infras.authentication.core.util.Requests;
 import io.github.photowey.riff.middleware.database.orm.mybatis.core.domain.po.SystemUserPO;
 import io.github.photowey.riff.storage.api.SystemUserStorage;
+import io.github.photowey.riff.storage.api.engine.StorageEngine;
 
 /**
  * {@code AbstractLocalTest}.
@@ -37,13 +38,22 @@ import io.github.photowey.riff.storage.api.SystemUserStorage;
 public abstract class AbstractLocalTest {
 
     @Autowired
+    protected LoginService loginService;
+
+    // ----------------------------------------------------------------
+
+    @Autowired
     protected PasswordHandler passwordHandler;
+
+    // ----------------------------------------------------------------
+
+    @Autowired
+    protected StorageEngine storageEngine;
 
     @Autowired
     protected SystemUserStorage<SystemUserPO> systemUserStorage;
 
-    @Autowired
-    protected LoginService loginService;
+    // ----------------------------------------------------------------
 
     protected void tryHttpRequestTest(Runnable task) {
         MockHttpServletRequest request = new MockHttpServletRequest();

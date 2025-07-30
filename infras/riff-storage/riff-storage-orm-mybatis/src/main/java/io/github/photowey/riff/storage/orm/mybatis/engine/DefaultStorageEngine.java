@@ -14,23 +14,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.photowey.riff.storage.api;
+package io.github.photowey.riff.storage.orm.mybatis.engine;
 
-import java.util.Optional;
+import org.springframework.stereotype.Component;
 
-import jakarta.annotation.Nonnull;
+import io.github.photowey.riff.infras.ioc.context.engine.AbstractEngine;
+import io.github.photowey.riff.storage.api.engine.StorageEngine;
 
-import io.github.photowey.riff.core.domain.entity.ScheduleApp;
+// @formatter:off
 
 /**
- * {@code ScheduleAppStorage}.
+ * {@code DefaultStorageEngine}.
  *
- * @param <PO> The {@code Database} persistence entity type.
  * @author photowey
  * @version 1.0.0
- * @since 2025/07/23
+ * @since 2025/07/30
  */
-public interface ScheduleAppStorage<PO> extends EntityStorage<ScheduleApp, PO> {
+@Component
+public class DefaultStorageEngine extends AbstractEngine implements StorageEngine { }
 
-    Optional<ScheduleApp> simpleQuery(@Nonnull Long id);
-}
+// @formatter:on

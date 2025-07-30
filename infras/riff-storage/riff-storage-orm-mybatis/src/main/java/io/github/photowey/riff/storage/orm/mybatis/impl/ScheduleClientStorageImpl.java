@@ -19,12 +19,15 @@ package io.github.photowey.riff.storage.orm.mybatis.impl;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Consumer;
 
 import jakarta.annotation.Nonnull;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 
 import io.github.photowey.riff.core.domain.entity.ScheduleClient;
 import io.github.photowey.riff.infras.common.util.Collections;
@@ -63,6 +66,20 @@ public class ScheduleClientStorageImpl
     @Override
     public EntityAssembler<ScheduleClient, ScheduleClientPO> entityAssembler() {
         return this.scheduleClientAssembler;
+    }
+
+    // ----------------------------------------------------------------
+
+    @Override
+    public Optional<ScheduleClient> testClientExists(@Nonnull ScheduleClient client) {
+        ScheduleClientPO image = this.scheduleClientRepository.selectOne(new LambdaQueryWrapper<ScheduleClientPO>()
+            .select(ScheduleClientPO::getId)
+            .eq(ScheduleClientPO::getAppId, client.appId())
+            .eq(ScheduleClientPO::getJobId, client.jobId())
+            .eq(ScheduleClientPO::getServerIp, client.serverIp())
+            .eq(ScheduleClientPO::getServerPort, client.serverPort()));
+
+        return Optional.ofNullable(this.toEntity(image));
     }
 
     // ----------------------------------------------------------------

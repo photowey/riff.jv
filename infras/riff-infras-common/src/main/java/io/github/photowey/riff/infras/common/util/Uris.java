@@ -14,23 +14,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.photowey.riff.storage.api;
+package io.github.photowey.riff.infras.common.util;
 
-import java.util.Optional;
+import java.net.URI;
+import java.net.URISyntaxException;
 
-import jakarta.annotation.Nonnull;
-
-import io.github.photowey.riff.core.domain.entity.ScheduleApp;
+import io.github.photowey.riff.infras.common.thrower.AssertionErrors;
 
 /**
- * {@code ScheduleAppStorage}.
+ * {@code Uris}.
  *
- * @param <PO> The {@code Database} persistence entity type.
  * @author photowey
  * @version 1.0.0
- * @since 2025/07/23
+ * @since 2025/07/30
  */
-public interface ScheduleAppStorage<PO> extends EntityStorage<ScheduleApp, PO> {
+public final class Uris {
 
-    Optional<ScheduleApp> simpleQuery(@Nonnull Long id);
+    private Uris() {
+        AssertionErrors.throwz(Uris.class);
+    }
+
+    public static boolean checkPattern(String uri) {
+        try {
+            new URI(uri);
+            return true;
+        } catch (URISyntaxException e) {
+            return false;
+        }
+    }
 }

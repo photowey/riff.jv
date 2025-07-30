@@ -73,6 +73,10 @@ public class ScheduleClientPO extends AbstractTenantEntity {
      */
     private String serverProtocol;
     /**
+     * ServerAddress
+     */
+    private String serverAddress;
+    /**
      * HealthCheckSuccessCount
      */
     private Integer healthCheckSuccessCount;
@@ -117,6 +121,10 @@ public class ScheduleClientPO extends AbstractTenantEntity {
 
     public String serverProtocol() {
         return this.serverProtocol;
+    }
+
+    public String serverAddress() {
+        return serverAddress;
     }
 
     public Integer healthCheckSuccessCount() {

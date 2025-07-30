@@ -39,6 +39,16 @@ import io.github.photowey.riff.middleware.database.core.domain.table.TableId;
 public interface QueryStorage<T extends TableId> {
 
     /**
+     * Exists.
+     *
+     * @param id The id.
+     * @return The existence, true if exists, false otherwise.
+     */
+    default boolean exists(@Nonnull Long id) {
+        return false;
+    }
+
+    /**
      * Select One.
      *
      * @param id The id.

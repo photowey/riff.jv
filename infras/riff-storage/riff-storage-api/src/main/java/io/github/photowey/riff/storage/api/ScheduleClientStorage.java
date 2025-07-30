@@ -16,6 +16,10 @@
  */
 package io.github.photowey.riff.storage.api;
 
+import java.util.Optional;
+
+import jakarta.annotation.Nonnull;
+
 import io.github.photowey.riff.core.domain.entity.ScheduleClient;
 
 /**
@@ -27,4 +31,13 @@ import io.github.photowey.riff.core.domain.entity.ScheduleClient;
  * @since 2025/07/23
  */
 public interface ScheduleClientStorage<PO> extends EntityStorage<ScheduleClient, PO> {
+
+
+    /**
+     * Test the client exists
+     *
+     * @param client the client {@link ScheduleClient}
+     * @return the database entity {@link ScheduleClient}
+     */
+    Optional<ScheduleClient> testClientExists(@Nonnull ScheduleClient client);
 }

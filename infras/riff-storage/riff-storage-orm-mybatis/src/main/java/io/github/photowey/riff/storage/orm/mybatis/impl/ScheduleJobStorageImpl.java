@@ -26,6 +26,8 @@ import jakarta.annotation.Nonnull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+
 import io.github.photowey.riff.core.domain.entity.ScheduleJob;
 import io.github.photowey.riff.infras.common.util.Collections;
 import io.github.photowey.riff.infras.common.util.Objects;
@@ -62,6 +64,13 @@ public class ScheduleJobStorageImpl implements ScheduleJobStorage<ScheduleJobPO>
     @Override
     public EntityAssembler<ScheduleJob, ScheduleJobPO> entityAssembler() {
         return this.scheduleJobAssembler;
+    }
+
+    // ----------------------------------------------------------------
+
+    @Override
+    public boolean exists(@Nonnull Long id) {
+        return this.scheduleJobRepository.exists(new LambdaQueryWrapper<ScheduleJobPO>().eq(ScheduleJobPO::getId, id));
     }
 
     // ----------------------------------------------------------------

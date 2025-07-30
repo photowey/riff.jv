@@ -21,9 +21,9 @@ import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockHttpServletRequest;
 
+import io.github.photowey.riff.business.job.service.ScheduleClientService;
 import io.github.photowey.riff.infras.authentication.core.util.Requests;
-import io.github.photowey.riff.middleware.database.orm.mybatis.core.domain.po.SystemUserPO;
-import io.github.photowey.riff.storage.api.SystemUserStorage;
+import io.github.photowey.riff.storage.api.engine.StorageEngine;
 
 /**
  * {@code AbstractLocalTest}.
@@ -35,7 +35,10 @@ import io.github.photowey.riff.storage.api.SystemUserStorage;
 public abstract class AbstractLocalTest {
 
     @Autowired
-    protected SystemUserStorage<SystemUserPO> systemUserStorage;
+    protected StorageEngine storageEngine;
+
+    @Autowired
+    protected ScheduleClientService scheduleClientService;
 
     protected void tryHttpRequestTest(Runnable task) {
         MockHttpServletRequest request = new MockHttpServletRequest();

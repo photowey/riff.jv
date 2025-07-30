@@ -34,5 +34,5 @@ public interface ScheduleClientService {
      * @param payload the payload {@link ScheduleClientAddPayload}
      * @return the {@link ScheduleClient}
      */
-    ScheduleClient add(ScheduleClientAddPayload payload);
+    ScheduleClient register(ScheduleClientAddPayload payload);
 }

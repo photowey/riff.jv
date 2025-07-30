@@ -19,6 +19,8 @@ package io.github.photowey.riff.core.domain.entity;
 import java.io.Serial;
 import java.time.LocalDateTime;
 
+import io.github.photowey.riff.infras.common.util.Objects;
+import io.github.photowey.riff.infras.common.util.Strings;
 import io.github.photowey.riff.middleware.database.core.domain.entity.AbstractTenantEntity;
 
 import lombok.AllArgsConstructor;
@@ -70,6 +72,10 @@ public class ScheduleClient extends AbstractTenantEntity {
      */
     private String serverProtocol;
     /**
+     * ServerAddress
+     */
+    private String serverAddress;
+    /**
      * HealthCheckSuccessCount
      */
     private Integer healthCheckSuccessCount;
@@ -89,6 +95,44 @@ public class ScheduleClient extends AbstractTenantEntity {
      * OfflineTime
      */
     private LocalDateTime offlineTime;
+
+    // ----------------------------------------------------------------
+
+    /**
+     * This field does not exist in the database.
+     * |- 0 | 1
+     */
+    private Integer registered;
+
+    // ----------------------------------------------------------------
+
+    public boolean determineIsRegistered() {
+        return Objects.isNotNull(this.registered) && this.registered == 1;
+    }
+
+    // ----------------------------------------------------------------
+
+    public void initBaseCounter() {
+        this.healthCheckSuccessCount = 0;
+        this.healthCheckFailureCount = 0;
+        this.receivedHeartbeatCount = 0;
+    }
+
+    // ----------------------------------------------------------------
+
+    public void injectTenantBase(ScheduleApp app) {
+        if (Strings.isEmpty(this.tenant())) {
+            this.setTenant(app.tenant());
+        }
+
+        if (Strings.isEmpty(this.platform())) {
+            this.setPlatform(app.platform());
+        }
+
+        if (Strings.isEmpty(this.app())) {
+            this.setApp(app.app());
+        }
+    }
 
     // ----------------------------------------------------------------
 
@@ -114,6 +158,10 @@ public class ScheduleClient extends AbstractTenantEntity {
 
     public String serverProtocol() {
         return this.serverProtocol;
+    }
+
+    public String serverAddress() {
+        return serverAddress;
     }
 
     public Integer healthCheckSuccessCount() {

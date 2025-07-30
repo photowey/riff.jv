@@ -29,6 +29,11 @@
 
         <dependency>
             <groupId>io.github.photowey</groupId>
+            <artifactId>riff-infras-ioc-context</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.github.photowey</groupId>
             <artifactId>riff-core</artifactId>
         </dependency>
 

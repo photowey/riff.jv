@@ -19,12 +19,15 @@ package io.github.photowey.riff.storage.orm.mybatis.impl;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Consumer;
 
 import jakarta.annotation.Nonnull;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 
 import io.github.photowey.riff.core.domain.entity.ScheduleApp;
 import io.github.photowey.riff.infras.common.util.Collections;
@@ -38,6 +41,7 @@ import io.github.photowey.riff.middleware.database.orm.mybatis.core.domain.mybat
 import io.github.photowey.riff.middleware.database.orm.mybatis.core.domain.mybatisplus.AbstractTenantEntity;
 import io.github.photowey.riff.middleware.database.orm.mybatis.core.domain.po.ScheduleAppPO;
 import io.github.photowey.riff.middleware.database.orm.mybatis.repository.ScheduleAppRepository;
+import io.github.photowey.riff.middleware.database.orm.mybatis.wrapper.AppendableLambdaQueryWrapper;
 import io.github.photowey.riff.storage.api.ScheduleAppStorage;
 import io.github.photowey.riff.storage.orm.mybatis.assembler.ScheduleAppAssembler;
 
@@ -62,6 +66,13 @@ public class ScheduleAppStorageImpl implements ScheduleAppStorage<ScheduleAppPO>
     @Override
     public EntityAssembler<ScheduleApp, ScheduleAppPO> entityAssembler() {
         return this.scheduleAppAssembler;
+    }
+
+    // ----------------------------------------------------------------
+
+    @Override
+    public boolean exists(@Nonnull Long id) {
+        return this.scheduleAppRepository.exists(new LambdaQueryWrapper<ScheduleAppPO>().eq(ScheduleAppPO::getId, id));
     }
 
     // ----------------------------------------------------------------
@@ -121,6 +132,25 @@ public class ScheduleAppStorageImpl implements ScheduleAppStorage<ScheduleAppPO>
     @Override
     public void updateById(@Nonnull ScheduleApp entity) {
         this.scheduleAppRepository.updateById(this.toPo(entity));
+    }
+
+    // ----------------------------------------------------------------
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public Optional<ScheduleApp> simpleQuery(@Nonnull Long id) {
+        try (AppendableLambdaQueryWrapper<ScheduleAppPO> wrapper = new AppendableLambdaQueryWrapper<ScheduleAppPO>()
+            .appendSelect(ScheduleAppPO::getId, ScheduleAppPO::getTenant, ScheduleAppPO::getPlatform)
+            .appendSelect(ScheduleAppPO::getApp, ScheduleAppPO::getAppCode)
+            .eq(ScheduleAppPO::getId, id)) {
+
+            ScheduleAppPO po = this.scheduleAppRepository.selectOne(wrapper);
+            return Optional.ofNullable(this.toEntity(po));
+        } catch (Exception ignored) {
+            // ignored
+        }
+
+        return Optional.empty();
     }
 
     // ----------------------------------------------------------------

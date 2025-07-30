@@ -19,6 +19,7 @@ package io.github.photowey.riff.business.job.core.domain.payload;
 import java.io.Serial;
 
 import io.github.photowey.riff.infras.model.payload.AbstractPayload;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -48,15 +49,30 @@ public abstract class AbstractSchedulePayload<T> extends AbstractPayload<T> {
      * Tenant
      * |- Default: saas
      */
+    @Schema(
+        description = "The Tenant, default: saas",
+        example = "saas",
+        requiredMode = Schema.RequiredMode.NOT_REQUIRED
+    )
     protected String tenant;
     /**
      * Platform
      * |- Default: saas
      */
+    @Schema(
+        description = "The Platform, default: saas",
+        example = "saas",
+        requiredMode = Schema.RequiredMode.NOT_REQUIRED
+    )
     protected String platform;
     /**
      * App
      * |- Default: saas
      */
+    @Schema(
+        description = "The App, default: boss",
+        example = "boss",
+        requiredMode = Schema.RequiredMode.NOT_REQUIRED
+    )
     protected String app;
 }
