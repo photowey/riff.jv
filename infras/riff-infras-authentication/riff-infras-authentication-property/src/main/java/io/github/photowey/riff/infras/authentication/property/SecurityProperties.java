@@ -134,10 +134,10 @@ public class SecurityProperties implements Serializable {
         @Serial
         private static final long serialVersionUID = -2512203819892599541L;
 
-        @NotBlank(message = "The Issuer secret can't be blank")
+        @NotBlank(message = "The Issuer secret is required.")
         @Size(min = 32, message = "The Issuer secret must be at least 32 characters")
         private String secret;
-        @NotBlank(message = "The Issuer URI can't be blank")
+        @NotBlank(message = "The Issuer URI is required.")
         private String uri;
 
         public String secret() {
@@ -156,7 +156,7 @@ public class SecurityProperties implements Serializable {
         @Serial
         private static final long serialVersionUID = 7166000514675396420L;
 
-        @NotBlank(message = "The jwt secret can't be blank")
+        @NotBlank(message = "The jwt secret is required.")
         @Size(min = 64, message = "The jwt secret must be at least 64 characters")
         private String secret;
         private String authorities = "ath";

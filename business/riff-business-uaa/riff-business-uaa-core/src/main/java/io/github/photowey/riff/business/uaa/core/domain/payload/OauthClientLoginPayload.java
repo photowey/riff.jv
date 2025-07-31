@@ -50,7 +50,7 @@ public class OauthClientLoginPayload extends AbstractPayload<EmptyModel> {
     @Serial
     private static final long serialVersionUID = 5213277065121774652L;
 
-    @NotBlank(message = "The accessKey can't be blank.")
+    @NotBlank(message = "The accessKey is required.")
     @Schema(
         description = "AccessKey",
         example = "70202507155719188245190111831234",
@@ -58,7 +58,7 @@ public class OauthClientLoginPayload extends AbstractPayload<EmptyModel> {
     )
     @Pattern(regexp = "^[a-zA-Z0-9]{32}$", message = "AccessKey must be 32 alphanumeric characters")
     private String accessKey;
-    @NotBlank(message = "The accessSecret can't be blank.")
+    @NotBlank(message = "The accessSecret is required.")
     @Schema(
         description = "AccessSecret",
         example = "71202507155719188245190187654321",

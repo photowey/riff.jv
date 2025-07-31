@@ -14,25 +14,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.photowey.riff.business.job.service;
+package io.github.photowey.riff.infras.validator.processor;
 
-import io.github.photowey.riff.business.job.core.domain.payload.ScheduleJobAddPayload;
-import io.github.photowey.riff.core.domain.entity.ScheduleJob;
+import java.lang.annotation.Annotation;
+
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 
 /**
- * {@code ScheduleJobService}.
+ * {@code AbstractAnnotationProcessorAdaptor}.
  *
+ * @param <T> The entity type
+ * @param <A> The annotation type
  * @author photowey
  * @version 1.0.0
- * @since 2025/07/28
+ * @since 2025/07/31
  */
-public interface ScheduleJobService {
+public abstract class AbstractAnnotationProcessorAdaptor
+    <A extends Annotation, T> implements ConstraintValidator<A, T> {
 
-    /**
-     * Add a new {@link ScheduleJob}
-     *
-     * @param payload the payload {@link ScheduleJobAddPayload}
-     * @return the {@link ScheduleJob}
-     */
-    ScheduleJob register(ScheduleJobAddPayload payload);
+    @Override
+    public void initialize(A constraintAnnotation) {
+    }
+
+    @Override
+    public boolean isValid(T value, ConstraintValidatorContext context) {
+        return true;
+    }
 }
+

@@ -62,9 +62,9 @@ public class ScheduleClientAddPayload extends AbstractSchedulePayload<ScheduleCl
     /**
      * JobID
      */
-    @NotNull(message = "The Job ID can't be NULL")
+    @NotNull(message = "The job ID is required.")
     @Schema(
-        description = "The Job ID",
+        description = "The job ID",
         example = "1947519918762827778",
         requiredMode = Schema.RequiredMode.REQUIRED
     )
@@ -111,7 +111,7 @@ public class ScheduleClientAddPayload extends AbstractSchedulePayload<ScheduleCl
 
     @Override
     public void checkActions() {
-        super.checkActions();
+        this.checkAddress();
     }
 
     private void checkAddress() {
@@ -129,15 +129,15 @@ public class ScheduleClientAddPayload extends AbstractSchedulePayload<ScheduleCl
 
     private void checkServerInfo() {
         if (Strings.isEmpty(this.serverIp)) {
-            throw new IllegalArgumentException("The client's serverIp can't be NULL");
+            throw new IllegalArgumentException("The client's serverIp is required.");
         }
 
         if (Objects.isEmpty(this.serverPort)) {
-            throw new IllegalArgumentException("The client‘s serverPort can't be NULL");
+            throw new IllegalArgumentException("The client‘s serverPort is required.");
         }
 
         if (Strings.isEmpty(this.serverProtocol)) {
-            throw new IllegalArgumentException("The client Server PROTOCOL can't be NULL");
+            throw new IllegalArgumentException("The client Server PROTOCOL is required.");
         }
     }
 

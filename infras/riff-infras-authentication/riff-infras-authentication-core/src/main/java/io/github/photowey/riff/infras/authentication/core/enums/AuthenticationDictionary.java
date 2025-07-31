@@ -69,7 +69,7 @@ public enum AuthenticationDictionary {
 
             public static Status codeOf(String code) {
                 if (Objects.isNull(code)) {
-                    throw new NullPointerException("code can't be null");
+                    throw new NullPointerException("code is required.");
                 }
 
                 for (Status status : values()) {
@@ -200,7 +200,7 @@ public enum AuthenticationDictionary {
 
             public static Status codeOf(String code) {
                 if (Objects.isNull(code)) {
-                    throw new NullPointerException("riff: code can't be null");
+                    throw new NullPointerException("riff: code is required.");
                 }
 
                 for (Status status : values()) {
@@ -297,7 +297,7 @@ public enum AuthenticationDictionary {
 
         public static Client codeOf(String code) {
             if (Objects.isNull(code)) {
-                throw new NullPointerException("riff: code can't be null");
+                throw new NullPointerException("riff: code is required.");
             }
 
             for (Client client : values()) {

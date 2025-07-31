@@ -27,12 +27,7 @@ import io.github.photowey.riff.business.job.core.domain.payload.ScheduleClientAd
 import io.github.photowey.riff.business.job.service.ScheduleClientService;
 import io.github.photowey.riff.core.domain.entity.ScheduleApp;
 import io.github.photowey.riff.core.domain.entity.ScheduleClient;
-import io.github.photowey.riff.middleware.database.orm.mybatis.core.domain.po.ScheduleAppPO;
-import io.github.photowey.riff.middleware.database.orm.mybatis.core.domain.po.ScheduleClientPO;
-import io.github.photowey.riff.middleware.database.orm.mybatis.core.domain.po.ScheduleJobPO;
-import io.github.photowey.riff.storage.api.ScheduleAppStorage;
-import io.github.photowey.riff.storage.api.ScheduleClientStorage;
-import io.github.photowey.riff.storage.api.ScheduleJobStorage;
+import io.github.photowey.riff.storage.api.engine.StorageEngine;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -48,15 +43,12 @@ import lombok.extern.slf4j.Slf4j;
 public class ScheduleClientServiceImpl implements ScheduleClientService {
 
     @Autowired
-    private ScheduleAppStorage<ScheduleAppPO> scheduleAppStorage;
-    @Autowired
-    private ScheduleJobStorage<ScheduleJobPO> scheduleJobStorage;
-    @Autowired
-    private ScheduleClientStorage<ScheduleClientPO> scheduleClientStorage;
+    private StorageEngine storageEngine;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ScheduleClient register(ScheduleClientAddPayload payload) {
+        // TODO todo lock.lock()?
         payload.preAction();
         ScheduleClient client = this.tryRegister(payload);
         payload.postAction();
@@ -67,11 +59,12 @@ public class ScheduleClientServiceImpl implements ScheduleClientService {
     private ScheduleClient tryRegister(ScheduleClientAddPayload payload) {
         ScheduleClient tt = payload.toScheduleClient(this::preRegister);
         if (tt.determineIsRegistered()) {
-            tt.initBaseCounter();
-            this.scheduleClientStorage.save(tt);
+            this.storageEngine.scheduleClientStorage().updateById(tt);
         } else {
-            this.scheduleClientStorage.updateById(tt);
+            tt.initBaseCounter();
+            this.storageEngine.scheduleClientStorage().save(tt);
         }
+
         this.postRegister(tt);
 
         return tt;
@@ -91,7 +84,7 @@ public class ScheduleClientServiceImpl implements ScheduleClientService {
     // ----------------------------------------------------------------
 
     private void testClientExists(ScheduleClient tt) {
-        Optional<ScheduleClient> clientOpt = this.scheduleClientStorage.testClientExists(tt);
+        Optional<ScheduleClient> clientOpt = this.storageEngine.scheduleClientStorage().testClientExists(tt);
         if (clientOpt.isPresent()) {
             tt.setRegistered(1);
             tt.setId(clientOpt.get().id());
@@ -101,7 +94,7 @@ public class ScheduleClientServiceImpl implements ScheduleClientService {
     // ----------------------------------------------------------------
 
     private void checkAppId(ScheduleClient tt) {
-        Optional<ScheduleApp> appOpt = this.scheduleAppStorage.simpleQuery(tt.appId());
+        Optional<ScheduleApp> appOpt = this.storageEngine.scheduleAppStorage().simpleQuery(tt.appId());
         if (appOpt.isPresent()) {
             ScheduleApp image = appOpt.get();
             tt.setTenant(image.tenant());
@@ -117,7 +110,7 @@ public class ScheduleClientServiceImpl implements ScheduleClientService {
     }
 
     private void checkJobId(Long jobId) {
-        boolean exists = this.scheduleJobStorage.exists(jobId);
+        boolean exists = this.storageEngine.scheduleJobStorage().exists(jobId);
         AbstractJobExceptionChecker.checkTrue(exists, "The jobId not exists");
     }
 }

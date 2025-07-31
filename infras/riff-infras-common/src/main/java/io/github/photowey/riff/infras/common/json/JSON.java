@@ -492,6 +492,6 @@ public final class JSON {
 
     @SuppressWarnings("all")
     private static void checkNPE(@Nullable ObjectMapper objectMapper) {
-        Exceptions.checkNPE(objectMapper, "riff: the objectMapper can't be null.");
+        Exceptions.checkNPE(objectMapper, "riff: the objectMapper is required.");
     }
 }

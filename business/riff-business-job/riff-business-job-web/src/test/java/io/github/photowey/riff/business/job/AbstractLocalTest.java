@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockHttpServletRequest;
 
 import io.github.photowey.riff.business.job.service.ScheduleClientService;
+import io.github.photowey.riff.business.job.service.ScheduleJobService;
 import io.github.photowey.riff.infras.authentication.core.util.Requests;
 import io.github.photowey.riff.storage.api.engine.StorageEngine;
 
@@ -38,7 +39,10 @@ public abstract class AbstractLocalTest {
     protected StorageEngine storageEngine;
 
     @Autowired
+    protected ScheduleJobService scheduleJobService;
+    @Autowired
     protected ScheduleClientService scheduleClientService;
+
 
     protected void tryHttpRequestTest(Runnable task) {
         MockHttpServletRequest request = new MockHttpServletRequest();

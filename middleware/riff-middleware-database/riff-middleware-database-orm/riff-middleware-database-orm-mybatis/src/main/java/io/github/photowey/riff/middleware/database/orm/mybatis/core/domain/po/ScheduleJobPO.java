@@ -17,6 +17,7 @@
 package io.github.photowey.riff.middleware.database.orm.mybatis.core.domain.po;
 
 import java.io.Serial;
+import java.time.LocalDateTime;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 
@@ -60,7 +61,7 @@ public class ScheduleJobPO extends AbstractTenantEntity {
      */
     private String jobName;
     /**
-     * JobType 1:HandlerJob 2:ScriptJob 4:HttpJob
+     * JobType 1:HandlerJob 2:ScriptJob 3:HttpJob
      */
     private Integer jobType;
     /**
@@ -79,6 +80,62 @@ public class ScheduleJobPO extends AbstractTenantEntity {
      * Arguments
      */
     private String arguments;
+
+    // ----------------------------------------------------------------
+
+    /**
+     * ScheduleType 1:Schedule once 2:Cron 3:FixedRate 4:FixedDelay
+     *
+     * <p>
+     * 1: Schedule once - Execute the task only once.
+     * 2: Cron - Execute the task based on a cron expression.
+     * 3: FixedRate - Execute the task at a fixed interval, measured from the start time of the previous execution.
+     * 4: FixedDelay - Execute the task at a fixed interval, measured from the completion time of the previous execution
+     */
+    private Integer scheduleType;
+    /**
+     * {@code riff://cron?expression=0/5 * * * * ?&initialDelay=0&delay=0}
+     */
+    private String scheduleContext;
+
+    /**
+     * Misfire strategy 1: Skip 2: Fire now
+     *
+     * <p>
+     * 1: Skip
+     * 2: Fire now
+     */
+    private Integer misfireStrategy;
+    /**
+     * Route strategy 1: First 2: Last 3: Round 4: Random 5: Consistent hash
+     *
+     * <p>
+     * 1: First
+     * 2: Last
+     * 3: Round
+     * 4: Random
+     * 5: Consistent hash
+     */
+    private Integer routeStrategy;
+    /**
+     * Block strategy 1.Serial execution 2.Discard later 3.Cover early
+     *
+     * <p>
+     * 1.Serial execution
+     * 2.Discard later
+     * 3.Cover early
+     */
+    private Integer blockStrategy;
+
+    private Integer timeoutSeconds;
+    private Integer retryCount;
+
+    /**
+     * Trigger status: 1: Not started 2: In progress 3: Completed
+     */
+    private Integer triggerStatus;
+    private LocalDateTime triggerLastTime;
+    private LocalDateTime triggerNextTime;
 
     // ----------------------------------------------------------------
 

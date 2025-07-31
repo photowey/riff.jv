@@ -48,7 +48,7 @@ public class TwofaAuthenticationPayload extends AbstractPayload<EmptyModel> {
     @Serial
     private static final long serialVersionUID = 5213277065121774652L;
 
-    @NotBlank(message = "The TwofaSecret can't be blank.")
+    @NotBlank(message = "The TwofaSecret is required.")
     @Pattern(regexp = "^\\d{6}$", message = "TwofaSecret must be exactly 6 digits")
     @Schema(
         description = "TwofaSecret",

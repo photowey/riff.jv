@@ -101,7 +101,7 @@ public class ScheduleJobChainStorageImpl
     @Override
     public void delete(@Nonnull ScheduleJobChain entity) {
         if (Objects.isNull(entity.id())) {
-            throw new NullPointerException("orm: the entity id can't be NULL");
+            throw new NullPointerException("orm: the entity id is required.");
         }
 
         this.deleteById(entity.id());

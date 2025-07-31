@@ -111,7 +111,7 @@ public class ScheduleAppStorageImpl implements ScheduleAppStorage<ScheduleAppPO>
     @Override
     public void delete(@Nonnull ScheduleApp entity) {
         if (Objects.isNull(entity.id())) {
-            throw new NullPointerException("orm: the entity id can't be NULL");
+            throw new NullPointerException("orm: the entity id is required.");
         }
 
         this.deleteById(entity.id());

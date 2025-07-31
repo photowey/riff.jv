@@ -35,6 +35,7 @@
         <module>../../infras/riff-infras-ioc</module>
         <module>../../infras/riff-infras-model</module>
         <module>../../infras/riff-infras-transport</module>
+        <module>../../infras/riff-infras-validator</module>
 
         <!-- Business -->
         <module>../../business/riff-business-uaa</module>

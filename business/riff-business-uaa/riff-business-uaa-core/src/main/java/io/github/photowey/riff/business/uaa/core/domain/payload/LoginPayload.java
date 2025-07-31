@@ -55,7 +55,7 @@ public class LoginPayload extends AbstractPayload<EmptyModel> {
     @Serial
     private static final long serialVersionUID = 5213277065121774652L;
 
-    @NotBlank(message = "The username can't be blank.")
+    @NotBlank(message = "The username is required.")
     @Schema(
         description = "Username",
         example = "admin0001",
@@ -64,7 +64,7 @@ public class LoginPayload extends AbstractPayload<EmptyModel> {
     @Pattern(regexp = "^[a-zA-Z0-9]{8,32}$", message = "Username must be 8 to 32 alphanumeric characters")
     private String username;
 
-    @NotBlank(message = "The password can't be blank.")
+    @NotBlank(message = "The password is required.")
     @Schema(
         description = "Password",
         example = "admin@123!@#",

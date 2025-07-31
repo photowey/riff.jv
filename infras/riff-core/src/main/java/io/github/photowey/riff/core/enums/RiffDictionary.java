@@ -68,7 +68,7 @@ public enum RiffDictionary {
 
             public static Status codeOf(String code) {
                 if (Objects.isNull(code)) {
-                    throw new NullPointerException("code can't be null");
+                    throw new NullPointerException("code is required.");
                 }
 
                 for (Status status : values()) {

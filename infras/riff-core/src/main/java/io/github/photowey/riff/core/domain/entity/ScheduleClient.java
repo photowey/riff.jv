@@ -19,6 +19,7 @@ package io.github.photowey.riff.core.domain.entity;
 import java.io.Serial;
 import java.time.LocalDateTime;
 
+import io.github.photowey.riff.infras.common.enums.CommonDictionary;
 import io.github.photowey.riff.infras.common.util.Objects;
 import io.github.photowey.riff.infras.common.util.Strings;
 import io.github.photowey.riff.middleware.database.core.domain.entity.AbstractTenantEntity;
@@ -107,7 +108,7 @@ public class ScheduleClient extends AbstractTenantEntity {
     // ----------------------------------------------------------------
 
     public boolean determineIsRegistered() {
-        return Objects.isNotNull(this.registered) && this.registered == 1;
+        return Objects.isNotNull(this.registered) && this.registered == CommonDictionary.Boolean.TRUE.value();
     }
 
     // ----------------------------------------------------------------

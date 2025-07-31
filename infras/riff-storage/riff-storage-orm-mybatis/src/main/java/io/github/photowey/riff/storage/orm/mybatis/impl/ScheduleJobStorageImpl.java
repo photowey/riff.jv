@@ -19,6 +19,7 @@ package io.github.photowey.riff.storage.orm.mybatis.impl;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Consumer;
 
 import jakarta.annotation.Nonnull;
@@ -31,6 +32,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import io.github.photowey.riff.core.domain.entity.ScheduleJob;
 import io.github.photowey.riff.infras.common.util.Collections;
 import io.github.photowey.riff.infras.common.util.Objects;
+import io.github.photowey.riff.infras.common.util.Strings;
 import io.github.photowey.riff.infras.model.assembler.EntityAssembler;
 import io.github.photowey.riff.infras.model.query.AbstractQuery;
 import io.github.photowey.riff.infras.model.query.pagination.AbstractPaginationQuery;
@@ -64,6 +66,35 @@ public class ScheduleJobStorageImpl implements ScheduleJobStorage<ScheduleJobPO>
     @Override
     public EntityAssembler<ScheduleJob, ScheduleJobPO> entityAssembler() {
         return this.scheduleJobAssembler;
+    }
+
+    // ----------------------------------------------------------------
+
+    @Override
+    public Optional<ScheduleJob> testJobExists(ScheduleJob job) {
+        ScheduleJobPO image = this.scheduleJobRepository.selectOne(new LambdaQueryWrapper<ScheduleJobPO>()
+            .select(ScheduleJobPO::getId)
+            .eq(ScheduleJobPO::getAppId, job.appId())
+            .eq(ScheduleJobPO::getJobCode, job.jobCode())
+        );
+
+        return Optional.ofNullable(this.toEntity(image));
+    }
+
+    @Override
+    public boolean testMethodNameExists(ScheduleJob job) {
+        if (Strings.isEmpty(job.declaredClass()) || Strings.isEmpty(job.method())) {
+            return false;
+        }
+
+        Long count = this.scheduleJobRepository.selectCount(new LambdaQueryWrapper<ScheduleJobPO>()
+            .eq(ScheduleJobPO::getAppId, job.appId())
+            .eq(ScheduleJobPO::getJobCode, job.jobCode())
+            .eq(ScheduleJobPO::getDeclaredClass, job.declaredClass())
+            .eq(ScheduleJobPO::getMethod, job.method())
+        );
+
+        return Objects.isNotNull(count) && count > 1;
     }
 
     // ----------------------------------------------------------------
@@ -109,7 +140,7 @@ public class ScheduleJobStorageImpl implements ScheduleJobStorage<ScheduleJobPO>
     @Override
     public void delete(@Nonnull ScheduleJob entity) {
         if (Objects.isNull(entity.id())) {
-            throw new NullPointerException("orm: the entity id can't be NULL");
+            throw new NullPointerException("orm: the entity id is required.");
         }
 
         this.deleteById(entity.id());

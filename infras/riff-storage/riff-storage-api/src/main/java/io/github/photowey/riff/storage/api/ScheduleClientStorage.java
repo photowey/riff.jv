@@ -36,7 +36,7 @@ public interface ScheduleClientStorage<PO> extends EntityStorage<ScheduleClient,
     /**
      * Test the client exists
      *
-     * @param client the client {@link ScheduleClient}
+     * @param client the current client {@link ScheduleClient}
      * @return the database entity {@link ScheduleClient}
      */
     Optional<ScheduleClient> testClientExists(@Nonnull ScheduleClient client);

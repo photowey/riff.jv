@@ -16,6 +16,8 @@
  */
 package io.github.photowey.riff.storage.api;
 
+import java.util.Optional;
+
 import io.github.photowey.riff.core.domain.entity.ScheduleJob;
 
 /**
@@ -27,4 +29,20 @@ import io.github.photowey.riff.core.domain.entity.ScheduleJob;
  * @since 2025/07/24
  */
 public interface ScheduleJobStorage<PO> extends EntityStorage<ScheduleJob, PO> {
+
+    /**
+     * Test that the job(job code) exists
+     *
+     * @param job the current job {@link ScheduleJob}
+     * @return the database entity {@link ScheduleJob}
+     */
+    Optional<ScheduleJob> testJobExists(ScheduleJob job);
+
+    /**
+     * Test that the job handler's handle method exists
+     *
+     * @param job the current job {@link ScheduleJob}
+     * @return the database entity {@link ScheduleJob}
+     */
+    boolean testMethodNameExists(ScheduleJob job);
 }
