@@ -16,17 +16,25 @@
  */
 package io.github.photowey.riff.business.job.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.AnnotationAwareOrderComparator;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import io.github.photowey.riff.business.job.core.checker.exception.AbstractJobExceptionChecker;
+import io.github.photowey.riff.business.job.core.context.ScheduleContext;
 import io.github.photowey.riff.business.job.core.domain.payload.ScheduleJobAddPayload;
 import io.github.photowey.riff.business.job.service.ScheduleJobService;
+import io.github.photowey.riff.business.job.service.calculator.TriggerTimeCalculator;
 import io.github.photowey.riff.core.domain.entity.ScheduleApp;
 import io.github.photowey.riff.core.domain.entity.ScheduleJob;
+import io.github.photowey.riff.core.enums.RiffDictionary;
+import io.github.photowey.riff.infras.ioc.context.holder.AbstractBeanFactoryHolder;
 import io.github.photowey.riff.storage.api.engine.StorageEngine;
 
 import lombok.extern.slf4j.Slf4j;
@@ -40,7 +48,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Service
-public class ScheduleJobServiceImpl implements ScheduleJobService {
+public class ScheduleJobServiceImpl extends AbstractBeanFactoryHolder implements ScheduleJobService {
 
     @Autowired
     private StorageEngine storageEngine;
@@ -75,6 +83,8 @@ public class ScheduleJobServiceImpl implements ScheduleJobService {
         this.checkMethodName(tt);
 
         this.testJobExists(tt);
+
+        this.determineTriggerInfo(tt);
     }
 
     private void postRegister(ScheduleJob tt) {
@@ -121,5 +131,32 @@ public class ScheduleJobServiceImpl implements ScheduleJobService {
             tt.setRegistered(1);
             tt.setId(jobOpt.get().id());
         }
+    }
+
+    private void determineTriggerInfo(ScheduleJob tt) {
+        this.determineTriggerStatus(tt);
+        this.parseScheduleContext(tt);
+    }
+
+    private void determineTriggerStatus(ScheduleJob tt) {
+        tt.setTriggerStatus(RiffDictionary.Job.TriggerStatus.NOT_STARTED.value());
+    }
+
+    private void parseScheduleContext(ScheduleJob tt) {
+        ScheduleContext ctx = ScheduleContext.parse(tt.scheduleContext());
+
+        Map<String, TriggerTimeCalculator> beans =
+            this.listableBeanFactory().getBeansOfType(TriggerTimeCalculator.class);
+        List<TriggerTimeCalculator> triggerTimeCalculators = new ArrayList<>(beans.values());
+        AnnotationAwareOrderComparator.sort(triggerTimeCalculators);
+
+        for (TriggerTimeCalculator triggerTimeCalculator : triggerTimeCalculators) {
+            if (triggerTimeCalculator.supports(ctx.type())) {
+                triggerTimeCalculator.handle(ctx, tt);
+                return;
+            }
+        }
+
+        throw new UnsupportedOperationException("Unreachable here.");
     }
 }

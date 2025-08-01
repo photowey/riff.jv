@@ -136,12 +136,12 @@ public class ScheduleJobAddPayload extends AbstractSchedulePayload<ScheduleJob> 
     private Integer scheduleType;
 
     /**
-     * {@code riff://cron?expression=0/5 * * * * ?&initialDelay=0&delay=0}
+     * {@code riff://trigger/cron?expression=0/5_*_*_*_*_?&initialDelay=0&delay=0}
      */
     @NotBlank(message = "The schedule context is required.")
     @Schema(
         description = "Scheduling context configuration in URI format, e.g., cron expression, delay, etc.",
-        example = "riff://cron?expression=0/5 * * * * ?&initialDelay=0&delay=0",
+        example = "riff://trigger/cron?expression=0/5_*_*_*_*_?&initialDelay=0&delay=0",
         requiredMode = Schema.RequiredMode.REQUIRED
     )
     private String scheduleContext;
@@ -246,6 +246,14 @@ public class ScheduleJobAddPayload extends AbstractSchedulePayload<ScheduleJob> 
             .declaredClass(this.declaredClass)
             .method(this.method)
             .arguments(this.arguments)
+            // ----------------------------------------------------------------
+            .scheduleType(this.scheduleType)
+            .scheduleContext(this.scheduleContext)
+            .misfireStrategy(this.misfireStrategy)
+            .routeStrategy(this.routeStrategy)
+            .blockStrategy(this.blockStrategy)
+            .timeoutSeconds(this.timeoutSeconds)
+            .retryCount(this.retryCount)
             // ----------------------------------------------------------------
             .appId(authenticated.userId())
             .build();

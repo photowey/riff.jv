@@ -8,6 +8,7 @@
 
     <suppress files=".*[\\/]model[\\/]query[\\/]pagination([\\/])?.*" checks="RegexpOnFilename"/>
     <suppress files=".*[\\/]service[\\/]listener([\\/])?.*" checks="RegexpOnFilename"/>
+    <suppress files=".*[\\/]service[\\/]calculator([\\/])?.*" checks="RegexpOnFilename"/>
 
     <suppress files=".*[\\/]enums([\\/])?.*" checks="NoWhitespaceBefore"/>
     <suppress files=".*[\\/]constant([\\/])?.*" checks="InterfaceIsType"/>

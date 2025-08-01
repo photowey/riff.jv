@@ -50,6 +50,13 @@ class ScheduleJobServiceTest extends AbstractLocalTest {
             .declaredClass("io.github.photowey.riff.order.timeout.close.OrderTimeoutHandler")
             .method("hande")
             .arguments("[]")
+            .scheduleType(1)
+            .scheduleContext("riff://trigger/cron?expression=0/5_*_*_*_*_?&initialDelay=0&delay=0")
+            .misfireStrategy(1)
+            .routeStrategy(1)
+            .blockStrategy(1)
+            .timeoutSeconds(5)
+            .retryCount(5)
             .build();
 
         LoginUserHolder.mock(appId, () -> {

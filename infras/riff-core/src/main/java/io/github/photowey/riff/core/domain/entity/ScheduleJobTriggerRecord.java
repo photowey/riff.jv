@@ -70,7 +70,7 @@ public class ScheduleJobTriggerRecord extends AbstractTenantEntity {
      */
     private LocalDateTime finishedTime;
     /**
-     * TriggerStatus 1:Online 2:Unhealthy 4:Suspect 8:Offline
+     * TriggerStatus 1:Success, 2:Failure 3: Canceled(misfire strategy -> skip) 4:Retry
      */
     private Integer triggerStatus;
     /**

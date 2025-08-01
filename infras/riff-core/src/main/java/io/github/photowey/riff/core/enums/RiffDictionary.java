@@ -91,4 +91,67 @@ public enum RiffDictionary {
             }
         }
     }
+
+    public enum Job {
+
+        ;
+
+        public enum TriggerStatus {
+
+            // JOB TRIGGER-STATUS: 1: Not started 2: In progress 3: Completed
+
+            NOT_STARTED("NOT_STARTED", "not.started", 1),
+            IN_PROGRESS("IN_PROGRESS", "in.process", 2),
+            COMPLETED("COMPLETED", "completed", 3),
+
+            ;
+
+            private final String name;
+            private final String code;
+            private final int value;
+
+            TriggerStatus(String name, String code, int value) {
+                this.name = name;
+                this.code = code;
+                this.value = value;
+            }
+
+            public String wrap() {
+                return name;
+            }
+
+            public String code() {
+                return code;
+            }
+
+            public int value() {
+                return value;
+            }
+
+            public static TriggerStatus codeOf(String code) {
+                if (Objects.isNull(code)) {
+                    throw new NullPointerException("code is required.");
+                }
+
+                for (TriggerStatus status : values()) {
+                    if (status.code().equalsIgnoreCase(code)) {
+                        return status;
+                    }
+                }
+
+                throw new RuntimeException("Invalid job's trigger status code.");
+            }
+
+            public static TriggerStatus valueOf(int value) {
+                for (TriggerStatus status : values()) {
+                    if (status.value() == value) {
+                        return status;
+                    }
+                }
+
+                throw new RuntimeException("Invalid job's trigger status value.");
+            }
+        }
+    }
+
 }

@@ -93,7 +93,10 @@ public class ScheduleJob extends AbstractTenantEntity {
      */
     private Integer scheduleType;
     /**
-     * {@code riff://cron?expression=0/5 * * * * ?&initialDelay=0&delay=0}
+     * {@code riff://trigger/once?initialDelay=0&delay=0}
+     * {@code riff://trigger/cron?expression=0/5_*_*_*_*_?&initialDelay=0&delay=0}
+     * {@code riff://trigger/fixedrate?initialDelay=0&delay=0}
+     * {@code riff://trigger/fixeddelay?initialDelay=0&delay=0}
      */
     private String scheduleContext;
 
@@ -101,7 +104,7 @@ public class ScheduleJob extends AbstractTenantEntity {
      * Misfire strategy 1: Skip 2: Fire now
      *
      * <p>
-     * 1: Skip
+     * 1: Skip|Cancel
      * 2: Fire now
      */
     private Integer misfireStrategy;
@@ -129,6 +132,9 @@ public class ScheduleJob extends AbstractTenantEntity {
     private Integer timeoutSeconds;
     private Integer retryCount;
 
+    /**
+     * Trigger status: 1: Not started 2: In progress 3: Completed
+     */
     private Integer triggerStatus;
     private LocalDateTime triggerLastTime;
     private LocalDateTime triggerNextTime;
@@ -198,4 +204,47 @@ public class ScheduleJob extends AbstractTenantEntity {
         return this.arguments;
     }
 
+    public Integer scheduleType() {
+        return scheduleType;
+    }
+
+    public String scheduleContext() {
+        return scheduleContext;
+    }
+
+    public Integer misfireStrategy() {
+        return misfireStrategy;
+    }
+
+    public Integer routeStrategy() {
+        return routeStrategy;
+    }
+
+    public Integer blockStrategy() {
+        return blockStrategy;
+    }
+
+    public Integer timeoutSeconds() {
+        return timeoutSeconds;
+    }
+
+    public Integer retryCount() {
+        return retryCount;
+    }
+
+    public Integer triggerStatus() {
+        return triggerStatus;
+    }
+
+    public LocalDateTime triggerLastTime() {
+        return triggerLastTime;
+    }
+
+    public LocalDateTime triggerNextTime() {
+        return triggerNextTime;
+    }
+
+    public Integer registered() {
+        return registered;
+    }
 }
