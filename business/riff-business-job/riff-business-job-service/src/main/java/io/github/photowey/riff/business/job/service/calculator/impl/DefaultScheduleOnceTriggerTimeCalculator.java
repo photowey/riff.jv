@@ -16,6 +16,8 @@
  */
 package io.github.photowey.riff.business.job.service.calculator.impl;
 
+import org.springframework.stereotype.Component;
+
 import io.github.photowey.riff.business.job.core.context.ScheduleContext;
 import io.github.photowey.riff.business.job.service.calculator.ScheduleOnceTriggerTimeCalculator;
 import io.github.photowey.riff.core.domain.entity.ScheduleJob;
@@ -28,6 +30,7 @@ import io.github.photowey.riff.infras.ioc.context.holder.AbstractBeanFactoryHold
  * @version 1.0.0
  * @since 2025/08/01
  */
+@Component
 public class DefaultScheduleOnceTriggerTimeCalculator
     extends AbstractBeanFactoryHolder implements ScheduleOnceTriggerTimeCalculator {
 

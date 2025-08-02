@@ -94,7 +94,7 @@ public class ScheduleJobPO extends AbstractTenantEntity {
      */
     private Integer scheduleType;
     /**
-     * {@code riff://trigger/cron?expression=0/5_*_*_*_*_?&initialDelay=0&delay=0}
+     * {@code riff://trigger/cron?expression=0%2F5+*+*+*+*+%3F&initialDelay=0&delay=0}
      */
     private String scheduleContext;
 

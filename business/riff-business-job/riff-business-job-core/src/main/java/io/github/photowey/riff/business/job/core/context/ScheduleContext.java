@@ -20,6 +20,9 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -60,7 +63,7 @@ public class ScheduleContext implements Serializable {
 
     /**
      * {@code riff://trigger/once?initialDelay=0&delay=0}
-     * {@code riff://trigger/cron?expression=0/5_*_*_*_*_?&initialDelay=0&delay=0}
+     * {@code riff://trigger/cron?expression=0%2F5+*+*+*+*+%3F&initialDelay=0&delay=0}
      * {@code riff://trigger/fixedrate?initialDelay=0&delay=0}
      * {@code riff://trigger/fixeddelay?initialDelay=0&delay=0}
      */
@@ -86,7 +89,7 @@ public class ScheduleContext implements Serializable {
         buf.append(this.action);
 
         if (Strings.isEmpty(this.type)) {
-            throw new IllegalArgumentException("type cannot be null");
+            throw new IllegalArgumentException("type can't be null");
         }
         buf.append(SLASH).append(this.type);
 
@@ -96,7 +99,7 @@ public class ScheduleContext implements Serializable {
             for (Map.Entry<String, List<String>> entry : this.ctx.entrySet()) {
                 String key = entry.getKey();
                 for (String value : entry.getValue()) {
-                    String encodedValue = value != null ? value.replace(" ", UNDERLINE) : "";
+                    String encodedValue = URLEncoder.encode(value, StandardCharsets.UTF_8);
                     params.add(key + EQUALS + encodedValue);
                 }
             }
@@ -118,7 +121,7 @@ public class ScheduleContext implements Serializable {
                 .scheme(uri.getScheme())
                 .action(uri.getHost())
                 .type(uri.getPath().replaceAll(SLASH, ""))
-                .query(queryString)
+                .query(URLDecoder.decode(queryString, StandardCharsets.UTF_8))
                 .ctx(ctx)
                 .build();
         } catch (URISyntaxException e) {
@@ -137,7 +140,9 @@ public class ScheduleContext implements Serializable {
             String key = entry[0];
             String value = entry.length > 1 ? entry[1] : "";
 
-            ctx.computeIfAbsent(key, k -> new ArrayList<>()).add(value.replaceAll(UNDERLINE, " "));
+            ctx.computeIfAbsent(
+                key, k -> new ArrayList<>()).add(URLDecoder.decode(value, StandardCharsets.UTF_8)
+            );
         }
 
         return ctx;

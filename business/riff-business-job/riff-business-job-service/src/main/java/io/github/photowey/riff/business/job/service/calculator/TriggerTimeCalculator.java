@@ -29,5 +29,12 @@ import io.github.photowey.riff.infras.ioc.context.strategy.string.StringOrderedB
  */
 public interface TriggerTimeCalculator extends StringOrderedBeanFactoryStrategySupporter {
 
+    /**
+     * Calculate the trigger time.
+     * |- {@code triggerNextTime}
+     *
+     * @param ctx the schedule context {@link ScheduleContext}
+     * @param job the schedule job {@link ScheduleJob}
+     */
     void handle(ScheduleContext ctx, ScheduleJob job);
 }

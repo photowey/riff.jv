@@ -18,6 +18,7 @@ package io.github.photowey.riff.core.domain.entity;
 
 import java.io.Serial;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import io.github.photowey.riff.infras.common.enums.CommonDictionary;
 import io.github.photowey.riff.infras.common.util.Objects;
@@ -94,7 +95,7 @@ public class ScheduleJob extends AbstractTenantEntity {
     private Integer scheduleType;
     /**
      * {@code riff://trigger/once?initialDelay=0&delay=0}
-     * {@code riff://trigger/cron?expression=0/5_*_*_*_*_?&initialDelay=0&delay=0}
+     * {@code riff://trigger/cron?expression=0%2F5+*+*+*+*+%3F&initialDelay=0&delay=0}
      * {@code riff://trigger/fixedrate?initialDelay=0&delay=0}
      * {@code riff://trigger/fixeddelay?initialDelay=0&delay=0}
      */
@@ -147,6 +148,11 @@ public class ScheduleJob extends AbstractTenantEntity {
      */
     @Schema(hidden = true)
     private Integer registered;
+
+    @Schema(hidden = true)
+    private List<Long> childrenIds;
+    @Schema(hidden = true)
+    private List<String> childrenCodes;
 
     // ----------------------------------------------------------------
 
@@ -244,7 +250,17 @@ public class ScheduleJob extends AbstractTenantEntity {
         return triggerNextTime;
     }
 
+    // ----------------------------------------------------------------
+
     public Integer registered() {
         return registered;
+    }
+
+    public List<Long> childrenIds() {
+        return childrenIds;
+    }
+
+    public List<String> childrenCodes() {
+        return childrenCodes;
     }
 }

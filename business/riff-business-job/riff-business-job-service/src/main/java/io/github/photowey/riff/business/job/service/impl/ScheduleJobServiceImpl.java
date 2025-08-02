@@ -89,6 +89,19 @@ public class ScheduleJobServiceImpl extends AbstractBeanFactoryHolder implements
 
     private void postRegister(ScheduleJob tt) {
         // TODO NOT implemented
+
+        this.tryAddScheduleJobChainIfNecessary(tt);
+        this.refreshParentScheduleJobChildrenIdIfNecessary(tt);
+    }
+
+    // ----------------------------------------------------------------
+
+    private void tryAddScheduleJobChainIfNecessary(ScheduleJob tt) {
+        // TODO NOT implemented
+    }
+
+    private void refreshParentScheduleJobChildrenIdIfNecessary(ScheduleJob tt) {
+        // TODO NOT implemented
     }
 
     // ----------------------------------------------------------------

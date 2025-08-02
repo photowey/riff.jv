@@ -53,7 +53,7 @@ class ScheduleJobStorageTest extends AbstractLocalTest {
             .method("hande")
             .arguments("[]")
             .scheduleType(1)
-            .scheduleContext("riff://trigger/cron?expression=0/5_*_*_*_*_?&initialDelay=0&delay=0")
+            .scheduleContext("riff://trigger/cron?expression=0%2F5+*+*+*+*+%3F&initialDelay=0&delay=0")
             .misfireStrategy(1)
             .routeStrategy(1)
             .blockStrategy(1)

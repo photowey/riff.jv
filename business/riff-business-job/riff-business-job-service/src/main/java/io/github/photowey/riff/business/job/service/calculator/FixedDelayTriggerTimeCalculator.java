@@ -29,7 +29,7 @@ public interface FixedDelayTriggerTimeCalculator extends TriggerTimeCalculator {
 
     @Override
     default int getOrder() {
-        return -1000;
+        return 1000;
     }
 
     @Override

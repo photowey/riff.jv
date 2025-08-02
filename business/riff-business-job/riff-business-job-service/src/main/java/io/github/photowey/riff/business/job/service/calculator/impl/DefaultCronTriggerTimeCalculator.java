@@ -16,6 +16,8 @@
  */
 package io.github.photowey.riff.business.job.service.calculator.impl;
 
+import org.springframework.stereotype.Component;
+
 import io.github.photowey.riff.business.job.core.context.ScheduleContext;
 import io.github.photowey.riff.business.job.service.calculator.CronTriggerTimeCalculator;
 import io.github.photowey.riff.core.domain.entity.ScheduleJob;
@@ -28,9 +30,9 @@ import io.github.photowey.riff.infras.ioc.context.holder.AbstractBeanFactoryHold
  * @version 1.0.0
  * @since 2025/08/01
  */
-public class DefaultCronTriggerTimeCalculator extends AbstractBeanFactoryHolder implements CronTriggerTimeCalculator {
-
-
+@Component
+public class DefaultCronTriggerTimeCalculator
+    extends AbstractBeanFactoryHolder implements CronTriggerTimeCalculator {
 
     @Override
     public void handle(ScheduleContext ctx, ScheduleJob job) {

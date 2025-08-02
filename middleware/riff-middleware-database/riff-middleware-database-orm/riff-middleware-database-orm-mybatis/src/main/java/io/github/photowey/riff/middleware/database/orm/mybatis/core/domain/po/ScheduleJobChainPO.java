@@ -56,6 +56,10 @@ public class ScheduleJobChainPO extends AbstractTenantEntity {
      */
     private Long childrenId;
     /**
+     * ChildrenCode
+     */
+    private String childrenCode;
+    /**
      * TriggerCondition
      */
     private String triggerCondition;
@@ -72,6 +76,10 @@ public class ScheduleJobChainPO extends AbstractTenantEntity {
 
     public Long childrenId() {
         return this.childrenId;
+    }
+
+    public String childrenCode() {
+        return childrenCode;
     }
 
     public String triggerCondition() {

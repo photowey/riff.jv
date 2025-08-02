@@ -17,7 +17,7 @@
 package io.github.photowey.riff.business.job.core.domain.payload;
 
 import java.io.Serial;
-import java.util.Set;
+import java.util.List;
 import java.util.function.Consumer;
 
 import jakarta.validation.constraints.NotBlank;
@@ -26,7 +26,6 @@ import jakarta.validation.constraints.NotNull;
 import io.github.photowey.riff.core.domain.entity.ScheduleJob;
 import io.github.photowey.riff.infras.authentication.core.domain.authenticated.LoginUser;
 import io.github.photowey.riff.infras.authentication.core.threadlocal.LoginUserHolder;
-import io.github.photowey.riff.infras.common.util.Arrays;
 import io.github.photowey.riff.infras.validator.annotation.AllowableValues;
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -52,8 +51,6 @@ public class ScheduleJobAddPayload extends AbstractSchedulePayload<ScheduleJob> 
 
     @Serial
     private static final long serialVersionUID = -3642962623917300066L;
-
-    private static final Set<Integer> JOB_TYPE_POOL = Arrays.asImmutableSet(1, 2, 4);
 
     @NotBlank(message = "The job code is required.")
     @Schema(
@@ -94,7 +91,7 @@ public class ScheduleJobAddPayload extends AbstractSchedulePayload<ScheduleJob> 
     private String handlerName;
 
     @Schema(
-        description = "Fully qualified class name of the job handler implementation.",
+        description = "Fully qualified class name of the job handler implementation. This field is optional.",
         example = "io.github.photowey.riff.order.timeout.close.OrderTimeoutHandler",
         requiredMode = Schema.RequiredMode.NOT_REQUIRED
     )
@@ -108,7 +105,8 @@ public class ScheduleJobAddPayload extends AbstractSchedulePayload<ScheduleJob> 
     private String method;
 
     @Schema(
-        description = "Arguments passed to the handler method, represented as a JSON array string.",
+        description = "Arguments passed to the handler method, represented as a JSON array string. <br/>"
+            + "This field is optional.",
         example = "[\"abc\", 123, true]",
         requiredMode = Schema.RequiredMode.NOT_REQUIRED
     )
@@ -121,8 +119,14 @@ public class ScheduleJobAddPayload extends AbstractSchedulePayload<ScheduleJob> 
      *
      * <p>
      * 1: Schedule once - Execute the task only once.
+     *
+     * <p>
      * 2: Cron - Execute the task based on a cron expression.
+     *
+     * <p>
      * 3: FixedRate - Execute the task at a fixed interval, measured from the start time of the previous execution.
+     *
+     * <p>
      * 4: FixedDelay - Execute the task at a fixed interval, measured from the completion time of the previous execution
      */
     @NotNull(message = "The schedule type is required.")
@@ -136,12 +140,21 @@ public class ScheduleJobAddPayload extends AbstractSchedulePayload<ScheduleJob> 
     private Integer scheduleType;
 
     /**
-     * {@code riff://trigger/cron?expression=0/5_*_*_*_*_?&initialDelay=0&delay=0}
+     * Scheduling context in a custom URI format (e.g., {@code riff://trigger/cron}).
+     * The query parameters define scheduling behavior such as cron expressions or delays.
+     *
+     * <p>
+     * Example: {@code riff://trigger/cron?expression=0%2F5+*+*+*+*+%3F&initialDelay=0&delay=0}
+     *
+     * <p>
+     * Note: Spaces in cron expressions must be URL-encoded (e.g., '+' or '%20').
      */
     @NotBlank(message = "The schedule context is required.")
     @Schema(
-        description = "Scheduling context configuration in URI format, e.g., cron expression, delay, etc.",
-        example = "riff://trigger/cron?expression=0/5_*_*_*_*_?&initialDelay=0&delay=0",
+        description = "Scheduling configuration in a custom URI format. "
+            + "Supports triggers like cron expressions. "
+            + "Spaces in values must be URL-encoded (e.g., '+' for space).",
+        example = "riff://trigger/cron?expression=0%2F5+*+*+*+*+%3F&initialDelay=0&delay=0",
         requiredMode = Schema.RequiredMode.REQUIRED
     )
     private String scheduleContext;
@@ -220,6 +233,20 @@ public class ScheduleJobAddPayload extends AbstractSchedulePayload<ScheduleJob> 
 
     // ----------------------------------------------------------------
 
+    @Schema(
+        description = "The IDs of child jobs, used for job chaining. This field is optional.",
+        requiredMode = Schema.RequiredMode.NOT_REQUIRED
+    )
+    private List<Long> childrenIds;
+
+    @Schema(
+        description = "The codes of child jobs, used for job chaining. This field is optional.",
+        requiredMode = Schema.RequiredMode.NOT_REQUIRED
+    )
+    private List<String> childrenCodes;
+
+    // ----------------------------------------------------------------
+
     /**
      * 应用 ID，用于权限与归属隔离。
      */
@@ -254,6 +281,9 @@ public class ScheduleJobAddPayload extends AbstractSchedulePayload<ScheduleJob> 
             .blockStrategy(this.blockStrategy)
             .timeoutSeconds(this.timeoutSeconds)
             .retryCount(this.retryCount)
+            // ----------------------------------------------------------------
+            .childrenIds(this.childrenIds)
+            .childrenCodes(this.childrenCodes)
             // ----------------------------------------------------------------
             .appId(authenticated.userId())
             .build();
