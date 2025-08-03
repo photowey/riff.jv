@@ -24,10 +24,17 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
+import jakarta.annotation.Nonnull;
+
+import io.github.photowey.riff.infras.common.constant.CommonConstants;
+import io.github.photowey.riff.infras.common.util.Lambdas;
 import io.github.photowey.riff.infras.common.util.Maps;
 import io.github.photowey.riff.infras.common.util.Strings;
 
@@ -52,14 +59,24 @@ public class ScheduleContext implements Serializable {
     @Serial
     private static final long serialVersionUID = -5315563844558346463L;
 
-    private static final String SLASH = "/";
-    private static final String QUESTION = "?";
-    private static final String AND = "&";
-    private static final String EQUALS = "=";
-    private static final String UNDERLINE = "_";
+    public static final String SLASH = "/";
+    public static final String QUESTION = "?";
+    public static final String AND = "&";
+    public static final String EQUALS = "=";
+    public static final String UNDERLINE = "_";
 
-    private static final String DEFAULT_SCHEME = "riff";
-    private static final String DEFAULT_ACTION = "trigger";
+    public static final String DEFAULT_SCHEME = "riff";
+    public static final String DEFAULT_ACTION = "trigger";
+
+    public static final String SCHEDULE_TYPE_ONCE = "once";
+    public static final String SCHEDULE_TYPE_CRON = "cron";
+    public static final String SCHEDULE_TYPE_FIXED_RATE = "fixedrate";
+    public static final String SCHEDULE_TYPE_FIXED_DELAY = "fixeddelay";
+    public static final String DEFAULT_TYPE = SCHEDULE_TYPE_CRON;
+
+    public static final String SCHEDULE_PARAMETER_CRON_EXPRESSION = "expression";
+    public static final String SCHEDULE_PARAMETER_INIT_DELAY = "initialDelay";
+    public static final String SCHEDULE_PARAMETER_DELAY = "delay";
 
     /**
      * {@code riff://trigger/once?initialDelay=0&delay=0}
@@ -74,6 +91,145 @@ public class ScheduleContext implements Serializable {
     private String query;
 
     private Map<String, List<String>> ctx;
+
+    // ----------------------------------------------------------------
+
+    public static ScheduleContext once() {
+        return once(0L, 0L, Lambdas::noOps);
+    }
+
+    public static ScheduleContext once(@Nonnull Long initDelay) {
+        return once(initDelay, 0L, Lambdas::noOps);
+    }
+
+    public static ScheduleContext once(
+        @Nonnull Long initDelay,
+        @Nonnull Long delay) {
+        return once(initDelay, delay, Lambdas::noOps);
+    }
+
+    public static ScheduleContext once(
+        @Nonnull Long initDelay,
+        @Nonnull Long delay,
+        @Nonnull Consumer<Map<String, List<String>>> fx) {
+        Map<String, List<String>> ctx = new HashMap<>(8);
+        ctx.put(SCHEDULE_PARAMETER_INIT_DELAY, List.of(String.valueOf(initDelay)));
+        ctx.put(SCHEDULE_PARAMETER_DELAY, List.of(String.valueOf(delay)));
+
+        fx.accept(ctx);
+
+        return ScheduleContext.builder()
+            .scheme(DEFAULT_SCHEME)
+            .action(DEFAULT_ACTION)
+            .type(SCHEDULE_TYPE_ONCE)
+            .ctx(ctx)
+            .build();
+    }
+
+    // ----------------------------------------------------------------
+
+    public static ScheduleContext cron(@Nonnull String expression) {
+        return cron(expression, 0L, 0L);
+    }
+
+    public static ScheduleContext cron(@Nonnull String expression, @Nonnull Long initDelay) {
+        return cron(expression, initDelay, 0L);
+    }
+
+    public static ScheduleContext cron(
+        @Nonnull String expression, @Nonnull Long initDelay, @Nonnull Long delay) {
+        return cron(expression, initDelay, delay, Lambdas::noOps);
+    }
+
+    public static ScheduleContext cron(
+        @Nonnull String expression,
+        @Nonnull Long initDelay,
+        @Nonnull Long delay,
+        @Nonnull Consumer<Map<String, List<String>>> fx) {
+        Map<String, List<String>> ctx = new HashMap<>(8);
+        ctx.put(SCHEDULE_PARAMETER_CRON_EXPRESSION, List.of(expression));
+        ctx.put(SCHEDULE_PARAMETER_INIT_DELAY, List.of(String.valueOf(initDelay)));
+        ctx.put(SCHEDULE_PARAMETER_DELAY, List.of(String.valueOf(delay)));
+
+        fx.accept(ctx);
+
+        return ScheduleContext.builder()
+            .scheme(DEFAULT_SCHEME)
+            .action(DEFAULT_ACTION)
+            .type(DEFAULT_TYPE)
+            .ctx(ctx)
+            .build();
+    }
+
+    // ----------------------------------------------------------------
+
+    public static ScheduleContext fixedRate() {
+        return fixedRate(0L, 0L, Lambdas::noOps);
+    }
+
+    public static ScheduleContext fixedRate(@Nonnull Long initDelay) {
+        return fixedRate(initDelay, 0L, Lambdas::noOps);
+    }
+
+    public static ScheduleContext fixedRate(
+        @Nonnull Long initDelay,
+        @Nonnull Long delay) {
+        return fixedRate(initDelay, delay, Lambdas::noOps);
+    }
+
+    public static ScheduleContext fixedRate(
+        @Nonnull Long initDelay,
+        @Nonnull Long delay,
+        @Nonnull Consumer<Map<String, List<String>>> fx) {
+        Map<String, List<String>> ctx = new HashMap<>(8);
+        ctx.put(SCHEDULE_PARAMETER_INIT_DELAY, List.of(String.valueOf(initDelay)));
+        ctx.put(SCHEDULE_PARAMETER_DELAY, List.of(String.valueOf(delay)));
+
+        fx.accept(ctx);
+
+        return ScheduleContext.builder()
+            .scheme(DEFAULT_SCHEME)
+            .action(DEFAULT_ACTION)
+            .type(SCHEDULE_TYPE_FIXED_RATE)
+            .ctx(ctx)
+            .build();
+    }
+
+    // ----------------------------------------------------------------
+
+    public static ScheduleContext fixedDelay() {
+        return fixedDelay(0L, 0L, Lambdas::noOps);
+    }
+
+    public static ScheduleContext fixedDelay(@Nonnull Long initDelay) {
+        return fixedDelay(initDelay, 0L, Lambdas::noOps);
+    }
+
+    public static ScheduleContext fixedDelay(
+        @Nonnull Long initDelay,
+        @Nonnull Long delay) {
+        return fixedDelay(initDelay, delay, Lambdas::noOps);
+    }
+
+    public static ScheduleContext fixedDelay(
+        @Nonnull Long initDelay,
+        @Nonnull Long delay,
+        @Nonnull Consumer<Map<String, List<String>>> fx) {
+        Map<String, List<String>> ctx = new HashMap<>(8);
+        ctx.put(SCHEDULE_PARAMETER_INIT_DELAY, List.of(String.valueOf(initDelay)));
+        ctx.put(SCHEDULE_PARAMETER_DELAY, List.of(String.valueOf(delay)));
+
+        fx.accept(ctx);
+
+        return ScheduleContext.builder()
+            .scheme(DEFAULT_SCHEME)
+            .action(DEFAULT_ACTION)
+            .type(SCHEDULE_TYPE_FIXED_DELAY)
+            .ctx(ctx)
+            .build();
+    }
+
+    // ----------------------------------------------------------------
 
     public String compact() {
         StringBuilder buf = new StringBuilder();
@@ -114,19 +270,39 @@ public class ScheduleContext implements Serializable {
         try {
             URI uri = new URI(compacted);
 
-            String queryString = uri.getQuery();
-            Map<String, List<String>> ctx = parseQueryParameters(queryString);
-
-            return ScheduleContext.builder()
-                .scheme(uri.getScheme())
-                .action(uri.getHost())
-                .type(uri.getPath().replaceAll(SLASH, ""))
-                .query(URLDecoder.decode(queryString, StandardCharsets.UTF_8))
-                .ctx(ctx)
-                .build();
+            return tryParse(uri);
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    // ----------------------------------------------------------------
+
+    public String parameter(String key) {
+        return this.parameter(key, Function.identity());
+    }
+
+    public <T> T parameter(String key, Function<String, T> mapper) {
+        return this.ctx.getOrDefault(key, List.of())
+            .stream()
+            .findFirst()
+            .map(mapper)
+            .orElse(null);
+    }
+
+    // ----------------------------------------------------------------
+
+    private static ScheduleContext tryParse(URI uri) {
+        String queryString = uri.getQuery();
+        Map<String, List<String>> ctx = parseQueryParameters(queryString);
+
+        return ScheduleContext.builder()
+            .scheme(uri.getScheme())
+            .action(uri.getHost())
+            .type(uri.getPath().replaceAll(SLASH, CommonConstants.Symbol.EMPTY))
+            .query(URLDecoder.decode(queryString, StandardCharsets.UTF_8))
+            .ctx(ctx)
+            .build();
     }
 
     private static Map<String, List<String>> parseQueryParameters(String query) {

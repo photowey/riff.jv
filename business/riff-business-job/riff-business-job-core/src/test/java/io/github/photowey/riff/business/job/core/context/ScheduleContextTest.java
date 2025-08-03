@@ -47,4 +47,36 @@ class ScheduleContextTest {
         Assertions.assertEquals(context.action(), parsed.action());
         Assertions.assertEquals(context.type(), parsed.type());
     }
+
+    @Test
+    void testCron() {
+        ScheduleContext context = ScheduleContext.cron("0/5 * * * * ?");
+        String compacted = context.compact();
+
+        ScheduleContext parsed = ScheduleContext.parse(compacted);
+
+        Assertions.assertEquals(context.scheme(), parsed.scheme());
+        Assertions.assertEquals(context.action(), parsed.action());
+        Assertions.assertEquals(context.type(), parsed.type());
+        Assertions.assertEquals(ScheduleContext.SCHEDULE_TYPE_CRON, parsed.type());
+    }
+
+    @Test
+    void testFixedRate() {
+        ScheduleContext context = ScheduleContext.fixedRate(10086L, 0L);
+        String compacted = context.compact();
+
+        ScheduleContext parsed = ScheduleContext.parse(compacted);
+
+        Assertions.assertEquals(context.scheme(), parsed.scheme());
+        Assertions.assertEquals(context.action(), parsed.action());
+        Assertions.assertEquals(context.type(), parsed.type());
+        Assertions.assertEquals(ScheduleContext.SCHEDULE_TYPE_FIXED_RATE, parsed.type());
+
+        Long initDelay = parsed.parameter(ScheduleContext.SCHEDULE_PARAMETER_INIT_DELAY, Long::valueOf);
+        Assertions.assertEquals(10086L, initDelay);
+
+        String unknown = parsed.parameter("unknown-key");
+        Assertions.assertNull(unknown);
+    }
 }
