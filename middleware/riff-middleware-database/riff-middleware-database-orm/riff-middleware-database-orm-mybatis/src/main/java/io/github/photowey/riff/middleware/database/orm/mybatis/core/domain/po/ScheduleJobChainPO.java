@@ -48,23 +48,31 @@ public class ScheduleJobChainPO extends AbstractTenantEntity {
     private static final long serialVersionUID = 4202434336779122933L;
 
     /**
-     * ParentID
+     * The ID of the parent job, or {@code 0} if this job has no parent.
      */
     private Long parentId;
+
     /**
-     * ChildrenID
+     * The ID of the child job, or {@code 0} if no child job has been created.
      */
-    private Long childrenId;
+    private Long childId;
+
     /**
-     * ChildrenCode
+     * The code identifier of the child job, or {@code null} if the child job
+     * has not been defined.
      */
-    private String childrenCode;
+    private String childCode;
+
     /**
-     * TriggerCondition
+     * The condition that determines when the child job should be triggered.
      */
     private String triggerCondition;
+
     /**
-     * TriggerContext
+     * Additional context or parameters passed when triggering the child job.
+     * Typically includes key-value pairs of runtime variables, environment data,
+     * or input parameters. Supports {@code SpEL} (Spring Expression Language)
+     * for dynamic evaluation.
      */
     private String triggerContext;
 
@@ -74,12 +82,12 @@ public class ScheduleJobChainPO extends AbstractTenantEntity {
         return this.parentId;
     }
 
-    public Long childrenId() {
-        return this.childrenId;
+    public Long childId() {
+        return this.childId;
     }
 
-    public String childrenCode() {
-        return childrenCode;
+    public String childCode() {
+        return childCode;
     }
 
     public String triggerCondition() {

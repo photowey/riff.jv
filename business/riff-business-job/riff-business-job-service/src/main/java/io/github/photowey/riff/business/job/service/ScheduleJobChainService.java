@@ -16,7 +16,10 @@
  */
 package io.github.photowey.riff.business.job.service;
 
+import java.util.List;
+
 import io.github.photowey.riff.business.job.core.domain.payload.ScheduleJobChainAddPayload;
+import io.github.photowey.riff.core.domain.entity.ScheduleJob;
 import io.github.photowey.riff.core.domain.entity.ScheduleJobChain;
 
 /**
@@ -35,4 +38,18 @@ public interface ScheduleJobChainService {
      * @return the {@link ScheduleJobChain}
      */
     ScheduleJobChain add(ScheduleJobChainAddPayload payload);
+
+    /**
+     * Batch add job chains
+     *
+     * @param chains the job chains {@link ScheduleJobChain}
+     */
+    void batchAdd(List<ScheduleJobChain> chains);
+
+    /**
+     * Refresh the job chains
+     *
+     * @param job the job {@link ScheduleJob}
+     */
+    void refreshJobChains(ScheduleJob job);
 }

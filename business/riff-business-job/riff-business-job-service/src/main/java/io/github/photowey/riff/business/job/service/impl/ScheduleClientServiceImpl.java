@@ -27,6 +27,7 @@ import io.github.photowey.riff.business.job.core.domain.payload.ScheduleClientAd
 import io.github.photowey.riff.business.job.service.ScheduleClientService;
 import io.github.photowey.riff.core.domain.entity.ScheduleApp;
 import io.github.photowey.riff.core.domain.entity.ScheduleClient;
+import io.github.photowey.riff.infras.common.enums.CommonDictionary;
 import io.github.photowey.riff.storage.api.engine.StorageEngine;
 
 import lombok.extern.slf4j.Slf4j;
@@ -86,7 +87,7 @@ public class ScheduleClientServiceImpl implements ScheduleClientService {
     private void testClientExists(ScheduleClient tt) {
         Optional<ScheduleClient> clientOpt = this.storageEngine.scheduleClientStorage().testClientExists(tt);
         if (clientOpt.isPresent()) {
-            tt.setRegistered(1);
+            tt.setRegistered(CommonDictionary.Boolean.TRUE.value());
             tt.setId(clientOpt.get().id());
         }
     }

@@ -14,42 +14,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.photowey.riff.core.domain.entity;
+package io.github.photowey.riff.core.domain.job;
 
 import java.io.Serial;
-
-import io.github.photowey.riff.infras.common.enums.CommonDictionary;
-import io.github.photowey.riff.infras.common.util.Objects;
-import io.github.photowey.riff.middleware.database.core.domain.entity.AbstractTenantEntity;
+import java.io.Serializable;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 
 /**
- * {@code ScheduleJobChain}.
- * |- riff_schedule_job_chain
+ * {@code ChildJob}.
  *
  * @author photowey
  * @version 1.0.0
- * @since 2025/07/21
+ * @since 2025/08/04
  */
 @Data
-@SuperBuilder
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = true)
-public class ScheduleJobChain extends AbstractTenantEntity {
+public class ChildJob implements Serializable {
 
     @Serial
-    private static final long serialVersionUID = 4022075619235143975L;
+    private static final long serialVersionUID = 3912896768841152941L;
 
-    /**
-     * The ID of the parent job, if the job has a parent.
-     */
-    private Long parentId;
     /**
      * The ID of the child job, if the child job has been created.
      */
@@ -75,28 +65,8 @@ public class ScheduleJobChain extends AbstractTenantEntity {
 
     // ----------------------------------------------------------------
 
-    /**
-     * This fields are used to determine whether the parent job ID (parentId) needs to be checked.
-     * |- 0: No need to check the parent job ID.
-     * |- 1: Need to check the parent job ID.
-     */
-    private Integer checkParent;
-
-    // ----------------------------------------------------------------
-
-    public boolean determineNeedCheckParent() {
-        return Objects.defaultIfNull(
-            this.checkParent, CommonDictionary.Boolean.TRUE.value()) == CommonDictionary.Boolean.TRUE.value();
-    }
-
-    // ----------------------------------------------------------------
-
-    public Long parentId() {
-        return this.parentId;
-    }
-
     public Long childId() {
-        return this.childId;
+        return childId;
     }
 
     public String childCode() {
@@ -104,11 +74,10 @@ public class ScheduleJobChain extends AbstractTenantEntity {
     }
 
     public String triggerCondition() {
-        return this.triggerCondition;
+        return triggerCondition;
     }
 
     public String triggerContext() {
-        return this.triggerContext;
+        return triggerContext;
     }
-
 }

@@ -34,6 +34,7 @@ import java.util.function.Function;
 import jakarta.annotation.Nonnull;
 
 import io.github.photowey.riff.infras.common.constant.CommonConstants;
+import io.github.photowey.riff.infras.common.util.Collections;
 import io.github.photowey.riff.infras.common.util.Lambdas;
 import io.github.photowey.riff.infras.common.util.Maps;
 import io.github.photowey.riff.infras.common.util.Strings;
@@ -77,12 +78,17 @@ public class ScheduleContext implements Serializable {
     public static final String SCHEDULE_PARAMETER_CRON_EXPRESSION = "expression";
     public static final String SCHEDULE_PARAMETER_INIT_DELAY = "initialDelay";
     public static final String SCHEDULE_PARAMETER_DELAY = "delay";
+    public static final String SCHEDULE_PARAMETER_PERIOD = "period";
+
+    private static final long DEFAULT_PARAMETER_PERIOD = 30L;
+
+    // NODES: All time-related parameters are in seconds.
 
     /**
-     * {@code riff://trigger/once?initialDelay=0&delay=0}
-     * {@code riff://trigger/cron?expression=0%2F5+*+*+*+*+%3F&initialDelay=0&delay=0}
-     * {@code riff://trigger/fixedrate?initialDelay=0&delay=0}
-     * {@code riff://trigger/fixeddelay?initialDelay=0&delay=0}
+     * {@code riff://trigger/once?delay=0}
+     * {@code riff://trigger/cron?expression=0%2F5+*+*+*+*+%3F&initialDelay=0}
+     * {@code riff://trigger/fixedrate?initialDelay=0&period=30}
+     * {@code riff://trigger/fixeddelay?initialDelay=0&delay=30}
      */
 
     private String scheme;
@@ -95,26 +101,18 @@ public class ScheduleContext implements Serializable {
     // ----------------------------------------------------------------
 
     public static ScheduleContext once() {
-        return once(0L, 0L, Lambdas::noOps);
+        return once(0L, Lambdas::noOps);
     }
 
-    public static ScheduleContext once(@Nonnull Long initDelay) {
-        return once(initDelay, 0L, Lambdas::noOps);
-    }
-
-    public static ScheduleContext once(
-        @Nonnull Long initDelay,
-        @Nonnull Long delay) {
-        return once(initDelay, delay, Lambdas::noOps);
+    public static ScheduleContext once(@Nonnull Long delay/*Seconds*/) {
+        return once(delay, Lambdas::noOps);
     }
 
     public static ScheduleContext once(
-        @Nonnull Long initDelay,
-        @Nonnull Long delay,
+        @Nonnull Long delay/*Seconds*/,
         @Nonnull Consumer<Map<String, List<String>>> fx) {
-        Map<String, List<String>> ctx = new HashMap<>(8);
-        ctx.put(SCHEDULE_PARAMETER_INIT_DELAY, List.of(String.valueOf(initDelay)));
-        ctx.put(SCHEDULE_PARAMETER_DELAY, List.of(String.valueOf(delay)));
+        Map<String, List<String>> ctx = new HashMap<>(2);
+        ctx.put(SCHEDULE_PARAMETER_DELAY, Collections.asImmutableList(String.valueOf(delay)));
 
         fx.accept(ctx);
 
@@ -129,27 +127,20 @@ public class ScheduleContext implements Serializable {
     // ----------------------------------------------------------------
 
     public static ScheduleContext cron(@Nonnull String expression) {
-        return cron(expression, 0L, 0L);
+        return cron(expression, 0L);
     }
 
-    public static ScheduleContext cron(@Nonnull String expression, @Nonnull Long initDelay) {
-        return cron(expression, initDelay, 0L);
-    }
-
-    public static ScheduleContext cron(
-        @Nonnull String expression, @Nonnull Long initDelay, @Nonnull Long delay) {
-        return cron(expression, initDelay, delay, Lambdas::noOps);
+    public static ScheduleContext cron(@Nonnull String expression, @Nonnull Long initDelay/*Seconds*/) {
+        return cron(expression, initDelay, Lambdas::noOps);
     }
 
     public static ScheduleContext cron(
         @Nonnull String expression,
-        @Nonnull Long initDelay,
-        @Nonnull Long delay,
+        @Nonnull Long initDelay/*Seconds*/,
         @Nonnull Consumer<Map<String, List<String>>> fx) {
-        Map<String, List<String>> ctx = new HashMap<>(8);
-        ctx.put(SCHEDULE_PARAMETER_CRON_EXPRESSION, List.of(expression));
-        ctx.put(SCHEDULE_PARAMETER_INIT_DELAY, List.of(String.valueOf(initDelay)));
-        ctx.put(SCHEDULE_PARAMETER_DELAY, List.of(String.valueOf(delay)));
+        Map<String, List<String>> ctx = new HashMap<>(4);
+        ctx.put(SCHEDULE_PARAMETER_CRON_EXPRESSION, Collections.asImmutableList(expression));
+        ctx.put(SCHEDULE_PARAMETER_INIT_DELAY, Collections.asImmutableList(String.valueOf(initDelay)));
 
         fx.accept(ctx);
 
@@ -164,26 +155,24 @@ public class ScheduleContext implements Serializable {
     // ----------------------------------------------------------------
 
     public static ScheduleContext fixedRate() {
-        return fixedRate(0L, 0L, Lambdas::noOps);
+        return fixedRate(DEFAULT_PARAMETER_PERIOD);
     }
 
-    public static ScheduleContext fixedRate(@Nonnull Long initDelay) {
-        return fixedRate(initDelay, 0L, Lambdas::noOps);
+    public static ScheduleContext fixedRate(@Nonnull Long period/*Seconds*/) {
+        return fixedRate(0L, period, Lambdas::noOps);
+    }
+
+    public static ScheduleContext fixedRate(@Nonnull Long initDelay/*Seconds*/, @Nonnull Long period/*Seconds*/) {
+        return fixedRate(initDelay, period, Lambdas::noOps);
     }
 
     public static ScheduleContext fixedRate(
-        @Nonnull Long initDelay,
-        @Nonnull Long delay) {
-        return fixedRate(initDelay, delay, Lambdas::noOps);
-    }
-
-    public static ScheduleContext fixedRate(
-        @Nonnull Long initDelay,
-        @Nonnull Long delay,
+        @Nonnull Long initDelay/*Seconds*/,
+        @Nonnull Long period/*Seconds*/,
         @Nonnull Consumer<Map<String, List<String>>> fx) {
-        Map<String, List<String>> ctx = new HashMap<>(8);
-        ctx.put(SCHEDULE_PARAMETER_INIT_DELAY, List.of(String.valueOf(initDelay)));
-        ctx.put(SCHEDULE_PARAMETER_DELAY, List.of(String.valueOf(delay)));
+        Map<String, List<String>> ctx = new HashMap<>(4);
+        ctx.put(SCHEDULE_PARAMETER_INIT_DELAY, Collections.asImmutableList(String.valueOf(initDelay)));
+        ctx.put(SCHEDULE_PARAMETER_PERIOD, Collections.asImmutableList(String.valueOf(period)));
 
         fx.accept(ctx);
 
@@ -201,23 +190,21 @@ public class ScheduleContext implements Serializable {
         return fixedDelay(0L, 0L, Lambdas::noOps);
     }
 
-    public static ScheduleContext fixedDelay(@Nonnull Long initDelay) {
-        return fixedDelay(initDelay, 0L, Lambdas::noOps);
+    public static ScheduleContext fixedDelay(@Nonnull Long delay/*Seconds*/) {
+        return fixedDelay(0L, delay, Lambdas::noOps);
     }
 
-    public static ScheduleContext fixedDelay(
-        @Nonnull Long initDelay,
-        @Nonnull Long delay) {
+    public static ScheduleContext fixedDelay(@Nonnull Long initDelay/*Seconds*/, @Nonnull Long delay/*Seconds*/) {
         return fixedDelay(initDelay, delay, Lambdas::noOps);
     }
 
     public static ScheduleContext fixedDelay(
-        @Nonnull Long initDelay,
-        @Nonnull Long delay,
+        @Nonnull Long initDelay/*Seconds*/,
+        @Nonnull Long delay/*Seconds*/,
         @Nonnull Consumer<Map<String, List<String>>> fx) {
-        Map<String, List<String>> ctx = new HashMap<>(8);
-        ctx.put(SCHEDULE_PARAMETER_INIT_DELAY, List.of(String.valueOf(initDelay)));
-        ctx.put(SCHEDULE_PARAMETER_DELAY, List.of(String.valueOf(delay)));
+        Map<String, List<String>> ctx = new HashMap<>(4);
+        ctx.put(SCHEDULE_PARAMETER_INIT_DELAY, Collections.asImmutableList(String.valueOf(initDelay)));
+        ctx.put(SCHEDULE_PARAMETER_DELAY, Collections.asImmutableList(String.valueOf(delay)));
 
         fx.accept(ctx);
 
@@ -288,6 +275,40 @@ public class ScheduleContext implements Serializable {
             .findFirst()
             .map(mapper)
             .orElse(null);
+    }
+
+    // ----------------------------------------------------------------
+
+    public String expression() {
+        if (!this.ctx.containsKey(SCHEDULE_PARAMETER_CRON_EXPRESSION)) {
+            throw new IllegalArgumentException("expression can't be null");
+        }
+
+        return this.parameter(SCHEDULE_PARAMETER_CRON_EXPRESSION);
+    }
+
+    public Long initDelay() {
+        if (!this.ctx.containsKey(SCHEDULE_PARAMETER_INIT_DELAY)) {
+            return 0L;
+        }
+
+        return this.parameter(SCHEDULE_PARAMETER_INIT_DELAY, Long::parseLong);
+    }
+
+    public Long delay() {
+        if (!this.ctx.containsKey(SCHEDULE_PARAMETER_DELAY)) {
+            return 0L;
+        }
+
+        return this.parameter(SCHEDULE_PARAMETER_DELAY, Long::parseLong);
+    }
+
+    public Long period() {
+        if (!this.ctx.containsKey(SCHEDULE_PARAMETER_PERIOD)) {
+            return 0L;
+        }
+
+        return this.parameter(SCHEDULE_PARAMETER_PERIOD, Long::parseLong);
     }
 
     // ----------------------------------------------------------------

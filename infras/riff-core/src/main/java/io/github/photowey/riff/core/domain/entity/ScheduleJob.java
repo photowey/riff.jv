@@ -21,6 +21,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import io.github.photowey.riff.infras.common.enums.CommonDictionary;
+import io.github.photowey.riff.infras.common.util.Collections;
 import io.github.photowey.riff.infras.common.util.Objects;
 import io.github.photowey.riff.infras.common.util.Strings;
 import io.github.photowey.riff.middleware.database.core.domain.entity.AbstractTenantEntity;
@@ -88,16 +89,31 @@ public class ScheduleJob extends AbstractTenantEntity {
      *
      * <p>
      * 1: Schedule once - Execute the task only once.
+     *
+     * <p>
      * 2: Cron - Execute the task based on a cron expression.
+     *
+     * <p>
      * 3: FixedRate - Execute the task at a fixed interval, measured from the start time of the previous execution.
+     *
+     * <p>
      * 4: FixedDelay - Execute the task at a fixed interval, measured from the completion time of the previous execution
      */
     private Integer scheduleType;
     /**
-     * {@code riff://trigger/once?initialDelay=0&delay=0}
-     * {@code riff://trigger/cron?expression=0%2F5+*+*+*+*+%3F&initialDelay=0&delay=0}
-     * {@code riff://trigger/fixedrate?initialDelay=0&delay=0}
-     * {@code riff://trigger/fixeddelay?initialDelay=0&delay=0}
+     * ScheduleContext
+     *
+     * <p>
+     * {@code riff://trigger/once?delay=0}
+     *
+     * <p>
+     * {@code riff://trigger/cron?expression=0%2F5+*+*+*+*+%3F&initialDelay=0}
+     *
+     * <p>
+     * {@code riff://trigger/fixedrate?initialDelay=0&period=30}
+     *
+     * <p>
+     * {@code riff://trigger/fixeddelay?initialDelay=0&delay=30}
      */
     private String scheduleContext;
 
@@ -150,14 +166,19 @@ public class ScheduleJob extends AbstractTenantEntity {
     private Integer registered;
 
     @Schema(hidden = true)
-    private List<Long> childrenIds;
+    private List<ScheduleJobChain> childJobs;
+
     @Schema(hidden = true)
-    private List<String> childrenCodes;
+    private LocalDateTime now;
 
     // ----------------------------------------------------------------
 
     public boolean determineIsRegistered() {
         return Objects.isNotNull(this.registered) && this.registered == CommonDictionary.Boolean.TRUE.value();
+    }
+
+    public boolean determineHasChildJobs() {
+        return Collections.isNotEmpty(this.childJobs);
     }
 
     // ----------------------------------------------------------------
@@ -256,11 +277,11 @@ public class ScheduleJob extends AbstractTenantEntity {
         return registered;
     }
 
-    public List<Long> childrenIds() {
-        return childrenIds;
+    public List<ScheduleJobChain> childJobs() {
+        return childJobs;
     }
 
-    public List<String> childrenCodes() {
-        return childrenCodes;
+    public LocalDateTime now() {
+        return now;
     }
 }

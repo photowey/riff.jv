@@ -95,7 +95,7 @@
     - `scritp_job`
       - `2`
     - `http_job`
-      - `4`
+      - `3`
   - `handler_name`
     - `${ioc_handler_bean_name}`
     - `hello_python`
@@ -119,11 +119,27 @@
       - `toml`
       - `hcl`
       - `...`
+  - `schedule_type`
+    - `1:Schedule once`
+    - `2:Cron`
+    - `3:FixedRate`
+    - `4:FixedDelay`
+  - `schedule_context`
+  - `misfire_strategy`
+  - `route_strategy`
+  - `block_strategy`
+  - `timeout_seconds`
+  - `retry_count`
+  - `trigger_status`
+  - `trigger_last_time`
+  - `trigger_next_time`
+  - `...`
 - `riff_schedule_job_chain`
   - `id`
     - `chain_id`
   - `parent_id`
-  - `children_id`
+  - `child_id`
+  - `child_code`
   - `trigger_condition`
     - `${xxxStatus} == 1`
     - `${xxxEnabled}`
@@ -165,7 +181,6 @@
   - `alarm_type`
   - `alarm_status`
   - `alarm_context`
-
 - `riff_schedule_job_trigger_stat`
   - `id`
   - `app_id`
@@ -199,6 +214,18 @@
   - `avatar`
   - `twofa_enabled`
   - `twofa_secret`
+  - `status`
+    - `1: Unactivated`
+    - `2: Activated`
+    - `4: Frozen`
+    - `8: Forbidden`
+    - `16: Expired`
+    - `32: Locked`
+  - `authentication_status`
+    - `1: Unauthenticated`
+    - `2: Authenticating`
+    - `4: Authenticated`
+    - `8: Authentication Failed`
   - `...`
 - `riff_system_role`
   - `id`

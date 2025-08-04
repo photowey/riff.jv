@@ -26,6 +26,9 @@ import jakarta.validation.constraints.NotNull;
 import io.github.photowey.riff.core.domain.entity.ScheduleJob;
 import io.github.photowey.riff.infras.authentication.core.domain.authenticated.LoginUser;
 import io.github.photowey.riff.infras.authentication.core.threadlocal.LoginUserHolder;
+import io.github.photowey.riff.infras.common.util.Collections;
+import io.github.photowey.riff.infras.common.util.Lambdas;
+import io.github.photowey.riff.infras.common.util.Objects;
 import io.github.photowey.riff.infras.validator.annotation.AllowableValues;
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -234,16 +237,10 @@ public class ScheduleJobAddPayload extends AbstractSchedulePayload<ScheduleJob> 
     // ----------------------------------------------------------------
 
     @Schema(
-        description = "The IDs of child jobs, used for job chaining. This field is optional.",
-        requiredMode = Schema.RequiredMode.NOT_REQUIRED
-    )
-    private List<Long> childrenIds;
-
-    @Schema(
         description = "The codes of child jobs, used for job chaining. This field is optional.",
         requiredMode = Schema.RequiredMode.NOT_REQUIRED
     )
-    private List<String> childrenCodes;
+    private List<ScheduleJobChainAddPayload> childJobs;
 
     // ----------------------------------------------------------------
 
@@ -252,6 +249,36 @@ public class ScheduleJobAddPayload extends AbstractSchedulePayload<ScheduleJob> 
      */
     @Schema(hidden = true)
     private Long appId;
+
+    // ----------------------------------------------------------------
+
+    @Override
+    public void initAction() {
+        this.initChildJobsIfNecessary();
+    }
+
+    // ----------------------------------------------------------------
+
+    @Override
+    public void checkActions() {
+        this.checkChildJobs();
+    }
+
+    // ----------------------------------------------------------------
+
+    private void initChildJobsIfNecessary() {
+        if (Objects.isNull(this.childJobs)) {
+            this.childJobs = Collections.emptyList();
+        }
+    }
+
+    // ----------------------------------------------------------------
+
+    private void checkChildJobs() {
+        if (Collections.isNotEmpty(this.childJobs)) {
+            this.childJobs.forEach(ScheduleJobChainAddPayload::checkActions);
+        }
+    }
 
     // ----------------------------------------------------------------
 
@@ -282,8 +309,7 @@ public class ScheduleJobAddPayload extends AbstractSchedulePayload<ScheduleJob> 
             .timeoutSeconds(this.timeoutSeconds)
             .retryCount(this.retryCount)
             // ----------------------------------------------------------------
-            .childrenIds(this.childrenIds)
-            .childrenCodes(this.childrenCodes)
+            .childJobs(Lambdas.toList(this.childJobs, ScheduleJobChainAddPayload::toScheduleJobChain))
             // ----------------------------------------------------------------
             .appId(authenticated.userId())
             .build();

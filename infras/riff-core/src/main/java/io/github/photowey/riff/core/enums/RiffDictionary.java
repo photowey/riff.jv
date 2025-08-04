@@ -154,4 +154,67 @@ public enum RiffDictionary {
         }
     }
 
+    public enum Schedule {
+
+        ;
+
+        public enum Type {
+
+            // SCHEDULE TYPE 1:Schedule once 2:Cron 3:FixedRate 4:FixedDelay
+
+            SCHEDULE_ONCE("SCHEDULE_ONCE", "once", 1),
+            CRON("CRON", "cron", 2),
+            FIXED_RATE("FIXED_RATE", "fixedrate", 3),
+            FIXED_DELAY("FIXED_DELAY", "fixeddelay", 4),
+
+            ;
+
+            private final String name;
+            private final String code;
+            private final int value;
+
+            Type(String name, String code, int value) {
+                this.name = name;
+                this.code = code;
+                this.value = value;
+            }
+
+            public String wrap() {
+                return name;
+            }
+
+            public String code() {
+                return code;
+            }
+
+            public int value() {
+                return value;
+            }
+
+            public static Type codeOf(String code) {
+                if (Objects.isNull(code)) {
+                    throw new NullPointerException("code is required.");
+                }
+
+                for (Type type : values()) {
+                    if (type.code().equalsIgnoreCase(code)) {
+                        return type;
+                    }
+                }
+
+                throw new RuntimeException("Invalid job's schedule type code.");
+            }
+
+            public static Type valueOf(int value) {
+                for (Type type : values()) {
+                    if (type.value() == value) {
+                        return type;
+                    }
+                }
+
+                throw new RuntimeException("Invalid job's schedule type value.");
+            }
+        }
+    }
+
 }

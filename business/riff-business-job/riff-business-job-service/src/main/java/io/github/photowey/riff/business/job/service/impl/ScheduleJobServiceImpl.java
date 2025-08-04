@@ -16,6 +16,7 @@
  */
 package io.github.photowey.riff.business.job.service.impl;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -29,11 +30,15 @@ import org.springframework.transaction.annotation.Transactional;
 import io.github.photowey.riff.business.job.core.checker.exception.AbstractJobExceptionChecker;
 import io.github.photowey.riff.business.job.core.context.ScheduleContext;
 import io.github.photowey.riff.business.job.core.domain.payload.ScheduleJobAddPayload;
+import io.github.photowey.riff.business.job.service.ScheduleJobChainService;
 import io.github.photowey.riff.business.job.service.ScheduleJobService;
 import io.github.photowey.riff.business.job.service.calculator.TriggerTimeCalculator;
 import io.github.photowey.riff.core.domain.entity.ScheduleApp;
 import io.github.photowey.riff.core.domain.entity.ScheduleJob;
+import io.github.photowey.riff.core.domain.entity.ScheduleJobChain;
 import io.github.photowey.riff.core.enums.RiffDictionary;
+import io.github.photowey.riff.infras.common.datetime.Timestamps;
+import io.github.photowey.riff.infras.common.enums.CommonDictionary;
 import io.github.photowey.riff.infras.ioc.context.holder.AbstractBeanFactoryHolder;
 import io.github.photowey.riff.storage.api.engine.StorageEngine;
 
@@ -53,6 +58,9 @@ public class ScheduleJobServiceImpl extends AbstractBeanFactoryHolder implements
     @Autowired
     private StorageEngine storageEngine;
 
+    @Autowired
+    private ScheduleJobChainService scheduleJobChainService;
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ScheduleJob register(ScheduleJobAddPayload payload) {
@@ -67,7 +75,7 @@ public class ScheduleJobServiceImpl extends AbstractBeanFactoryHolder implements
     private ScheduleJob tryRegister(ScheduleJobAddPayload payload) {
         ScheduleJob tt = payload.toScheduleJob(this::preRegister);
         if (tt.determineIsRegistered()) {
-            // update Or return?
+            // TODO update Or return?
             this.storageEngine.scheduleJobStorage().updateById(tt);
         } else {
             this.storageEngine.scheduleJobStorage().save(tt);
@@ -92,16 +100,47 @@ public class ScheduleJobServiceImpl extends AbstractBeanFactoryHolder implements
 
         this.tryAddScheduleJobChainIfNecessary(tt);
         this.refreshParentScheduleJobChildrenIdIfNecessary(tt);
+
+        this.cycleDetect(tt);
     }
 
     // ----------------------------------------------------------------
 
     private void tryAddScheduleJobChainIfNecessary(ScheduleJob tt) {
-        // TODO NOT implemented
+        if (tt.determineHasChildJobs()) {
+            tt.childJobs().forEach(it -> {
+                this.injectChainBase(tt, it);
+            });
+            this.batchAddScheduleJobChain(tt);
+        }
     }
 
     private void refreshParentScheduleJobChildrenIdIfNecessary(ScheduleJob tt) {
-        // TODO NOT implemented
+        if (tt.determineHasChildJobs()) {
+            this.refreshScheduleJobChain(tt);
+        }
+    }
+
+    private void cycleDetect(ScheduleJob tt) {
+    }
+
+    private void injectChainBase(ScheduleJob tt, ScheduleJobChain it) {
+        it.setParentId(tt.id());
+        it.setCheckParent(CommonDictionary.Boolean.FALSE.value());
+
+        it.setTenant(tt.tenant());
+        it.setPlatform(tt.platform());
+        it.setApp(tt.app());
+    }
+
+    // ----------------------------------------------------------------
+
+    private void batchAddScheduleJobChain(ScheduleJob tt) {
+        this.scheduleJobChainService.batchAdd(tt.childJobs());
+    }
+
+    private void refreshScheduleJobChain(ScheduleJob tt) {
+        this.scheduleJobChainService.refreshJobChains(tt);
     }
 
     // ----------------------------------------------------------------
@@ -141,7 +180,7 @@ public class ScheduleJobServiceImpl extends AbstractBeanFactoryHolder implements
     private void testJobExists(ScheduleJob tt) {
         Optional<ScheduleJob> jobOpt = this.storageEngine.scheduleJobStorage().testJobExists(tt);
         if (jobOpt.isPresent()) {
-            tt.setRegistered(1);
+            tt.setRegistered(CommonDictionary.Boolean.TRUE.value());
             tt.setId(jobOpt.get().id());
         }
     }
@@ -162,6 +201,9 @@ public class ScheduleJobServiceImpl extends AbstractBeanFactoryHolder implements
             this.listableBeanFactory().getBeansOfType(TriggerTimeCalculator.class);
         List<TriggerTimeCalculator> triggerTimeCalculators = new ArrayList<>(beans.values());
         AnnotationAwareOrderComparator.sort(triggerTimeCalculators);
+
+        // The base time for the trigger.
+        tt.setNow(Timestamps.trimTail(LocalDateTime.now()));
 
         for (TriggerTimeCalculator triggerTimeCalculator : triggerTimeCalculators) {
             if (triggerTimeCalculator.supports(ctx.type())) {

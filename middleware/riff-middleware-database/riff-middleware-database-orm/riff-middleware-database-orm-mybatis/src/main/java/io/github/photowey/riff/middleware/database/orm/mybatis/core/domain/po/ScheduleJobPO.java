@@ -88,13 +88,31 @@ public class ScheduleJobPO extends AbstractTenantEntity {
      *
      * <p>
      * 1: Schedule once - Execute the task only once.
+     *
+     * <p>
      * 2: Cron - Execute the task based on a cron expression.
+     *
+     * <p>
      * 3: FixedRate - Execute the task at a fixed interval, measured from the start time of the previous execution.
+     *
+     * <p>
      * 4: FixedDelay - Execute the task at a fixed interval, measured from the completion time of the previous execution
      */
     private Integer scheduleType;
     /**
-     * {@code riff://trigger/cron?expression=0%2F5+*+*+*+*+%3F&initialDelay=0&delay=0}
+     * ScheduleContext
+     *
+     * <p>
+     * {@code riff://trigger/once?delay=0}
+     *
+     * <p>
+     * {@code riff://trigger/cron?expression=0%2F5+*+*+*+*+%3F&initialDelay=0}
+     *
+     * <p>
+     * {@code riff://trigger/fixedrate?initialDelay=0&period=30}
+     *
+     * <p>
+     * {@code riff://trigger/fixeddelay?initialDelay=0&delay=30}
      */
     private String scheduleContext;
 
@@ -111,9 +129,17 @@ public class ScheduleJobPO extends AbstractTenantEntity {
      *
      * <p>
      * 1: First
+     *
+     * <p>
      * 2: Last
+     *
+     * <p>
      * 3: Round
+     *
+     * <p>
      * 4: Random
+     *
+     * <p>
      * 5: Consistent hash
      */
     private Integer routeStrategy;
