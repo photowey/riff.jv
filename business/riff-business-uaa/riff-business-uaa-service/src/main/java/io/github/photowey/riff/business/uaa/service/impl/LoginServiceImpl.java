@@ -131,6 +131,7 @@ public class LoginServiceImpl extends AbstractApplicationContextHolder implement
                 this.ext(payload, scopes, roles, builder);
             })
             .now(this.now())
+            .tokenType(payload.determineTokenType())
             .build();
 
         String token = this.auth().jwt().createToken(ctx);
@@ -311,7 +312,7 @@ public class LoginServiceImpl extends AbstractApplicationContextHolder implement
         RefreshTokenDTO refresh = RefreshTokenDTO.builder()
             .enabled(1)
             .token(refreshToken)
-            .type(AuthorityConstants.AUTHORIZATION_TOKEN_PREFIX_BEARER)
+            .type(ctx.tokenType())
             .issuedAt(ctx.now())
             .expiresIn(jwt.refreshTokenValidityInSeconds())
             .build();
@@ -319,7 +320,7 @@ public class LoginServiceImpl extends AbstractApplicationContextHolder implement
         return TokenDTO.builder()
             .token(token)
             .twofa(twofa ? 1 : 0)
-            .type(AuthorityConstants.AUTHORIZATION_TOKEN_PREFIX_BEARER)
+            .type(ctx.tokenType())
             .issuedAt(ctx.now())
             .expiresIn(expiresIn)
             .refreshToken(refresh)

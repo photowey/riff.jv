@@ -16,6 +16,8 @@
  */
 package io.github.photowey.riff.middleware.database.orm.mybatis.repository;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 import io.github.photowey.riff.middleware.database.orm.mybatis.core.domain.po.ScheduleJobChainPO;
@@ -30,5 +32,40 @@ import io.github.photowey.riff.middleware.database.orm.mybatis.ext.BatchReposito
  */
 public interface ScheduleJobChainRepository extends BatchRepositoryExt<ScheduleJobChainPO> {
 
+    /**
+     * Physical delete
+     *
+     * @param id the id
+     */
     void physicalDelete(@Param("id") Long id);
+
+    /**
+     * Refresh childId by jobCode
+     *
+     * @param childId   the child job ID
+     * @param childCode the child job code
+     * @return the affected rows
+     */
+    int refreshChildIdByCode(@Param("childId") Long childId, @Param("child_code") String childCode);
+
+    /**
+     * Refresh childCode by childId
+     *
+     * @param childId   the child job ID
+     * @param childCode the child job code
+     * @return the affected rows
+     */
+    int refreshChildCodeById(@Param("childId") Long childId, @Param("childCode") String childCode);
+
+    /**
+     * Detects cyclic references in the parent-child hierarchy.
+     *
+     * <p>
+     * This method traverses upward from the specified child job, collecting all ancestor job IDs
+     * to identify if a cycle exists (i.e., a job indirectly becomes its own ancestor).
+     *
+     * @param childId the ID of the child job to start the cycle detection from (must not be null)
+     * @return an ordered list of parent job IDs from direct parent to root ancestor;
+     */
+    List<Long> cycleDetect(Long childId);
 }

@@ -81,12 +81,24 @@ public class ScheduleJobChain extends AbstractTenantEntity {
      * |- 1: Need to check the parent job ID.
      */
     private Integer checkParent;
+    private Integer checkChildCode;
 
     // ----------------------------------------------------------------
 
     public boolean determineNeedCheckParent() {
         return Objects.defaultIfNull(
             this.checkParent, CommonDictionary.Boolean.TRUE.value()) == CommonDictionary.Boolean.TRUE.value();
+    }
+
+    public boolean determineNeedCheckChildCode() {
+        return Objects.defaultIfNull(
+            this.checkChildCode, CommonDictionary.Boolean.TRUE.value()) == CommonDictionary.Boolean.TRUE.value();
+    }
+
+    public void initChildIdIfNecessary() {
+        if (Objects.isNull(this.childId)) {
+            this.childId = 0L;
+        }
     }
 
     // ----------------------------------------------------------------

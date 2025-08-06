@@ -156,6 +156,26 @@ public class ScheduleAppStorageImpl implements ScheduleAppStorage<ScheduleAppPO>
     // ----------------------------------------------------------------
 
     @Override
+    @SuppressWarnings("unchecked")
+    public Optional<ScheduleApp> loadPrincipal(@Nonnull String username) {
+        try (AppendableLambdaQueryWrapper<ScheduleAppPO> wrapper = new AppendableLambdaQueryWrapper<ScheduleAppPO>()
+            .appendSelect(ScheduleAppPO::getId, ScheduleAppPO::getTenant, ScheduleAppPO::getPlatform)
+            .appendSelect(ScheduleAppPO::getApp, ScheduleAppPO::getAppCode, ScheduleAppPO::getAppName)
+            .appendSelect(ScheduleAppPO::getAccessKey, ScheduleAppPO::getAccessSecret, ScheduleAppPO::getCreateTime)
+            .eq(ScheduleAppPO::getAccessKey, username)) {
+
+            ScheduleAppPO po = this.scheduleAppRepository.selectOne(wrapper);
+            return Optional.ofNullable(this.toEntity(po));
+        } catch (Exception ignored) {
+            // ignored
+        }
+
+        return Optional.empty();
+    }
+
+    // ----------------------------------------------------------------
+
+    @Override
     public ScheduleApp selectOne(@Nonnull Long id) {
         return this.toEntity(this.scheduleAppRepository.selectById(id));
     }

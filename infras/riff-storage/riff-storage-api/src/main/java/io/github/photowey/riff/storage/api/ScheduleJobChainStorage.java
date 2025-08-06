@@ -16,6 +16,9 @@
  */
 package io.github.photowey.riff.storage.api;
 
+import java.util.List;
+
+import io.github.photowey.riff.core.domain.entity.ScheduleJob;
 import io.github.photowey.riff.core.domain.entity.ScheduleJobChain;
 
 /**
@@ -27,4 +30,22 @@ import io.github.photowey.riff.core.domain.entity.ScheduleJobChain;
  * @since 2025/07/24
  */
 public interface ScheduleJobChainStorage<PO> extends EntityStorage<ScheduleJobChain, PO> {
+
+    /**
+     * Refresh the childId by childCode.
+     *
+     * @param job the job {@link ScheduleJob}
+     * @return the number of rows affected
+     */
+    int refreshChildIdByCode(ScheduleJob job);
+
+    /**
+     * Refresh the childCode by childId.
+     *
+     * @param job the job {@link ScheduleJob}
+     * @return the number of rows affected
+     */
+    int refreshChildCodeById(ScheduleJob job);
+
+    List<Long> cycleDetect(Long childId);
 }

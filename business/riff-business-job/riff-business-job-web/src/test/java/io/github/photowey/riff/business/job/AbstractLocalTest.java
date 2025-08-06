@@ -38,11 +38,14 @@ public abstract class AbstractLocalTest {
     @Autowired
     protected StorageEngine storageEngine;
 
+    // ----------------------------------------------------------------
+
     @Autowired
     protected ScheduleJobService scheduleJobService;
     @Autowired
     protected ScheduleClientService scheduleClientService;
 
+    // ----------------------------------------------------------------
 
     protected void tryHttpRequestTest(Runnable task) {
         MockHttpServletRequest request = new MockHttpServletRequest();

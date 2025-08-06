@@ -39,4 +39,6 @@ public interface TokenContext extends Serializable {
     Consumer<JwtBuilder> callback();
 
     long now();
+
+    String tokenType();
 }

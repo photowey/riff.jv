@@ -17,17 +17,19 @@
 package io.github.photowey.riff.business.job.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import io.github.photowey.riff.business.job.core.checker.exception.AbstractJobExceptionChecker;
-import io.github.photowey.riff.business.job.core.constant.JobMessageConstants;
+import io.github.photowey.riff.business.job.core.constant.MessageConstants;
 import io.github.photowey.riff.business.job.core.domain.payload.ScheduleJobChainAddPayload;
 import io.github.photowey.riff.business.job.service.ScheduleJobChainService;
 import io.github.photowey.riff.core.domain.entity.ScheduleJob;
 import io.github.photowey.riff.core.domain.entity.ScheduleJobChain;
+import io.github.photowey.riff.infras.common.enums.CommonDictionary;
 import io.github.photowey.riff.infras.common.util.Objects;
 import io.github.photowey.riff.infras.common.util.Strings;
 import io.github.photowey.riff.storage.api.engine.StorageEngine;
@@ -68,6 +70,11 @@ public class ScheduleJobChainServiceImpl implements ScheduleJobChainService {
         this.refreshChildCodeById(job);
     }
 
+    @Override
+    public List<Long> cycleDetect(Long childId) {
+        return this.storageEngine.scheduleJobChainStorage().cycleDetect(childId);
+    }
+
     // ----------------------------------------------------------------
 
     private void preBatchAdd(List<ScheduleJobChain> chains) {
@@ -78,6 +85,8 @@ public class ScheduleJobChainServiceImpl implements ScheduleJobChainService {
 
             this.checkChildId(it);
             this.checkChildCode(it);
+
+            it.initChildIdIfNecessary();
         });
     }
 
@@ -88,11 +97,26 @@ public class ScheduleJobChainServiceImpl implements ScheduleJobChainService {
     // ----------------------------------------------------------------
 
     private void refreshChildIdByCode(ScheduleJob job) {
-        throw new UnsupportedOperationException("Not implemented");
+        int affected = this.storageEngine.scheduleJobChainStorage().refreshChildIdByCode(job);
+        if (log.isInfoEnabled()) {
+            log.info("riff: job [{}:{}] added, refreshing job chain by job code, affected {} rows",
+                job.id(),
+                job.jobCode(),
+                affected
+            );
+        }
     }
 
     private void refreshChildCodeById(ScheduleJob job) {
+        int affected = this.storageEngine.scheduleJobChainStorage().refreshChildCodeById(job);
 
+        if (log.isInfoEnabled()) {
+            log.info("riff: job [{}:{}] added, refreshing job chain by id, affected {} rows",
+                job.id(),
+                job.jobCode(),
+                affected
+            );
+        }
     }
 
     // ----------------------------------------------------------------
@@ -102,7 +126,8 @@ public class ScheduleJobChainServiceImpl implements ScheduleJobChainService {
 
         AbstractJobExceptionChecker.checkTrue(
             exists,
-            JobMessageConstants.ERROR_PARENT_JOB_NOT_EXISTS, chain.parentId()
+            MessageConstants.JobChain.ERROR_PARENT_JOB_NOT_EXISTS,
+            chain.parentId()
         );
     }
 
@@ -111,7 +136,25 @@ public class ScheduleJobChainServiceImpl implements ScheduleJobChainService {
             return;
         }
 
-        // TODO Not implemented
+        Optional<ScheduleJob> jobOpt = this.storageEngine.scheduleJobStorage().simpleQuery(chain.childId());
+        if (jobOpt.isPresent()) {
+            ScheduleJob child = jobOpt.get();
+            if (Strings.isNotEmpty(chain.getChildCode())) {
+                if (Strings.isNotEquals(child.jobCode(), chain.getChildCode())) {
+                    AbstractJobExceptionChecker.throwUnchecked(
+                        MessageConstants.JobChain.ERROR_CHILD_JOB_CODE_MISMATCH,
+                        child.jobCode()
+                    );
+                }
+            }
+
+            chain.setChildCode(child.jobCode());
+            chain.setCheckChildCode(CommonDictionary.Boolean.FALSE.value());
+
+            return;
+        }
+
+        AbstractJobExceptionChecker.throwUnchecked(MessageConstants.Job.ERROR_CHILD_JOB_NOT_FOUND, chain.childId());
     }
 
     private void checkChildCode(ScheduleJobChain chain) {
@@ -119,6 +162,19 @@ public class ScheduleJobChainServiceImpl implements ScheduleJobChainService {
             return;
         }
 
-        // TODO Not implemented
+        if (chain.determineNeedCheckChildCode()) {
+            Optional<ScheduleJob> jobOpt = this.storageEngine.scheduleJobStorage().simpleQuery(chain.childCode());
+
+            if (jobOpt.isPresent()) {
+                ScheduleJob child = jobOpt.get();
+                chain.setChildId(child.id());
+
+                chain.setCheckChildCode(CommonDictionary.Boolean.FALSE.value());
+            }
+
+            AbstractJobExceptionChecker.throwUnchecked(
+                MessageConstants.Job.ERROR_CHILD_JOB_NOT_FOUND, chain.childCode()
+            );
+        }
     }
 }

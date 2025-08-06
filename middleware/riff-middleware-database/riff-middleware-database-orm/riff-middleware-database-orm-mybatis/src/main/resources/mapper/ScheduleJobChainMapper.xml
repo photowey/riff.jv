@@ -12,4 +12,32 @@
     <delete id="physicalDelete">
         DELETE FROM riff_schedule_job_chain WHERE id = #{id}
     </delete>
+
+    <update id="refreshChildIdByCode">
+        UPDATE riff_schedule_job_chain SET child_id = #{childId} WHERE child_id = 0 AND child_code = #{childCode}
+    </update>
+
+    <update id="refreshChildCodeById">
+        UPDATE riff_schedule_job_chain SET child_code = #{childCode} WHERE child_id = #{childId} AND child_code IS NULL
+    </update>
+
+    <!-- @formatter:off -->
+    <select id="cycleDetect" resultType="Long">
+        WITH RECURSIVE ancestors AS (
+            SELECT parent_id, child_id, 1 AS depth
+            FROM riff_schedule_job_chain
+            WHERE child_id = #{childId}
+
+            UNION ALL
+
+            SELECT jc.parent_id, jc.child_id, a.depth + 1
+            FROM riff_schedule_job_chain jc
+            INNER JOIN ancestors a ON jc.child_id = a.parent_id
+            WHERE
+                a.depth &lt; 20
+                AND jc.parent_id > 0
+        )
+        SELECT parent_id FROM ancestors
+    </select>
+    <!-- @formatter:on -->
 </mapper>

@@ -16,11 +16,20 @@
  */
 package io.github.photowey.riff.business.uaa.service.impl;
 
+import java.util.Optional;
+import java.util.Set;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import io.github.photowey.riff.business.uaa.service.ScheduleAppService;
+import io.github.photowey.riff.core.domain.entity.ScheduleApp;
 import io.github.photowey.riff.infras.authentication.core.domain.authenticated.AuthenticationPrincipal;
+import io.github.photowey.riff.infras.authentication.core.enums.AuthenticationDictionary;
 import io.github.photowey.riff.infras.authentication.core.username.Username;
+import io.github.photowey.riff.infras.common.enums.CommonDictionary;
+import io.github.photowey.riff.infras.common.util.Collections;
+import io.github.photowey.riff.storage.api.engine.StorageEngine;
 
 /**
  * {@code ScheduleAppServiceImpl}.
@@ -32,8 +41,44 @@ import io.github.photowey.riff.infras.authentication.core.username.Username;
 @Service
 public class ScheduleAppServiceImpl implements ScheduleAppService {
 
+    @Autowired
+    private StorageEngine storageEngine;
+
     @Override
     public AuthenticationPrincipal loadPrincipal(Username proxy) {
+        Optional<ScheduleApp> appOpt = this.storageEngine.scheduleAppStorage().loadPrincipal(proxy.username());
+        if (appOpt.isPresent()) {
+            ScheduleApp app = appOpt.get();
+            return this.toAuthenticationPrincipal(app);
+        }
+
         return null;
+    }
+
+    private AuthenticationPrincipal toAuthenticationPrincipal(ScheduleApp app) {
+        Set<String> emptySet = Collections.emptySet();
+        return AuthenticationPrincipal.builder()
+            .tenant(app.tenant())
+            .platform(app.platform())
+            .app(app.app())
+            // ----------------------------------------------------------------
+            .userId(app.id())
+            .username(app.accessKey())
+            .password(app.accessSecret())
+            .fullname(app.appName())
+            .twofaEnabled(CommonDictionary.Boolean.FALSE.value())
+            // ----------------------------------------------------------------
+            .type(AuthenticationDictionary.User.Type.OAUTH_CLIENT.value())
+            .status(AuthenticationDictionary.User.Status.ACTIVATED.value())
+            .authenticationStatus(AuthenticationDictionary.Authentication.Status.AUTHENTICATED.value())
+            .deleted(CommonDictionary.Boolean.FALSE.value())
+            // ----------------------------------------------------------------
+            .rememberMe(false)
+            .createdAt(app.createTime())
+            // ----------------------------------------------------------------
+            .authorities(emptySet)
+            .scopes(emptySet)
+            .roles(emptySet)
+            .build();
     }
 }

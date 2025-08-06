@@ -75,7 +75,15 @@ public class AuthenticationPrincipal implements Serializable {
      * @see AuthenticationDictionary.User.Type
      */
     private Integer type;
+    /**
+     * Status
+     * |- 1: Unactivated 2: Activated 4: Frozen 8: Forbidden 16: Expired 32: Locked
+     */
     private Integer status;
+    /**
+     * Authentication Status
+     * |- 1: Unauthenticated 2: Authenticating 4: Authenticated 8: Authentication Failed
+     */
     private Integer authenticationStatus;
     private Integer deleted;
 

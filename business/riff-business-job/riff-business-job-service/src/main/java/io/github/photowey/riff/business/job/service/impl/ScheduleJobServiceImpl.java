@@ -18,9 +18,11 @@ package io.github.photowey.riff.business.job.service.impl;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.AnnotationAwareOrderComparator;
@@ -96,8 +98,6 @@ public class ScheduleJobServiceImpl extends AbstractBeanFactoryHolder implements
     }
 
     private void postRegister(ScheduleJob tt) {
-        // TODO NOT implemented
-
         this.tryAddScheduleJobChainIfNecessary(tt);
         this.refreshParentScheduleJobChildrenIdIfNecessary(tt);
 
@@ -111,7 +111,7 @@ public class ScheduleJobServiceImpl extends AbstractBeanFactoryHolder implements
             tt.childJobs().forEach(it -> {
                 this.injectChainBase(tt, it);
             });
-            this.batchAddScheduleJobChain(tt);
+            this.batchAddScheduleJobChains(tt);
         }
     }
 
@@ -122,6 +122,18 @@ public class ScheduleJobServiceImpl extends AbstractBeanFactoryHolder implements
     }
 
     private void cycleDetect(ScheduleJob tt) {
+        List<Long> parentIds = this.scheduleJobChainService.cycleDetect(tt.id());
+        Set<Long> distinctParentIds = new HashSet<>(parentIds);
+
+        if (distinctParentIds.size() < parentIds.size()) {
+            AbstractJobExceptionChecker.throwUnchecked("A cycle has been detected in the job chain");
+        }
+
+        parentIds.clear();
+        distinctParentIds.clear();
+
+        parentIds = null;
+        distinctParentIds = null;
     }
 
     private void injectChainBase(ScheduleJob tt, ScheduleJobChain it) {
@@ -135,7 +147,7 @@ public class ScheduleJobServiceImpl extends AbstractBeanFactoryHolder implements
 
     // ----------------------------------------------------------------
 
-    private void batchAddScheduleJobChain(ScheduleJob tt) {
+    private void batchAddScheduleJobChains(ScheduleJob tt) {
         this.scheduleJobChainService.batchAdd(tt.childJobs());
     }
 

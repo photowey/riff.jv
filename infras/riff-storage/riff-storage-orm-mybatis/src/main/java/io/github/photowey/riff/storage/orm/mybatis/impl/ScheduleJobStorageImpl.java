@@ -100,6 +100,28 @@ public class ScheduleJobStorageImpl implements ScheduleJobStorage<ScheduleJobPO>
     // ----------------------------------------------------------------
 
     @Override
+    public Optional<ScheduleJob> simpleQuery(@Nonnull Long id) {
+        ScheduleJobPO image = this.scheduleJobRepository.selectOne(new LambdaQueryWrapper<ScheduleJobPO>()
+            .select(ScheduleJobPO::getId, ScheduleJobPO::getJobCode, ScheduleJobPO::getAppId)
+            .eq(ScheduleJobPO::getId, id)
+        );
+
+        return Optional.ofNullable(this.toEntity(image));
+    }
+
+    @Override
+    public Optional<ScheduleJob> simpleQuery(@Nonnull String jobCode) {
+        ScheduleJobPO image = this.scheduleJobRepository.selectOne(new LambdaQueryWrapper<ScheduleJobPO>()
+            .select(ScheduleJobPO::getId, ScheduleJobPO::getJobCode, ScheduleJobPO::getAppId)
+            .eq(ScheduleJobPO::getJobCode, jobCode)
+        );
+
+        return Optional.ofNullable(this.toEntity(image));
+    }
+
+    // ----------------------------------------------------------------
+
+    @Override
     public boolean exists(@Nonnull Long id) {
         return this.scheduleJobRepository.exists(new LambdaQueryWrapper<ScheduleJobPO>().eq(ScheduleJobPO::getId, id));
     }

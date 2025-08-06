@@ -26,6 +26,7 @@ import jakarta.annotation.Nonnull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import io.github.photowey.riff.core.domain.entity.ScheduleJob;
 import io.github.photowey.riff.core.domain.entity.ScheduleJobChain;
 import io.github.photowey.riff.infras.common.util.Collections;
 import io.github.photowey.riff.infras.common.util.Objects;
@@ -122,6 +123,25 @@ public class ScheduleJobChainStorageImpl
     @Override
     public void updateById(@Nonnull ScheduleJobChain entity) {
         this.scheduleJobChainRepository.updateById(this.toPo(entity));
+    }
+
+    // ----------------------------------------------------------------
+
+    @Override
+    public int refreshChildIdByCode(ScheduleJob job) {
+        return this.scheduleJobChainRepository.refreshChildIdByCode(job.id(), job.jobCode());
+    }
+
+    @Override
+    public int refreshChildCodeById(ScheduleJob job) {
+        return this.scheduleJobChainRepository.refreshChildCodeById(job.id(), job.jobCode());
+    }
+
+    // ----------------------------------------------------------------
+
+    @Override
+    public List<Long> cycleDetect(Long childId) {
+        return this.scheduleJobChainRepository.cycleDetect(childId);
     }
 
     // ----------------------------------------------------------------

@@ -50,4 +50,6 @@ public class DefaultTokenContext implements TokenContext {
     private boolean rememberMe;
     private Consumer<JwtBuilder> callback;
     private long now;
+
+    private String tokenType;
 }

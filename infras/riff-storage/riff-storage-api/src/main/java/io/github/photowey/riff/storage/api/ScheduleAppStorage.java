@@ -33,4 +33,6 @@ import io.github.photowey.riff.core.domain.entity.ScheduleApp;
 public interface ScheduleAppStorage<PO> extends EntityStorage<ScheduleApp, PO> {
 
     Optional<ScheduleApp> simpleQuery(@Nonnull Long id);
+
+    Optional<ScheduleApp> loadPrincipal(@Nonnull String username);
 }

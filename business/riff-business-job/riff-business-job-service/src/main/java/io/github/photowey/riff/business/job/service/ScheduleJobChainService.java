@@ -52,4 +52,6 @@ public interface ScheduleJobChainService {
      * @param job the job {@link ScheduleJob}
      */
     void refreshJobChains(ScheduleJob job);
+
+    List<Long> cycleDetect(Long childId);
 }

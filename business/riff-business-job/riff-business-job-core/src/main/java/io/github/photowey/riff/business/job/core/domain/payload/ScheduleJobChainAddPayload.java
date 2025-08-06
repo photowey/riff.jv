@@ -20,7 +20,7 @@ import java.io.Serial;
 import java.util.function.Consumer;
 
 import io.github.photowey.riff.business.job.core.checker.exception.AbstractJobExceptionChecker;
-import io.github.photowey.riff.business.job.core.constant.JobMessageConstants;
+import io.github.photowey.riff.business.job.core.constant.MessageConstants;
 import io.github.photowey.riff.core.domain.entity.ScheduleJobChain;
 import io.github.photowey.riff.infras.common.util.Objects;
 import io.github.photowey.riff.infras.common.util.Strings;
@@ -91,7 +91,9 @@ public class ScheduleJobChainAddPayload extends AbstractSchedulePayload<Schedule
 
     private void checkChildIdOrCode() {
         if (Objects.isNull(this.childId) && Strings.isEmpty(this.childCode)) {
-            AbstractJobExceptionChecker.throwUnchecked(JobMessageConstants.ERROR_CHILD_JOB_ID_AND_CODE_NOT_PROVIDED);
+            AbstractJobExceptionChecker.throwUnchecked(
+                MessageConstants.JobChain.ERROR_CHILD_JOB_ID_AND_CODE_NOT_PROVIDED
+            );
         }
     }
 

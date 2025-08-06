@@ -18,6 +18,8 @@ package io.github.photowey.riff.storage.api;
 
 import java.util.Optional;
 
+import jakarta.annotation.Nonnull;
+
 import io.github.photowey.riff.core.domain.entity.ScheduleJob;
 
 /**
@@ -45,4 +47,20 @@ public interface ScheduleJobStorage<PO> extends EntityStorage<ScheduleJob, PO> {
      * @return the database entity {@link ScheduleJob}
      */
     boolean testMethodNameExists(ScheduleJob job);
+
+    /**
+     * Simple query
+     *
+     * @param id the job id
+     * @return the database entity {@link ScheduleJob}
+     */
+    Optional<ScheduleJob> simpleQuery(@Nonnull Long id);
+
+    /**
+     * Simple query
+     *
+     * @param jobCode the job code
+     * @return the database entity {@link ScheduleJob}
+     */
+    Optional<ScheduleJob> simpleQuery(@Nonnull String jobCode);
 }

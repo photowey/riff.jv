@@ -24,6 +24,7 @@ import io.github.photowey.riff.business.uaa.AbstractLocalTest;
 import io.github.photowey.riff.business.uaa.TestUaa;
 import io.github.photowey.riff.business.uaa.core.domain.dto.TokenDTO;
 import io.github.photowey.riff.business.uaa.core.domain.payload.LoginPayload;
+import io.github.photowey.riff.business.uaa.core.domain.payload.OauthClientLoginPayload;
 import io.github.photowey.riff.infras.authentication.core.constant.AuthorityConstants;
 import io.github.photowey.riff.infras.common.json.JSON;
 
@@ -60,7 +61,22 @@ class LoginServiceTest extends AbstractLocalTest {
 
         this.tryHttpRequestTest(() -> {
             TokenDTO token = this.loginService.login(payload);
-            log.info("the login token is:[{}]", JSON.toPrettyString(token));
+            log.info("the account type login token is:[{}]", JSON.toPrettyString(token));
+        });
+
+        this.sleep(3_000L);
+    }
+
+    @Test
+    void testLogin_app() {
+        OauthClientLoginPayload payload = OauthClientLoginPayload.builder()
+            .accessKey("70202507155719188245190111831234")
+            .accessSecret("7020250715571918824519011183123471202507155719188245190187654321")
+            .build();
+
+        this.tryHttpRequestTest(() -> {
+            TokenDTO token = this.loginService.login(payload.toLoginPayload());
+            log.info("the oauthclient type login token is:[{}]", JSON.toPrettyString(token));
         });
 
         this.sleep(3_000L);

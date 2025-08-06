@@ -49,7 +49,6 @@ public class ScheduleClientServiceImpl implements ScheduleClientService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ScheduleClient register(ScheduleClientAddPayload payload) {
-        // TODO todo lock.lock()?
         payload.preAction();
         ScheduleClient client = this.tryRegister(payload);
         payload.postAction();
