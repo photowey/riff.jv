@@ -20,7 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
 
-import io.github.photowey.riff.business.uaa.service.ScheduleAppService;
+import io.github.photowey.riff.business.uaa.service.ScheduleAppAuthenticationService;
 import io.github.photowey.riff.business.uaa.service.SystemUserService;
 
 import lombok.Getter;
@@ -42,5 +42,5 @@ public abstract class AbstractApplicationListener<E extends ApplicationEvent> im
     protected SystemUserService systemUserService;
 
     @Autowired
-    protected ScheduleAppService scheduleAppService;
+    protected ScheduleAppAuthenticationService scheduleAppService;
 }

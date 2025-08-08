@@ -67,5 +67,5 @@ public interface ScheduleJobChainRepository extends BatchRepositoryExt<ScheduleJ
      * @param childId the ID of the child job to start the cycle detection from (must not be null)
      * @return an ordered list of parent job IDs from direct parent to root ancestor;
      */
-    List<Long> cycleDetect(Long childId);
+    List<Long> cycleDetect(@Param("childId") Long childId);
 }

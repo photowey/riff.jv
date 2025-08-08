@@ -14,15 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.photowey.riff.core.domain.entity;
+package io.github.photowey.riff.business.job.core.domain.payload;
 
 import java.io.Serial;
+import java.util.function.Consumer;
 
-import io.github.photowey.riff.core.domain.dto.ScheduleAppDTO;
-import io.github.photowey.riff.infras.common.constant.CommonConstants;
-import io.github.photowey.riff.infras.common.enums.CommonDictionary;
-import io.github.photowey.riff.infras.common.util.Objects;
-import io.github.photowey.riff.middleware.database.core.domain.entity.AbstractTenantEntity;
+import io.github.photowey.riff.core.domain.entity.ScheduleApp;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,22 +28,21 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 /**
- * {@code ScheduleApp}.
- * |- riff_schedule_app
+ * {@code ScheduleAppAddPayload}.
  *
  * @author photowey
  * @version 1.0.0
- * @since 2025/07/21
+ * @since 2025/08/08
  */
 @Data
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class ScheduleApp extends AbstractTenantEntity {
+public class ScheduleAppAddPayload extends AbstractSchedulePayload<ScheduleApp> {
 
     @Serial
-    private static final long serialVersionUID = -2941087918692585013L;
+    private static final long serialVersionUID = 3488173087264667580L;
 
     /**
      * AppCode
@@ -56,14 +52,6 @@ public class ScheduleApp extends AbstractTenantEntity {
      * AppName
      */
     private String appName;
-    /**
-     * AccessKey
-     */
-    private String accessKey;
-    /**
-     * AccessSecret
-     */
-    private String accessSecret;
     /**
      * Cluster
      */
@@ -83,68 +71,42 @@ public class ScheduleApp extends AbstractTenantEntity {
 
     // ----------------------------------------------------------------
 
-    /**
-     * This field does not exist in the database.
-     * |- 0 | 1
-     */
-    private Integer registered;
-
-    // ----------------------------------------------------------------
-
-    public ScheduleAppDTO toDto() {
-        return ScheduleAppDTO.builder()
-            .id(this.id)
-            // ----------------------------------------------------------------
-            .createBy(this.createBy)
-            .createTime(this.createTime)
-            .tenant(this.tenant)
-            .platform(this.platform)
-            .app(this.app)
-            // ----------------------------------------------------------------
+    public ScheduleApp toScheduleApp() {
+        return ScheduleApp.builder()
             .appCode(this.appCode)
             .appName(this.appName)
-            .accessKey(this.accessKey)
-            .accessSecret(CommonConstants.Secret.mask(4))
             .cluster(this.cluster)
             .configuratorNamespace(this.configuratorNamespace)
             .configuratorGroup(this.configuratorGroup)
             .build();
     }
 
-    // ----------------------------------------------------------------
+    public ScheduleApp toScheduleApp(Consumer<ScheduleApp> fx) {
+        ScheduleApp tt = this.toScheduleApp();
+        fx.accept(tt);
 
-    public boolean determineIsRegistered() {
-        return Objects.isNotNull(this.registered) && this.registered == CommonDictionary.Boolean.TRUE.value();
+        return tt;
     }
 
     // ----------------------------------------------------------------
 
     public String appCode() {
-        return this.appCode;
+        return appCode;
     }
 
     public String appName() {
-        return this.appName;
-    }
-
-    public String accessKey() {
-        return this.accessKey;
-    }
-
-    public String accessSecret() {
-        return this.accessSecret;
+        return appName;
     }
 
     public String cluster() {
-        return this.cluster;
+        return cluster;
     }
 
     public String configuratorNamespace() {
-        return this.configuratorNamespace;
+        return configuratorNamespace;
     }
 
     public String configuratorGroup() {
-        return this.configuratorGroup;
+        return configuratorGroup;
     }
-
 }

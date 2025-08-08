@@ -34,5 +34,7 @@ public interface ScheduleAppStorage<PO> extends EntityStorage<ScheduleApp, PO> {
 
     Optional<ScheduleApp> simpleQuery(@Nonnull Long id);
 
+    Optional<ScheduleApp> simpleQuery(@Nonnull String appCode);
+
     Optional<ScheduleApp> loadPrincipal(@Nonnull String username);
 }

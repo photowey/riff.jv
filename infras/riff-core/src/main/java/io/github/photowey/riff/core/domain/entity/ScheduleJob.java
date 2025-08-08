@@ -20,6 +20,7 @@ import java.io.Serial;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import io.github.photowey.riff.core.domain.dto.ScheduleJobDTO;
 import io.github.photowey.riff.infras.common.enums.CommonDictionary;
 import io.github.photowey.riff.infras.common.util.Collections;
 import io.github.photowey.riff.infras.common.util.Objects;
@@ -170,6 +171,39 @@ public class ScheduleJob extends AbstractTenantEntity {
 
     @Schema(hidden = true)
     private LocalDateTime now;
+
+    // ----------------------------------------------------------------
+
+    public ScheduleJobDTO toDto() {
+        return ScheduleJobDTO.builder()
+            .id(this.id)
+            // ----------------------------------------------------------------
+            .createBy(this.createBy)
+            .createTime(this.createTime)
+            .tenant(this.tenant)
+            .platform(this.platform)
+            .app(this.app)
+            // ----------------------------------------------------------------
+            .appId(this.appId)
+            .jobCode(this.jobCode)
+            .jobName(this.jobName)
+            .jobType(this.jobType)
+            .handlerName(this.handlerName)
+            .declaredClass(this.declaredClass)
+            .method(this.method)
+            .arguments(this.arguments)
+            .scheduleType(this.scheduleType)
+            .scheduleContext(this.scheduleContext)
+            .misfireStrategy(this.misfireStrategy)
+            .routeStrategy(this.routeStrategy)
+            .blockStrategy(this.blockStrategy)
+            .timeoutSeconds(this.timeoutSeconds)
+            .retryCount(this.retryCount)
+            .triggerStatus(this.triggerStatus)
+            .triggerLastTime(this.triggerLastTime)
+            .triggerNextTime(this.triggerNextTime)
+            .build();
+    }
 
     // ----------------------------------------------------------------
 

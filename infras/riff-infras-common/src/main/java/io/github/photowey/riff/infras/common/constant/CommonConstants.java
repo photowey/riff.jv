@@ -92,4 +92,26 @@ public interface CommonConstants {
         long HUNDRED_LONG = HUNDRED;
         long THOUSAND_LONG = THOUSAND;
     }
+
+    interface Access {
+
+        int ACCESS_KEY_RANDOM_LENGTH = 26;
+        int ACCESS_SECRET_RANDOM_LENGTH = 56;
+        int ACCESS_SECRET_TAIL_LENGTH = 8;
+    }
+
+    interface Secret {
+
+        String STAR = "*";
+
+        /**
+         * Mask
+         *
+         * @param length the length
+         * @return mask
+         */
+        static String mask(int length) {
+            return STAR.repeat(length);
+        }
+    }
 }

@@ -19,6 +19,7 @@ package io.github.photowey.riff.core.domain.entity;
 import java.io.Serial;
 import java.time.LocalDateTime;
 
+import io.github.photowey.riff.core.domain.dto.ScheduleClientDTO;
 import io.github.photowey.riff.infras.common.enums.CommonDictionary;
 import io.github.photowey.riff.infras.common.util.Objects;
 import io.github.photowey.riff.infras.common.util.Strings;
@@ -104,6 +105,28 @@ public class ScheduleClient extends AbstractTenantEntity {
      * |- 0 | 1
      */
     private Integer registered;
+
+    // ----------------------------------------------------------------
+
+    public ScheduleClientDTO toDto() {
+        return ScheduleClientDTO.builder()
+            .id(this.id)
+            // ----------------------------------------------------------------
+            .createBy(this.createBy)
+            .createTime(this.createTime)
+            .tenant(this.tenant)
+            .platform(this.platform)
+            .app(this.app)
+            // ----------------------------------------------------------------
+            .appId(this.appId)
+            .jobId(this.jobId)
+            .clientStatus(this.clientStatus)
+            .serverIp(this.serverIp)
+            .serverPort(this.serverPort)
+            .serverProtocol(this.serverProtocol)
+            .serverAddress(this.serverAddress)
+            .build();
+    }
 
     // ----------------------------------------------------------------
 

@@ -20,13 +20,13 @@ import io.github.photowey.riff.infras.authentication.core.domain.authenticated.A
 import io.github.photowey.riff.infras.authentication.core.username.Username;
 
 /**
- * {@code ScheduleAppService}.
+ * {@code ScheduleAppAuthenticationService}.
  *
  * @author photowey
  * @version 1.0.0
  * @since 2025/07/23
  */
-public interface ScheduleAppService {
+public interface ScheduleAppAuthenticationService {
 
     /**
      * Load the {@link AuthenticationPrincipal}.

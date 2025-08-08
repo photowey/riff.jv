@@ -22,7 +22,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import io.github.photowey.riff.business.uaa.service.ScheduleAppService;
+import io.github.photowey.riff.business.uaa.service.ScheduleAppAuthenticationService;
 import io.github.photowey.riff.core.domain.entity.ScheduleApp;
 import io.github.photowey.riff.infras.authentication.core.domain.authenticated.AuthenticationPrincipal;
 import io.github.photowey.riff.infras.authentication.core.enums.AuthenticationDictionary;
@@ -32,14 +32,14 @@ import io.github.photowey.riff.infras.common.util.Collections;
 import io.github.photowey.riff.storage.api.engine.StorageEngine;
 
 /**
- * {@code ScheduleAppServiceImpl}.
+ * {@code ScheduleAppAuthenticationServiceImpl}.
  *
  * @author photowey
  * @version 1.0.0
  * @since 2025/07/23
  */
 @Service
-public class ScheduleAppServiceImpl implements ScheduleAppService {
+public class ScheduleAppAuthenticationServiceImpl implements ScheduleAppAuthenticationService {
 
     @Autowired
     private StorageEngine storageEngine;

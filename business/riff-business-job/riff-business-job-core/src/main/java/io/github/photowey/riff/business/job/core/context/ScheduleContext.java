@@ -86,8 +86,14 @@ public class ScheduleContext implements Serializable {
 
     /**
      * {@code riff://trigger/once?delay=0}
+     *
+     * <p>
      * {@code riff://trigger/cron?expression=0%2F5+*+*+*+*+%3F&initialDelay=0}
+     *
+     * <p>
      * {@code riff://trigger/fixedrate?initialDelay=0&period=30}
+     *
+     * <p>
      * {@code riff://trigger/fixeddelay?initialDelay=0&delay=30}
      */
 

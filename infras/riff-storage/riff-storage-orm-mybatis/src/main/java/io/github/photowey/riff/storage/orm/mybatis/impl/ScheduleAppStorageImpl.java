@@ -45,6 +45,8 @@ import io.github.photowey.riff.middleware.database.orm.mybatis.wrapper.Appendabl
 import io.github.photowey.riff.storage.api.ScheduleAppStorage;
 import io.github.photowey.riff.storage.orm.mybatis.assembler.ScheduleAppAssembler;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * {@code ScheduleAppStorageImpl}.
  *
@@ -52,6 +54,7 @@ import io.github.photowey.riff.storage.orm.mybatis.assembler.ScheduleAppAssemble
  * @version 1.0.0
  * @since 2025/07/23
  */
+@Slf4j
 @Component
 public class ScheduleAppStorageImpl implements ScheduleAppStorage<ScheduleAppPO>, PaginationMetaStorage<ScheduleAppPO> {
 
@@ -140,14 +143,31 @@ public class ScheduleAppStorageImpl implements ScheduleAppStorage<ScheduleAppPO>
     @SuppressWarnings("unchecked")
     public Optional<ScheduleApp> simpleQuery(@Nonnull Long id) {
         try (AppendableLambdaQueryWrapper<ScheduleAppPO> wrapper = new AppendableLambdaQueryWrapper<ScheduleAppPO>()
-            .appendSelect(ScheduleAppPO::getId, ScheduleAppPO::getTenant, ScheduleAppPO::getPlatform)
-            .appendSelect(ScheduleAppPO::getApp, ScheduleAppPO::getAppCode)
+            .appendSelect(ScheduleAppPO::getId, ScheduleAppPO::getAppCode)
+            .appendSelect(ScheduleAppPO::getTenant, ScheduleAppPO::getPlatform, ScheduleAppPO::getApp)
             .eq(ScheduleAppPO::getId, id)) {
 
             ScheduleAppPO po = this.scheduleAppRepository.selectOne(wrapper);
             return Optional.ofNullable(this.toEntity(po));
-        } catch (Exception ignored) {
-            // ignored
+        } catch (Exception e) {
+            log.error("riff: failed to find ScheduleApp by id: [{}]", id, e);
+        }
+
+        return Optional.empty();
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public Optional<ScheduleApp> simpleQuery(@Nonnull String appCode) {
+        try (AppendableLambdaQueryWrapper<ScheduleAppPO> wrapper = new AppendableLambdaQueryWrapper<ScheduleAppPO>()
+            .appendSelect(ScheduleAppPO::getId, ScheduleAppPO::getAppCode)
+            .appendSelect(ScheduleAppPO::getTenant, ScheduleAppPO::getPlatform, ScheduleAppPO::getApp)
+            .eq(ScheduleAppPO::getAppCode, appCode)) {
+
+            ScheduleAppPO po = this.scheduleAppRepository.selectOne(wrapper);
+            return Optional.ofNullable(this.toEntity(po));
+        } catch (Exception e) {
+            log.error("riff: failed to find ScheduleApp by app code: [{}]", appCode, e);
         }
 
         return Optional.empty();
